@@ -1,0 +1,47 @@
+<div class="bjui-pageContent">
+    <form action="{:url(M_C_A)}" data-toggle="validate" data-alertmsg="true">
+        <input type="hidden" name="role_id" value="{$Request.param.role_id}">
+        <div class="panel panel-default">
+            <table class="table table-bordered table-responsive">
+                {volist name="rules" id="val"}
+                    <tr>
+                        {if condition="$val.outer"}
+                            <td rowspan="{$val.countOuter}">{$val.module}</td>
+                        {/if}
+                        {if condition="$val.mid"}
+                            <td rowspan="{$val.countMid}">{$val.controller}</td>
+                        {/if}
+                        <td>{$val.name}</td>
+                        <td>
+                            {if condition="$val.checked"}
+                            <input type="checkbox"
+                                   name="ids[]"
+                                   value="{$val.id}"
+                                   data-toggle="icheck"
+                                   checked
+                                   data-label="">
+                            {else/}
+                            <input type="checkbox"
+                                   name="ids[]"
+                                   value="{$val.id}"
+                                   data-toggle="icheck"
+                                   data-label="">
+                            {/if}
+                        </td>
+                    </tr>
+                {/volist}
+            </table>
+        </div>
+    </form>
+</div>
+
+<div class="bjui-pageFooter">
+    <ul>
+        <li>
+            <button type="button" data-icon="close" class="btn btn-close">取消</button>
+        </li>
+        <li>
+            <button type="submit" data-icon="check" class="btn btn-success">提交</button>
+        </li>
+    </ul>
+</div>

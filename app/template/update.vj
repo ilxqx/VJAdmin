@@ -1,0 +1,23 @@
+<div class="bjui-pageContent">
+    <form action="{:url(M_C_A)}" data-toggle="validate" data-alertmsg="true"#enctype#>
+        {if condition="isset($data) && !empty($data.id)"}
+        <input type="hidden" name="id" value="{$data.id}">
+        {/if}
+        <input type="hidden" name="beforeNavTabId" value="{$Request.param.tabid}">
+
+        <div class="bjui-row col-1">
+            #inputFields#
+        </div>
+    </form>
+</div>
+
+<div class="bjui-pageFooter">
+    <ul>
+        <li>
+            <button type="button" data-icon="close" class="btn btn-close">取消</button>
+        </li>
+        <li>
+            <button type="submit" data-icon="check" class="btn btn-success">提交</button>
+        </li>
+    </ul>
+</div>

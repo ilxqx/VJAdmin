@@ -1,0 +1,64 @@
+<div class="bjui-pageHeader">
+    <div class="bs-callout bs-callout-info">
+        <div class="bjui-searchBar">
+            <a href="{:url(M_C . 'backup')}"
+               data-icon="archive"
+               class="btn btn-success"
+               data-toggle="doajax"
+               data-confirm-msg="确定要备份吗？"
+            >备份</a>
+        </div>
+    </div>
+</div>
+
+<div class="bjui-pageContent tableContent">
+    <div class="panel panel-default">
+        <table class="table table-hover table-bordered table-responsive">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>SQL文件</th>
+				<th>文件大小</th>
+				<th width="200">时间</th>
+                <th width="300">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {volist name="data" id="val"}
+            <tr>
+                <th>{$key + 1}</th>
+                <td>{$val.name}</td>
+				<td>{$val.size}</td>
+				<td>{$val.datetime}</td>
+                <th>
+                    <a href="{:url(M_C . 'download', ['filename' => $val.name])}"
+                       data-icon="cloud-download"
+                       class="btn btn-xs btn-blue"
+                       data-toggle="ajaxdownload"
+                       data-confirm-msg="确定要下载吗？"
+                    >
+                        下载
+                    </a>
+                    <a href="{:url(M_C . 'restore', ['filename' => $val.name])}"
+                       data-icon="window-restore"
+                       class="btn btn-xs btn-green"
+                       data-toggle="doajax"
+                       data-confirm-msg="确定要还原吗？"
+                    >
+                        还原
+                    </a>
+                    <a href="{:url(M_C . 'del', ['filename' => $val.name])}"
+                       data-icon="trash-o"
+                       class="btn btn-red"
+                       data-toggle="doajax"
+                       data-confirm-msg="确定要删除吗？"
+                    >
+                        删除
+                    </a>
+                </th>
+            </tr>
+            {/volist}
+            </tbody>
+        </table>
+    </div>
+</div>

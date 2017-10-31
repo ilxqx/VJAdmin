@@ -1,0 +1,40 @@
+<div class="bjui-pageContent">
+    <form action="{:url(M_C_A)}" data-toggle="validate" data-alertmsg="true">
+        {if condition="isset($data) && !empty($data.id)"}
+        <input type="hidden" name="id" value="{$data.id}">
+        {/if}
+        <input type="hidden" name="beforeNavTabId" value="{$Request.param.tabid}">
+
+        <div class="bjui-row col-1">
+            <label for="name{:MCA}" class="row-label">名称：</label>
+			<div class="row-input required">
+				<input type="text"  name="name" id="name{:MCA}" value="{$data.name|default=''}" data-rule="required;length(~50)">
+			</div>
+			<label for="remark{:MCA}" class="row-label">备注：</label>
+			<div class="row-input required">
+				<textarea style="resize: none;" name="remark" id="remark{:MCA}" data-toggle="autoheight" data-rule="required;length(~255)" rows="5">{$data.remark|default=''}</textarea>
+			</div>
+			<label class="row-label">状态：</label>
+			<div class="row-input required">
+				{volist name="status_values_meanings" id="val"}
+				{if condition="isset($data) && !empty($data.status) && $data.status == $val.value"}
+				<input checked type="radio" name="status" data-toggle="icheck" data-rule="checked" value="{$val.value}" data-label="{$val.meaning}">
+				{else/}
+				<input type="radio" name="status" data-toggle="icheck" data-rule="checked" value="{$val.value}" data-label="{$val.meaning}">
+				{/if}
+				{/volist}
+			</div>
+        </div>
+    </form>
+</div>
+
+<div class="bjui-pageFooter">
+    <ul>
+        <li>
+            <button type="button" data-icon="close" class="btn btn-close">取消</button>
+        </li>
+        <li>
+            <button type="submit" data-icon="check" class="btn btn-success">提交</button>
+        </li>
+    </ul>
+</div>

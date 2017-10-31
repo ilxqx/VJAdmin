@@ -1,0 +1,34 @@
+<div class="bjui-pageContent">
+    <form action="{:url(M_C_A)}" data-toggle="validate" data-alertmsg="true">
+        {if condition="isset($data) && !empty($data.id)"}
+        <input type="hidden" name="id" value="{$data.id}">
+        {/if}
+        <input type="hidden" name="beforeNavTabId" value="{$Request.param.tabid}">
+
+        <div class="bjui-row col-1">
+            <label for="name{:MCA}" class="row-label">键值：</label>
+			<div class="row-input required">
+				<input type="text"  name="name" id="name{:MCA}" value="{$data.name|default=''}" data-rule="required;length(~50)">
+			</div>
+			<label for="value{:MCA}" class="row-label">值：</label>
+			<div class="row-input required">
+				<input type="text"  name="value" id="value{:MCA}" value="{$data.value|default=''}" data-rule="required;length(~100)">
+			</div>
+			<label for="remark{:MCA}" class="row-label">备注：</label>
+			<div class="row-input">
+				<textarea style="resize: none;" name="remark" id="remark{:MCA}" data-toggle="autoheight" data-rule="length(~255)" rows="5">{$data.remark|default=''}</textarea>
+			</div>
+        </div>
+    </form>
+</div>
+
+<div class="bjui-pageFooter">
+    <ul>
+        <li>
+            <button type="button" data-icon="close" class="btn btn-close">取消</button>
+        </li>
+        <li>
+            <button type="submit" data-icon="check" class="btn btn-success">提交</button>
+        </li>
+    </ul>
+</div>

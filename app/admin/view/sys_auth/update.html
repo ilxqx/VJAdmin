@@ -1,0 +1,135 @@
+<div class="bjui-pageContent">
+    <form action="{:url(M_C_A)}" data-toggle="validate" data-alertmsg="true">
+        {if condition="isset($data) && !empty($data.id)"}
+        <input type="hidden" name="id" value="{$data.id}">
+        {/if}
+        <input type="hidden" name="beforeNavTabId" value="{$Request.param.tabid}">
+
+        <div class="bjui-row col-1">
+            <label for="name{:MCA}" class="row-label">权限名：</label>
+			<div class="row-input required">
+				<input type="text"  name="name" id="name{:MCA}" value="{$data.name|default=''}" data-rule="required;length(~50)">
+			</div>
+			<label for="rule_module{:MCA}" class="row-label">模块：</label>
+			<div class="row-input required">
+				{if condition="isset($data) && !empty($data.rule_module)"}
+				<select id="rule_module{:MCA}"
+						data-rule="required"
+						data-emptytxt="请选择模块"
+						data-live-search="true"
+						name="rule_module"
+						data-width="437"
+						data-nextselect="#rule_controller{:MCA}"
+						data-refurl="{:url(M_C . 'getTableFields', '', '')}/table/{value}"
+						data-toggle="selectpicker">
+					{volist name="modules" id="val"}
+					{eq name="$data.rule_module" value="$val"}
+					<option value="{$val}" selected>{$val}</option>
+					{else/}
+					<option value="{$val}">{$val}</option>
+					{/eq}
+					{/volist}
+				</select>
+				{else/}
+				<select id="rule_module{:MCA}"
+						data-rule="required"
+						data-emptytxt="请选择模块"
+						data-live-search="true"
+						name="rule_module"
+						data-width="437"
+						data-nextselect="#rule_controller{:MCA}"
+						data-refurl="{:url(M_C . 'getControllers', '', '')}/module/{value}"
+						data-toggle="selectpicker">
+					<option value="">请选择模块</option>
+					{volist name="modules" id="val"}
+					<option value="{$val}">{$val}</option>
+					{/volist}
+				</select>
+				{/if}
+			</div>
+			<label for="rule_controller{:MCA}" class="row-label">控制器：</label>
+			<div class="row-input required">
+				{if condition="isset($data) && !empty($data.rule_controller)"}
+				<select
+						data-live-search="true"
+						data-rule="required"
+						data-emptytxt="请选择控制器"
+						data-width="437"
+						data-nextselect="#rule_method{:MCA}"
+						data-refurl="{:url(M_C . 'getMethods', '', '')}/controller/{value}"
+						name="rule_controller"
+						id="rule_controller{:MCA}"
+						data-toggle="selectpicker">
+					{volist name="controllers" id="val"}
+                        {eq name="$val.name" value="$data.rule_controller"}
+                        <option value="{$val.value}" selected>{$val.name}</option>
+                        {else/}
+                        <option value="{$val.value}">{$val.name}</option>
+                        {/eq}
+                    {/volist}
+				</select>
+				{else/}
+				<select
+						data-live-search="true"
+						data-rule="required"
+						data-emptytxt="请选择控制器"
+						data-width="437"
+                        data-nextselect="#rule_method{:MCA}"
+                        data-refurl="{:url(M_C . 'getMethods', '', '')}/controller/{value}"
+						name="rule_controller"
+						id="rule_controller{:MCA}"
+						data-toggle="selectpicker">
+					<option value="">请选择控制器</option>
+				</select>
+				{/if}
+			</div>
+			<label for="rule_controller{:MCA}" class="row-label">方法：</label>
+			<div class="row-input required">
+				{if condition="isset($data) && !empty($data.rule_method)"}
+				<select
+						data-live-search="true"
+						data-rule="required"
+						data-emptytxt="请选择方法"
+						data-width="437"
+						name="rule_method"
+						id="rule_method{:MCA}"
+						data-toggle="selectpicker">
+                    {volist name="methods" id="val"}
+                        {eq name="$val.name" value="$data.rule_method"}
+                        <option value="{$val.value}" selected>{$val.name}</option>
+                        {else/}
+                        <option value="{$val.value}">{$val.name}</option>
+                        {/eq}
+                    {/volist}
+				</select>
+				{else/}
+				<select
+						data-live-search="true"
+						data-rule="required"
+						data-emptytxt="请选择方法"
+						data-width="437"
+						name="rule_method"
+						id="rule_method{:MCA}"
+						data-toggle="selectpicker">
+					<option value="">请选择方法</option>
+				</select>
+				{/if}
+			</div>
+			<label for="remark{:MCA}" class="row-label">备注：</label>
+			<div class="row-input">
+				<textarea style="resize: none;" name="remark" id="remark{:MCA}" data-toggle="autoheight" data-rule="length(~255)" rows="5">{$data.remark|default=''}</textarea>
+			</div>
+        </div>
+    </form>
+</div>
+
+<div class="bjui-pageFooter">
+    <ul>
+        <li>
+            <button type="button" data-icon="close" class="btn btn-close">取消</button>
+        </li>
+        <li>
+            <button type="submit" data-icon="check" class="btn btn-success">提交</button>
+        </li>
+    </ul>
+</div>

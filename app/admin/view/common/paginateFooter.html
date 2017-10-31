@@ -1,0 +1,14 @@
+<div class="bjui-pageFooter navtab-style">
+    <div id="page{:MCA}"></div>
+    <script>
+        $('#page{:MCA}').pagination({
+            width: '100%',
+            total: {$total},
+            pageSize: {$page_size},
+            pageCurrent: {$page_current},
+            form:'#searchForm{:MCA}',
+            selectPageSize: '20,40,60,80',
+            showPagenum: 20
+        });
+    </script>
+</div>

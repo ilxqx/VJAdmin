@@ -1,0 +1,84 @@
+<div class="bjui-pageContent">
+    <form action="{:url(M_C_A)}" data-toggle="validate" data-alertmsg="true">
+        {if condition="isset($data) && !empty($data.id)"}
+        <input type="hidden" name="id" value="{$data.id}">
+        {/if}
+        <input type="hidden" name="beforeNavTabId" value="{$Request.param.tabid}">
+
+        <div class="bjui-row col-1">
+            <label for="pid{:MCA}" class="row-label required">父级菜单:</label>
+            <div class="row-input required">
+                <select id="pid{:MCA}"
+                        data-rule="required"
+                        data-width="437"
+                        data-live-search="true"
+                        name="pid"
+                        data-toggle="selectpicker">
+                    <option value="0"># 顶级菜单</option>
+                    {volist name="menus" id="val"}
+                    {if condition="isset($data) && !empty($data.pid) && $data.pid == $val.id"}
+                    <option value="{$val.id}" selected>{$val.name}</option>
+                    {else/}
+                    <option value="{$val.id}">{$val.name}</option>
+                    {/if}
+                    {/volist}
+                </select>
+            </div>
+
+            <label for="name{:MCA}" class="row-label">名称：</label>
+            <div class="row-input required">
+                <input type="text" name="name" id="name{:MCA}" value="{$data.name|default=''}" data-rule="required;length(~10)">
+            </div>
+
+            <label for="icon{:MCA}" class="row-label">图标:</label>
+            <div class="row-input required">
+                <div class="input-group">
+                    <span class="input-group-addon">fa fa-</span>
+                    <input type="text" name="icon" id="icon{:MCA}" value="{$data.icon|default=''}" data-rule="required;length(~50)">
+                </div>
+            </div>
+
+            <label for="url{:MCA}" class="row-label">URL:</label>
+            <div class="row-input">
+                <div class="input-group">
+                    <span class="input-group-addon">模块/控制器/方法</span>
+                    <input type="text" name="url" id="url{:MCA}" value="{$data.url|default=''}" data-rule="length(~100);menu" data-rule-menu="[/^[a-z]\w*\/[a-z]\w*\/[a-z]\w*$/i, '请输入正确的菜单URL']">
+                </div>
+            </div>
+
+            <label class="row-label">状态:</label>
+            <div class="row-input required">
+                {volist name="status_values_meanings" id="val"}
+                {if condition="isset($data) && !empty($data) && $val.value == $data.status"}
+                <input type="radio" name="status" checked data-toggle="icheck" value="{$val.value}" data-rule="checked" data-label="{$val.meaning}">
+                {elseif condition="(!isset($data) || empty($data)) && $key == 0"/}
+                <input type="radio" name="status" checked data-toggle="icheck" value="{$val.value}" data-rule="checked" data-label="{$val.meaning}">
+                {else/}
+                <input type="radio" name="status" data-toggle="icheck" value="{$val.value}" data-rule="checked" data-label="{$val.meaning}">
+                {/if}
+                {/volist}
+            </div>
+
+            <label for="seq{:MCA}" class="row-label">序号:</label>
+            <div class="row-input required">
+                <input type="text" name="seq" id="seq{:MCA}" value="{$data.seq|default=''}" data-rule="required;integer;length(~11)">
+            </div>
+
+            <label for="remark{:MCA}" class="row-label">备注:</label>
+            <div class="row-input">
+                <textarea style="resize: none;" name="remark" id="remark{:MCA}" data-toggle="autoheight" data-rule="length(~255)" rows="5">{$data.remark|default=''}</textarea>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="bjui-pageFooter">
+    <ul>
+        <li>
+            <button type="button" data-icon="close" class="btn btn-close">取消</button>
+        </li>
+        <li>
+            <button type="submit" data-icon="check" class="btn btn-success">提交</button>
+        </li>
+    </ul>
+</div>

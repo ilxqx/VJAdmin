@@ -1,0 +1,57 @@
+{include file="common:headerSearch" search="true" height="500" width="650" /}
+
+<div class="bjui-pageContent tableContent">
+    <div class="panel panel-default">
+        <table class="table table-hover table-bordered table-responsive">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>表名</th>
+				<th>字段名</th>
+				<th>字段值</th>
+				<th>含义</th>
+				<th>备注</th>
+				<th>管理员</th>
+				<th width="200">时间</th>
+                <th width="200">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {volist name="data" id="val"}
+            <tr>
+                <th>{$key + 1}</th>
+                <td>{$val.table}</td>
+				<td>{$val.field}</td>
+				<td>{$val.value}</td>
+				<td>{$val.meaning}</td>
+				<td>{$val.remark}</td>
+				<td>{$val.manager_name}</td>
+				<td>{$val.at_datetime}</td>
+                <th>
+                    <a href="{:url(M_C . 'edit', ['id' => $val.id, 'tabid' => MCA])}"
+                       data-icon="pencil"
+                       class="btn btn-xs btn-blue"
+                       data-toggle="dialog"
+                       data-id="{:MC . 'edit'}"
+                       data-width="650"
+                       data-height="500"
+                    >
+                        编辑
+                    </a>
+                    <a href="{:url(M_C . 'del', ['id' => $val.id])}"
+                       data-icon="trash-o"
+                       class="btn btn-red"
+                       data-toggle="doajax"
+                       data-confirm-msg="确定要删除吗？"
+                    >
+                        删除
+                    </a>
+                </th>
+            </tr>
+            {/volist}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{include file="common:paginateFooter" /}

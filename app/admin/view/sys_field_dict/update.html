@@ -1,0 +1,99 @@
+<div class="bjui-pageContent">
+    <form action="{:url(M_C_A)}" data-toggle="validate" data-alertmsg="true">
+        {if condition="isset($data) && !empty($data.id)"}
+        <input type="hidden" name="id" value="{$data.id}">
+        {/if}
+        <input type="hidden" name="beforeNavTabId" value="{$Request.param.tabid}">
+
+        <div class="bjui-row col-1">
+            <label for="table{:MCA}" class="row-label">表名：</label>
+			<div class="row-input required">
+				{if condition="isset($data) && !empty($data.table)"}
+                <select id="table{:MCA}"
+                        data-rule="required"
+                        data-emptytxt="请选择表"
+                        data-live-search="true"
+                        name="table"
+                        data-width="437"
+                        data-val="{$data.table}"
+                        data-nextselect="#field{:MCA}"
+                        data-refurl="{:url(M_C . 'getTableFields', '', '')}/table/{value}"
+                        data-toggle="selectpicker">
+                    {volist name="tables" id="val"}
+                    {eq name="$data.table" value="$val"}
+                    <option value="{$val}" selected>{$val}</option>
+                    {else/}
+                    <option value="{$val}">{$val}</option>
+                    {/eq}
+                    {/volist}
+                </select>
+                {else/}
+                <select id="table{:MCA}"
+                        data-rule="required"
+                        data-emptytxt="请选择表"
+                        data-live-search="true"
+                        name="table"
+                        data-width="437"
+                        data-nextselect="#field{:MCA}"
+                        data-refurl="{:url(M_C . 'getTableFields', '', '')}/table/{value}"
+                        data-toggle="selectpicker">
+                    <option value="">请选择表</option>
+                    {volist name="tables" id="val"}
+                    <option value="{$val}">{$val}</option>
+                    {/volist}
+                </select>
+                {/if}
+			</div>
+			<label for="field{:MCA}" class="row-label">字段名：</label>
+			<div class="row-input required">
+                {if condition="isset($data) && !empty($data.field)"}
+                <select
+                        data-live-search="true"
+                        data-rule="required"
+                        data-emptytxt="请选择字段"
+                        data-width="437"
+                        data-val="{$data.field}"
+                        name="field"
+                        id="field{:MCA}"
+                        data-toggle="selectpicker">
+                    <option value="">请选择字段</option>
+                </select>
+                {else/}
+                <select
+                        data-live-search="true"
+                        data-rule="required"
+                        data-emptytxt="请选择字段"
+                        data-width="437"
+                        name="field"
+                        id="field{:MCA}"
+                        data-toggle="selectpicker">
+                    <option value="">请选择字段</option>
+                </select>
+                {/if}
+			</div>
+			<label for="value{:MCA}" class="row-label">字段值：</label>
+			<div class="row-input required">
+				<input type="text"  name="value" id="value{:MCA}" value="{$data.value|default=''}" data-rule="required;length(~10)">
+			</div>
+			<label for="meaning{:MCA}" class="row-label">含义：</label>
+			<div class="row-input required">
+				<input type="text"  name="meaning" id="meaning{:MCA}" value="{$data.meaning|default=''}" data-rule="required;length(~50)">
+			</div>
+			<label for="remark{:MCA}" class="row-label">备注：</label>
+			<div class="row-input">
+				<textarea style="resize: none;" name="remark" id="remark{:MCA}" data-toggle="autoheight" data-rule="length(~255)" rows="5">{$data.remark|default=''}</textarea>
+			</div>
+        </div>
+    </form>
+</div>
+
+<div class="bjui-pageFooter">
+    <ul>
+        <li>
+            <button type="button" data-icon="close" class="btn btn-close">取消</button>
+        </li>
+        <li>
+            <button type="submit" data-icon="check" class="btn btn-success">提交</button>
+        </li>
+    </ul>
+</div>

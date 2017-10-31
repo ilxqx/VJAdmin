@@ -1,0 +1,45 @@
+{include file="common:headerSearch" search="#search#" height="#height#" width="#width#" /}
+
+<div class="bjui-pageContent tableContent">
+    <div class="panel panel-default">
+        <table class="table table-hover table-bordered table-responsive">
+            <thead>
+            <tr>
+                <th>#</th>
+                #showFields#
+                <th width="200">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {volist name="data" id="val"}
+            <tr>
+                <th>{$key + 1}</th>
+                #fields#
+                <th>
+                    <a href="{:url(M_C . 'edit', ['id' => $val.id, 'tabid' => MCA])}"
+                       data-icon="pencil"
+                       class="btn btn-xs btn-blue"
+                       data-toggle="dialog"
+                       data-id="{:MC . 'edit'}"
+                       data-width="650"
+                       data-height="500"
+                    >
+                        编辑
+                    </a>
+                    <a href="{:url(M_C . 'del', ['id' => $val.id])}"
+                       data-icon="trash-o"
+                       class="btn btn-red"
+                       data-toggle="doajax"
+                       data-confirm-msg="确定要删除吗？"
+                    >
+                        删除
+                    </a>
+                </th>
+            </tr>
+            {/volist}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+#pagination#

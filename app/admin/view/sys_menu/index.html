@@ -1,0 +1,63 @@
+{include file="common:headerSearch" search="false" height="500" width="650" /}
+
+<div class="bjui-pageContent tableContent">
+    <div class="panel panel-default">
+        <table class="table table-hover table-bordered table-responsive">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>排序</th>
+                <th>名称</th>
+                <th>图标</th>
+                <th>url</th>
+                <th>备注</th>
+                <th>状态</th>
+                <th>管理员</th>
+                <th>时间</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {volist name="data" id="val"}
+            <tr>
+                <td>{$key + 1}</td>
+                <td>{$val.seq}</td>
+                <td>{$val.name}</td>
+                <td><i class="fa fa-{$val.icon}"></i> {$val.icon}</td>
+                <td>{$val.url}</td>
+                <td>{$val.remark}</td>
+                <td>
+                    {eq name="val.status" value="a"}
+                    <div class="label label-success">{$val.status_name}</div>
+                    {else/}
+                    <div class="label label-danger">{$val.status_name}</div>
+                    {/eq}
+                </td>
+                <td>{$val.manager_name|default=''}</td>
+                <td>{$val.at_datetime}</td>
+                <td>
+                    <a href="{:url(M_C . 'edit', ['id' => $val.id, 'tabid' => MCA])}"
+                       data-icon="pencil"
+                       class="btn btn-xs btn-blue"
+                       data-toggle="dialog"
+                       data-id="{:MC . 'edit'}"
+                       data-width="650"
+                       data-height="500"
+                    >
+                        编辑
+                    </a>
+                    <a href="{:url(M_C . 'del', ['id' => $val.id])}"
+                       data-icon="trash-o"
+                       class="btn btn-red"
+                       data-toggle="doajax"
+                       data-confirm-msg="确定要删除吗？"
+                    >
+                        删除
+                    </a>
+                </td>
+            </tr>
+            {/volist}
+            </tbody>
+        </table>
+    </div>
+</div>

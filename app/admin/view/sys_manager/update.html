@@ -1,0 +1,71 @@
+<div class="bjui-pageContent">
+    <form action="{:url(M_C_A)}" data-toggle="validate" data-alertmsg="true" enctype="multipart/form-data">
+        {if condition="isset($data) && !empty($data.id)"}
+        <input type="hidden" name="id" value="{$data.id}">
+        {/if}
+        <input type="hidden" name="beforeNavTabId" value="{$Request.param.tabid}">
+
+        <div class="bjui-row col-1">
+            <label for="name{:MCA}" class="row-label">昵称：</label>
+			<div class="row-input required">
+				<input type="text"  name="name" id="name{:MCA}" value="{$data.name|default=''}" data-rule="required;length(~20)">
+			</div>
+			<label for="account{:MCA}" class="row-label">账号：</label>
+			<div class="row-input required">
+				<input type="text"  name="account" id="account{:MCA}" value="{$data.account|default=''}" data-rule="required;length(~16)">
+			</div>
+			{if condition="!isset($data) || empty($data)"}
+			<label for="pwd{:MCA}" class="row-label">密码：</label>
+			<div class="row-input required">
+				<input type="text"  name="pwd" id="pwd{:MCA}" value="{$data.pwd|default=''}" data-rule="required;length(~32)">
+			</div>
+			{/if}
+			<label for="avatar{:MCA}" class="row-label">头像：</label>
+			<div class="row-input required">
+				{if condition="isset($data) && !empty($data.avatar)"}
+				<input type="file" data-toggle="fileinput" data-ext="bmp,png,gif,jpg,jpeg,jpe,svg" name="avatar" id="avatar{:MCA}" data-preview="{:getImgUrl($data.avatar)}">
+				{else/}
+				<input type="file" data-toggle="fileinput" data-ext="bmp,png,gif,jpg,jpeg,jpe,svg" name="avatar" id="avatar{:MCA}" data-rule="required">
+				{/if}
+			</div>
+            <label for="role_id{:MCA}" class="row-label">角色：</label>
+            <div class="row-input required">
+                <select id="role_id{:MCA}"
+                        data-rule="required"
+                        data-live-search="true"
+                        name="role_id"
+                        data-width="437"
+                        data-toggle="selectpicker">
+                    {volist name="roles" id="val"}
+                    {if condition="isset($data) && !empty($data.role_id) && $data.role_id == $val.id"}
+                    <option value="{$val.id}" selected>{$val.name}</option>
+                    {else/}
+                    <option value="{$val.id}">{$val.name}</option>
+                    {/if}
+                    {/volist}
+                </select>
+            </div>
+			<label class="row-label">状态：</label>
+			<div class="row-input required">
+				{volist name="status_values_meanings" id="val"}
+				{if condition="isset($data) && !empty($data.status) && $data.status == $val.value"}
+				<input checked type="radio" name="status" data-toggle="icheck" data-rule="checked" value="{$val.value}" data-label="{$val.meaning}">
+				{else/}
+				<input type="radio" name="status" data-toggle="icheck" data-rule="checked" value="{$val.value}" data-label="{$val.meaning}">
+				{/if}
+				{/volist}
+			</div>
+        </div>
+    </form>
+</div>
+
+<div class="bjui-pageFooter">
+    <ul>
+        <li>
+            <button type="button" data-icon="close" class="btn btn-close">取消</button>
+        </li>
+        <li>
+            <button type="submit" data-icon="check" class="btn btn-success">提交</button>
+        </li>
+    </ul>
+</div>
