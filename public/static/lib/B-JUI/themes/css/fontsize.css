@@ -1,0 +1,244 @@
+@charset "utf-8";
+/*中*/
+html.bjui-font-c body,
+html.bjui-font-c legend {
+    font-size: 16px;
+}
+
+html.bjui-font-c .bjui-header .navbar-nav > li > a {
+    font-size: 16px;
+}
+
+html.bjui-font-c #bjui-sidenav-box > .nav {
+    font-size: 16px;
+}
+
+html.bjui-font-c #bjui-sidenav-box > .nav > li > a {
+    padding-top: 9px;
+    padding-bottom: 9px;
+}
+
+html.bjui-font-c #bjui-sidenav-box > .nav > li .nav > li > a {
+    padding-top: 9px;
+    padding-bottom: 9px;
+}
+
+html.bjui-font-c #bjui-navtab > .tabsPageHeader {
+    height: 40px;
+}
+
+html.bjui-font-c #bjui-navtab > .tabsPageHeader > .tabsPageHeaderContent {
+    height: 40px;
+}
+
+html.bjui-font-c #bjui-navtab > .tabsPageHeader > .tabsPageHeaderContent > ul {
+    height: 40px;
+}
+
+html.bjui-font-c #bjui-navtab > .tabsPageHeader > .tabsPageHeaderContent > ul > li > a {
+    padding: 8px 24px 7px 16px;
+}
+
+html.bjui-font-c #bjui-navtab > .tabsPageHeader > .tabsPageHeaderContent > ul > li > a > span {
+    font-size: 16px;
+}
+
+html.bjui-font-c #bjui-navtab > .tabsPageHeader > .tabsPageHeaderContent > ul > li span.close {
+    font-size: 18px;
+}
+
+html.bjui-font-c #bjui-navtab > .tabsPageHeader > .tabsLeft, html.bjui-font-c #bjui-navtab > .tabsPageHeader > .tabsRight, html.bjui-font-c #bjui-navtab > .tabsPageHeader > .tabsMore {
+    height: 40px;
+    line-height: 2.4;
+}
+
+html.bjui-font-c #bjui-navtab > .tabsMoreList {
+    top: 39px;
+}
+
+html.bjui-font-c #bjui-navtab > .tabsMoreList > li a {
+    height: 40px;
+    line-height: 40px;
+}
+
+html.bjui-font-c #bjui-contextmenu li {
+    height: 35px;
+    line-height: 35px;
+}
+
+html.bjui-font-c .bjui-datagrid .datagrid-title {
+    font-size: 16px;
+}
+
+html.bjui-font-c .bjui-datagrid .table > thead > tr > th {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 16px;
+}
+
+html.bjui-font-c .bjui-datagrid .table > tbody > tr > td {
+    padding: 5px 7px;
+    font-size: 16px;
+}
+
+html.bjui-font-c ul.selectpicker > li {
+    height: 28px;
+    font-size: 16px;
+    line-height: 22px;
+}
+
+html.bjui-font-c .bootstrap-select.btn-group .btn .filter-option {
+    line-height: 1.4;
+}
+
+html.bjui-font-c .btn {
+    height: 28px;
+    font-size: 16px;
+}
+
+html.bjui-font-c .btn.btn-lg {
+    height: 40px;
+}
+
+html.bjui-font-c .form-control {
+    height: 28px;
+    font-size: 16px;
+}
+
+html.bjui-font-c textarea.form-control {
+    height: auto;
+}
+
+html.bjui-font-c .input-group-lg > .form-control,
+html.bjui-font-c .input-group-lg > .input-group-addon,
+html.bjui-font-c .input-group-lg > .input-group-btn > .btn {
+    height: 46px;
+    padding: 10px 16px;
+    font-size: 18px;
+    line-height: 1.3333333;
+}
+
+html.bjui-font-c .bjui-lookup {
+    width: 22px;
+}
+
+html.bjui-font-c .bjui-spinner {
+    font-size: 14px;
+}
+
+html.bjui-font-c #bjui-calendar {
+    width: 225px;
+}
+
+html.bjui-font-c #bjui-calendar > .main > .body > dl > dt, html.bjui-font-c #bjui-calendar > .main > .body > dl > dd {
+    width: 30px;
+    height: 30px;
+    line-height: 28px;
+}
+
+html.bjui-font-c #bjui-calendar > .main > .foot > .time td {
+    font-size: 14px;
+    line-height: 26px;
+}
+
+html.bjui-font-c #bjui-calendar > .main > .foot > .time .hh, html.bjui-font-c #bjui-calendar > .main > .foot > .time .mm, html.bjui-font-c #bjui-calendar > .main > .foot > .time .ss {
+    width: 24px;
+    height: 26px;
+    font-size: 14px;
+    line-height: 26px;
+}
+
+html.bjui-font-c #bjui-calendar > .main > .foot .btn {
+    height: 28px;
+    font-size: 14px;
+}
+
+html.bjui-font-c #bjui-calendar > .main > .tm > .hh, html.bjui-font-c #bjui-calendar > .main > .tm > .mm, html.bjui-font-c #bjui-calendar > .main > .tm > .ss {
+    width: 182px;
+}
+
+html.bjui-font-c #bjui-calendar > .main > .tm > .hh > li, html.bjui-font-c #bjui-calendar > .main > .tm > .mm > li, html.bjui-font-c #bjui-calendar > .main > .tm > .ss > li {
+    width: 30px;
+    height: 26px;
+    font-size: 14px;
+    line-height: 26px;
+}
+
+html.bjui-font-c #bjui-calendar > .main > .foot > .time .up, html.bjui-font-c #bjui-calendar > .main > .foot > .time .down {
+    height: 13px;
+}
+
+html.bjui-font-c .bjui-row .row-label,
+html.bjui-font-c .bjui-row .row-input {
+    font-size: 16px;
+}
+
+html.bjui-font-c .bjui-dialog > .dialogHeader h1 {
+    font-size: 16px;
+}
+
+html.bjui-font-c .bjui-alert > .alertContent .alertInner > h1 {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    height: 40px;
+    font-size: 16px;
+    line-height: 30px;
+}
+
+html.bjui-font-c .bjui-alert > .alertContent .alertInner > .msg {
+    font-size: 16px;
+}
+
+html.bjui-font-c .bjui-maskProgress {
+    padding: 23px 0;
+    width: 300px;
+    height: 100px;
+    font-size: 16px;
+}
+
+html.bjui-font-c .bjui-maskProgress .fa-cog {
+    font-size: 20px;
+}
+
+html.bjui-font-c .bjui-maskProgress > .progressBg {
+    bottom: 25px;
+    width: 280px;
+    border-radius: 5px;
+}
+
+html.bjui-font-c .bjui-datagrid .datagrid-box-h,
+html.bjui-font-c .bjui-datagrid .datagrid-box-h .btn,
+html.bjui-font-c .bjui-datagrid .datagrid-paging-box,
+html.bjui-font-c .bjui-datagrid .datagrid-paging-box .btn {
+    font-size: 16px;
+}
+
+html.bjui-font-c .bjui-datagrid .table > thead > tr.datagrid-filter th .form-control,
+html.bjui-font-c .bjui-datagrid .table > tbody > tr > td.datagrid-edit-td .form-control {
+    height: 28px;
+    font-size: 16px;
+}
+
+html.bjui-font-c .bjui-paging-box > .paging-content > .datagrid-pagesize,
+html.bjui-font-c .bjui-paging-box > .paging-content > .datagrid-pagesize > .btn-refresh,
+html.bjui-font-c .bjui-paging-box > .paging-content > .datagrid-pagesize > .btn-group > .btn {
+    height: 28px;
+}
+
+html.bjui-font-c .bjui-paging-box {
+    min-height: 42px;
+}
+
+html.bjui-font-c .bjui-paging-box > .paging-content > span {
+    height: 37px;
+}
+
+html.bjui-font-c .bjui-paging-box > .paging-content > .paging-box > .pagination > li.btn-nav > a {
+    width: 100px;
+}
+
+html.bjui-font-c .bjui-paging-box > .paging-content > .paging-box > .pagination > li > span.page-input > input {
+    width: 35px !important;
+    height: 23px;
+    font-size: 16px;
+}

@@ -1,0 +1,299 @@
+/* right */
+.top_right {
+}
+
+/* top_link */
+.top_link {
+    padding-top: 24px;
+    height: 26px;
+    line-height: 26px;
+    padding-right: 35px;
+    text-align: right;
+}
+
+.top_link i {
+    color: #686868;
+}
+
+.top_link span, .top_link a {
+    color: #46AAFE;
+}
+
+.top_link a {
+    font-size: 13px;
+}
+
+.top_link a:hover {
+    text-decoration: underline;
+}
+
+.nav_bar {
+    position: relative;
+    z-index: 999;
+    color: #333;
+    margin-right: 10px;
+    height: 50px;
+    line-height: 50px;
+}
+
+.nav_bar ul {
+    padding: 0;
+}
+
+.nav {
+    position: relative;
+    margin: 0 auto;
+    font-family: "Microsoft YaHei", SimSun, SimHei;
+    font-size: 14px;
+}
+
+.nav a {
+    color: #333;
+}
+
+.nav h3 {
+    font-size: 100%;
+    font-weight: normal;
+    height: 50px;
+    line-height: 50px;
+}
+
+.nav h3 a {
+    display: block;
+    padding: 0 20px;
+    text-align: center;
+    font-size: 14px;
+    color: #fff;
+    height: 50px;
+    line-height: 50px;
+}
+
+.nav .m {
+    float: left;
+    position: relative;
+    z-index: 1;
+    height: 50px;
+    line-height: 50px;
+    list-style: none;
+}
+
+.nav .s {
+    float: left;
+    width: 3px;
+    text-align: center;
+    color: #D4D4D4;
+    font-size: 12px;
+    height: 50px;
+    line-height: 50px;
+    list-style: none;
+}
+
+.nav .sub, ul.sub {
+    display: none;
+    position: absolute;
+    left: -3px;
+    top: 42px;
+    z-index: 999;
+    width: 128px;
+    border: 1px solid #E6E4E3;
+    border-top: 0;
+    background: #fff;
+}
+
+.nav .sub li {
+    text-align: center;
+    padding: 0 8px;
+    margin-bottom: -1px;
+    list-style: none;
+}
+
+.nav .sub li a {
+    display: block;
+    border-bottom: 1px solid #E6E4E3;
+    padding: 8px 0;
+    height: 28px;
+    line-height: 28px;
+    color: #666;
+}
+
+.nav .sub li a:hover {
+    color: #1E95FB;
+    cursor: pointer;
+}
+
+.nav .block {
+    height: 3px;
+    background: #1E95FB;
+    position: absolute;
+    left: 0;
+    top: 47px;
+    overflow: hidden;
+}
+
+.sub {
+    padding: 0;
+    background: #f5f5f5;
+}
+
+.sub li {
+    padding: 0 8px;
+    list-style: none;
+}
+
+.sub li:hover {
+    background: #f3f3f3;
+}
+
+.sub li a {
+    display: block;
+    color: #000;
+    height: 34px;
+    line-height: 34px;
+}
+
+.sub li a:hover {
+    text-decoration-line: none;
+}
+
+/* 重用类样式 */
+.f_l {
+    float: left !important;
+}
+
+.f_r {
+    float: right !important;
+}
+
+.no_margin {
+    margin: 0px !important;
+}
+
+.no_border {
+    border: 0px !important;
+}
+
+.no_bg {
+    background: none !important;
+}
+
+.clear_both {
+    clear: both !important;
+}
+
+.display_block {
+    display: block !important;
+}
+
+.text_over {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    -moz-binding: url('ellipsis.xml#ellipsis');
+}
+
+/* 重用自定义样式 */
+.w_100 {
+    width: 100%;
+}
+
+.w_95 {
+    width: 95%;
+}
+
+.indextx {
+    width: 980px;
+    margin: 0 auto;
+    margin-top: 10px;
+    background: #FFFFFF;
+}
+
+.w_min_width {
+    min-width: 1200px;
+}
+
+.w_1200 {
+    width: 1200px;
+}
+
+.w_1067 {
+    width: 1067px;
+}
+
+.w_980 {
+    width: 980px;
+}
+
+.header {
+    overflow: hidden
+}
+
+#north {
+    height: 50px;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+#north>table {
+    float: left;
+    border-spacing: 0;
+}
+
+.title-icon {
+    font-size: 25px !important;
+    padding-right: 8px;
+}
+
+.collapseMenu {
+    text-align: center;
+    cursor: pointer;
+}
+
+.fz18 {
+    font-size: 18px !important;
+}
+
+.nowrap {
+    white-space:nowrap;
+}
+
+#showUserInfo {
+    display: inline-block;
+}
+
+#index_tabs {
+    width: 100%;
+    height: 100%;
+}
+
+#center {
+    overflow: hidden;
+}
+
+.footer {
+    text-align: center;
+    height: 30px;
+    line-height: 30px;
+    border-bottom: 0;
+    overflow: hidden;
+}
+
+.footer .footer-user {
+    float: left;
+    padding-left: 5px;
+    width: 30%;
+    text-align: left;
+}
+
+.footer .footer-copyright {
+    padding-right: 5px;
+    width: 40%;
+}
+
+.footer .footer-version {
+    float: right;
+    padding-right: 5px;
+    width: 30%;
+    text-align: right;
+}
