@@ -185,7 +185,7 @@ class Demo extends Common {
      * 插入和更新后的公共操作
      * @param $data array 待处理数据
      */
-    protected function afterAlter ($data) {
+    protected function alterAlter ($data) {
 
     }
 
