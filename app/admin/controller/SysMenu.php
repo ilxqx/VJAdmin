@@ -110,7 +110,7 @@ class SysMenu extends Common {
      */
     protected function beforeData () {
         /*让它根据id顺序*/
-
+        dump(config('hello'));die;
     }
 
     protected function beforeUpdate () {
