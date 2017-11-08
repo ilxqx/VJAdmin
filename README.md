@@ -49,11 +49,11 @@ www  WEB部署目录（或者子目录）
 │  │
 │  ├─base               base模块目录
 │  |  ├─controller      控制器目录
-│  |  |  ├─base.php     base控制器文件
+│  |  |  ├─Base.php     base控制器文件
 │  |  ├─model           模型目录
-│  |  |  ├─base.php     base模型文件
+│  |  |  ├─Base.php     base模型文件
 │  |  ├─validate        验证器目录
-│  |  |  ├─base.php     base验证器文件
+│  |  |  ├─Base.php     base验证器文件
 │  ├─config             应用配置目录
 │  |  ├─config.php      应用配置文件
 │  |  ├─route.php       应用路由配置文件
