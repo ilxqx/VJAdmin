@@ -102,3 +102,7 @@ www  WEB部署目录（或者子目录）
 ├─README.md             README 文件
 ├─think                 命令行入口文件
 ```
+
+## 系统使用
+
+> 系统中的admin模块里面有Demo控制器，Demo模型，Demo验证器的示例，里面注释详细，使用简介，一看即会。
