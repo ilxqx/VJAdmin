@@ -105,14 +105,6 @@ class SysMenu extends Common {
         $this->sortMenus($data);
     }
 
-    /**
-     * 查询前的操作
-     */
-    protected function beforeData () {
-        /*让它根据id顺序*/
-        dump(config('hello'));die;
-    }
-
     protected function beforeUpdate () {
         /*查询所有的菜单*/
         $menus = model($this->table)
