@@ -105,26 +105,15 @@
             else if (treeNode.target && treeNode.target == 'navtab')
                 $(event.target).navtab({id:treeNode.targetid, url:treeNode.url, title:treeNode.name, fresh:treeNode.fresh, external:treeNode.external})
         }
-
-        /*加载遮罩层*/
-        document.onreadystatechange = function() {
-            if (document.readyState === 'complete') {
-                $('.vj-loading').remove();
-            }
-        }
     </script>
 </head>
 <body>
+
+<script src="__LIB__/B-JUI/plugins/vj-plugins/vj-loading.min.js"></script>
+
 <!--[if lte IE 7]>
 <div id="errorie"><div>您还在使用老掉牙的IE，正常使用系统前请升级您的浏览器到 IE8以上版本 <a target="_blank" href="http://windows.microsoft.com/zh-cn/internet-explorer/ie-8-worldwide-languages">点击升级</a>&nbsp;&nbsp;强烈建议您更改换浏览器：<a href="http://down.tech.sina.com.cn/content/40975.html" target="_blank">谷歌 Chrome</a></div></div>
 <![endif]-->
-
-<!--加载遮罩层-->
-<div class="vj-loading">
-    <div class="vj-text">
-        <img src="__IMG__/loading.svg">
-    </div>
-</div>
 
 <nav class="navbar navbar-inverse" id="navbar">
     <div class="container-fluid">

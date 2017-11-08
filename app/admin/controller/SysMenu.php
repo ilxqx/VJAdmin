@@ -47,7 +47,7 @@ class SysMenu extends Common {
      * @param $mark array 菜单层级符号
      */
     private function handleMenus (&$menus, &$data, $pid, &$mark) {
-        array_push($mark, '-');
+        array_push($mark, '—');
         $sub = [];
         foreach ($data as $val) {
             if ($val['pid'] == $pid) {
