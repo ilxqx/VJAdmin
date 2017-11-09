@@ -2,9 +2,26 @@
 MySQL Database Backup Tools(Venus dump)
 Server:127.0.0.1:
 Database:vj_admin
-Date:2017-11-09 10:25:00
+Date:2017-11-09 15:44:49
 */
 SET FOREIGN_KEY_CHECKS=0;
+-------------------------------
+-- Table structure for vj_customer
+-------------------------------
+DROP TABLE IF EXISTS `vj_customer`;
+CREATE TABLE `vj_customer` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `name` varchar(20) NOT NULL COMMENT '姓名',
+  `manager_id` int(10) unsigned NOT NULL COMMENT '管理员',
+  `at_datetime` datetime NOT NULL COMMENT '时间',
+  PRIMARY KEY (`id`),
+  KEY `fk_vj_customer_manager_id` (`manager_id`),
+  CONSTRAINT `fk_vj_customer_manager_id` FOREIGN KEY (`manager_id`) REFERENCES `vj_sys_manager` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+-------------------------------
+-- Records of vj_customer
+-------------------------------
+
 -------------------------------
 -- Table structure for vj_sys_auth
 -------------------------------
@@ -156,7 +173,7 @@ CREATE TABLE `vj_sys_menu` (
   PRIMARY KEY (`id`),
   KEY `fk_vj_menu_manager_id` (`manager_id`),
   CONSTRAINT `fk_sys_menu_manager_id` FOREIGN KEY (`manager_id`) REFERENCES `vj_sys_manager` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 -------------------------------
 -- Records of vj_sys_menu
 -------------------------------
@@ -172,6 +189,9 @@ INSERT INTO `vj_sys_menu` (`id`, `name`, `seq`, `pid`, `icon`, `url`, `type_id`,
 INSERT INTO `vj_sys_menu` (`id`, `name`, `seq`, `pid`, `icon`, `url`, `type_id`, `status`, `remark`, `manager_id`, `at_datetime`) VALUES ('10', '用户管理', '1', '9', 'users', 'admin/sys_manager/index', 'adminsys_managerindex', 'a', '对系统的管理员进行管理', '1', '2017-10-29 17:25:02');
 INSERT INTO `vj_sys_menu` (`id`, `name`, `seq`, `pid`, `icon`, `url`, `type_id`, `status`, `remark`, `manager_id`, `at_datetime`) VALUES ('11', '角色管理', '2', '9', 'user-circle', 'admin/sys_role/index', 'adminsys_roleindex', 'a', '对系统中的角色进行管理', '1', '2017-10-29 17:25:13');
 INSERT INTO `vj_sys_menu` (`id`, `name`, `seq`, `pid`, `icon`, `url`, `type_id`, `status`, `remark`, `manager_id`, `at_datetime`) VALUES ('12', '权限管理', '3', '9', 'unlock-alt', 'admin/sys_auth/index', 'adminsys_authindex', 'a', '对系统中的权限进行管理', '1', '2017-10-29 17:25:25');
+INSERT INTO `vj_sys_menu` (`id`, `name`, `seq`, `pid`, `icon`, `url`, `type_id`, `status`, `remark`, `manager_id`, `at_datetime`) VALUES ('13', '业务管理', '2', '0', 'compass', '', '', 'a', '业务管理', '1', '2017-11-09 12:21:56');
+INSERT INTO `vj_sys_menu` (`id`, `name`, `seq`, `pid`, `icon`, `url`, `type_id`, `status`, `remark`, `manager_id`, `at_datetime`) VALUES ('14', '数据维护', '1', '13', 'globe', '', '', 'a', '数据维护', '1', '2017-11-09 12:24:34');
+INSERT INTO `vj_sys_menu` (`id`, `name`, `seq`, `pid`, `icon`, `url`, `type_id`, `status`, `remark`, `manager_id`, `at_datetime`) VALUES ('15', '客户管理', '1', '14', 'vcard', 'business/customer/index', 'businesscustomerindex', 'a', '客户管理', '1', '2017-11-09 14:11:20');
 
 -------------------------------
 -- Table structure for vj_sys_option
