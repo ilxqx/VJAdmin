@@ -8,7 +8,7 @@ VJ Admin 1.1.1
  + 功能的自动生成（完全应对包括有文件上传这样的功能）
  + 清晰的架构，志在减少代码的重复
  + 完善的基础功能（让开发变得更加便捷）
- + 后续会继承大量常用功能（包括微信，二维码，PHPWord，PHPExcel等）
+ + 后续会继承大量常用功能（包括微信，PHPWord，PHPExcel等）
 
 > 运行环境要求PHP5.6以上。
 
@@ -141,7 +141,7 @@ www  WEB部署目录（或者子目录）
 这个id也就是系统中SysFile表中的id值
 
 使用：调用例子：
-```
+```php
 $res = uploadImage($name); // $name 为前台表单的name属性值
 if (is_integer($res)) { // 也可以使用is_string()先判断上传失败的情况
     // 上传成功
@@ -162,7 +162,7 @@ if (is_integer($res)) { // 也可以使用is_string()先判断上传失败的情
 这个id也就是系统中SysFile表中的id值
 
 使用：调用例子：
-```
+```php
 $res = uploadFile($name); // $name 为前台表单的name属性值
 if (is_integer($res)) { // 也可以使用is_string()先判断上传失败的情况
     // 上传成功
@@ -296,7 +296,7 @@ if (is_integer($res)) { // 也可以使用is_string()先判断上传失败的情
 返回值：`bool|string` 返回false、生成二维码的url绝对地址或者错误字符串（取决于第二个参数）
 
 使用：调用例子：
-```
+```php
 $qrUrl = qrCode($text);
 if ($qrUrl !== false) {
     // 生成二维码成功 $qrUrl为二维码的绝对路径url（默认保存在/public/generator/*.png）
