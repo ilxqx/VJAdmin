@@ -22,7 +22,6 @@ class SysHome extends Common {
         'name',
         'icon',
         'url',
-        '\'navtab\' as type',
         'type_id'
     ];
 
@@ -52,7 +51,8 @@ class SysHome extends Common {
                 ->select();
             if (empty($children)) {
                 /*移除id属性*/
-                unset($menu['id']);
+                $menu['id'] = $menu['type_id'];
+                unset($menu['type_id']);
                 /*为空时直接跳过*/
                 continue;
             } else {
@@ -62,14 +62,16 @@ class SysHome extends Common {
                 foreach ($children as &$child) {
                     if (!empty($child['url'])) {
                         $child['url'] = url($child['url']);
+                        $child['target'] = 'navtab';
                     }
                 }
-                /*处理字段字典的值*/
-                $this->handleFieldsInDict($this->menuTable, $children, $model->fieldDictNames, true);
                 /*不为空时递归查找*/
                 $this->buildMenus($children);
                 /*最后赋值给children*/
                 $menu['children'] = $children;
+                unset($menu['id']);
+                unset($menu['url']);
+                unset($menu['type_id']);
             }
         }
     }
@@ -108,6 +110,7 @@ class SysHome extends Common {
         foreach ($menus as &$menu) {
             if (!empty($menu['url'])) {
                 $menu['url'] = url($menu['url']);
+                $menu['target'] = 'navtab';
             }
         }
         /*处理子菜单*/

@@ -1,12 +1,15 @@
 <div class="bjui-pageContent">
-    <form action="{:url(M_C_A)}" data-toggle="validate" data-alertmsg="true"#enctype#>
+    <form action="{:url(M_C_A)}" data-toggle="validate" data-alertmsg="true">
         {if condition="isset($data) && !empty($data.id)"}
         <input type="hidden" name="id" value="{$data.id}">
         {/if}
         <input type="hidden" name="tabid" value="{$Request.param.tabid}">
 
         <div class="bjui-row col-1">
-            #inputFields#
+            <label for="name{:MCA}" class="row-label">姓名：</label>
+			<div class="row-input required">
+				<input type="text"  name="name" id="name{:MCA}" value="{$data.name|default=''}" data-rule="required;length(~20)">
+			</div>
         </div>
     </form>
 </div>

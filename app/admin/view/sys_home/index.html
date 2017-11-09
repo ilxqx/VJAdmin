@@ -131,14 +131,14 @@
                 {volist name="menus" id="val"}
                     {eq name="key" value="0"}
                         <li class="active">
-                            <a href="{$val.url}" data-toggle="sidenav" data-target-key="type" data-id-key="type_id">
+                            <a href="{$val.url}" data-toggle="sidenav">
                                 <i class="fa fa-{$val.icon}"></i>
                                 {$val.name}
                             </a>
                         </li>
                     {else/}
                         <li>
-                            <a href="{$val.url}" data-toggle="sidenav" data-id-key="target_id">
+                            <a href="{$val.url}" data-toggle="sidenav">
                                 <i class="fa fa-{$val.icon}"></i>
                                 {$val.name}
                             </a>

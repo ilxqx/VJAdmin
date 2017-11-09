@@ -1,0 +1,17 @@
+<div class="bjui-pageHeader">
+    <div class="bs-callout bs-callout-info">
+        <div class="bjui-searchBar">
+            <form id="searchForm{:MCA}" class="form-inline" action="{:url(M_C_A)}" data-toggle="ajaxsearch" data-options="{validate:false}">
+                {if condition="[search]"}
+                <div class="input-group pull-right">
+                    <input name="key" class="pull-right" type="text" value="{$Request.param.key}" placeholder="请输入关键字...">
+                    <span class="input-group-btn">
+                        <button type="submit" data-icon="search" class="btn-default pull-right">查询</button>
+                    </span>
+                </div>
+                {/if}
+                <a href="{:url(M_C . 'add', ['tabid' => MCA])}" data-icon="plus" class="btn btn-success" data-toggle="dialog" data-id="{:MC . 'add'}" data-width=[width] data-height=[height]>添加</a>
+            </form>
+        </div>
+    </div>
+</div>

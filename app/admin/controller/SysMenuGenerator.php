@@ -82,7 +82,12 @@ class SysMenuGenerator extends Common {
         }
         /*创建外键字段*/
         foreach ($fks as $fk) {
-            $table = getTableNameOfPrefixWithCStyle($fk['relation_table']);
+            $relationTable = $fk['relation_table'];
+            if (false !== strpos($relationTable, '\\')) {
+                $arr = explode('\\', $relationTable);
+                $relationTable = array_pop($arr);
+            }
+            $table = getTableNameOfPrefixWithCStyle($relationTable);
             $idName = config('system.sys_table_pk');
             $sql .= "CONSTRAINT `fk_{$tableName}_{$fk['fk']}` FOREIGN KEY (`{$fk['fk']}`) REFERENCES `{$table}` (`{$idName}`) ,\r\n";
         }
@@ -273,10 +278,14 @@ class SysMenuGenerator extends Common {
         $modelFile = str_replace('#module#', $data['module_name'], $modelFile);
         $modelFile = str_replace('#model#', $data['model_file_name'], $modelFile);
         $relationModels = $this->getColumnFromArr($relation_arr, 'relation_table');
-        $arr = array_map(function ($item) {
+        $arrWithNoNS = array_map(function ($item) {
+            if (false !== strpos($item, '\\')) {
+                $tempArr = explode('\\', $item);
+                $item = array_pop($tempArr);
+            }
             return "'" . lcfirst($item) . "'";
         }, $relationModels);
-        $modelFile = str_replace('#relationModels#', join(', ', $arr), $modelFile);
+        $modelFile = str_replace('#relationModels#', join(', ', $arrWithNoNS), $modelFile);
         $modelFile = str_replace('#fieldDictNames#', "'{$data['dict_names']}'", $modelFile);
         /*处理上传文件*/
         $file_list = preg_split('/\s*,\s*/', $data['file_list']);
@@ -317,13 +326,14 @@ class SysMenuGenerator extends Common {
         }
         /*处理模型的relationFuncs*/
         $funcsStr = [];
-        foreach ($relation_arr as $relation) {
-            $str = "public function " . lcfirst($relation['relation_table']) . " () {\r\n";
+        foreach ($relation_arr as $key => $relation) {
+            $str = "public function " . trim($arrWithNoNS[$key], "'") . " () {\r\n";
             $map = $this->resolveFkMap($relation['map_fields']);
-            $str .= "\t\treturn \$this->belongsTo('{$relation['relation_table']}', '{$relation['fk']}')->bind([\r\n";
+            $str .= "\t\treturn \$this->belongsTo('" . str_replace('\\', '\\\\', $relation['relation_table']) . "', '{$relation['fk']}')->bind([\r\n";
             foreach ($map as $val) {
                 $str .= "\t\t\t'{$val[0]}' => '{$val[1]}',\r\n";
             }
+            rtrim($str, ",\r\n");
             $str .= "\t\t]);\r\n\t}";
             array_push($funcsStr, $str);
         }

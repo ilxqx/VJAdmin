@@ -3,7 +3,7 @@
         {if condition="isset($data) && !empty($data.id)"}
         <input type="hidden" name="id" value="{$data.id}">
         {/if}
-        <input type="hidden" name="beforeNavTabId" value="{$Request.param.tabid}">
+        <input type="hidden" name="tabid" value="{$Request.param.tabid}">
 
         <div class="bjui-row col-1">
             <label for="name{:MCA}" class="row-label">权限名：</label>

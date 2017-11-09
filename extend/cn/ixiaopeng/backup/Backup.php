@@ -263,7 +263,7 @@ class Backup {
      */
     private function parseSql ($path = '') {
         $sql = file_get_contents($path);
-        $sql = explode("\r\n", $sql);
+        $sql = explode("\n", $sql);
         //先消除--注释
         $sql = array_filter($sql, function ($data) {
             if (empty($data) || preg_match('/^--.*/', $data)) {

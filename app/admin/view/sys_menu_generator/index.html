@@ -96,19 +96,19 @@
             </div>
             <table id="relationTable{:MCA}" class="table table-bordered table-responsive">
                 <tr>
-                    <th width="33.33%">关联表名</th>
+                    <th width="33.33%">关联模型（驼峰式）</th>
                     <th width="33.33%">外键</th>
                     <th width="33.33%">映射字段</th>
                 </tr>
                 <tr>
                     <td>
-                        <input type="text" name="relation_table0" data-rule="required">
+                        <input type="text" title="若该关联模型非本模块，则要加命名空间限定（例：app\admin\model\Xxx）" placeholder="若该关联模型非本模块，则要加命名空间限定（例：app\admin\model\Xxx）" name="relation_table0" data-rule="required">
                     </td>
                     <td>
                         <input type="text" name="fk0" data-rule="required">
                     </td>
                     <td>
-                        <input type="text" placeholder="格式（字段别名->关联表字段|字段别名->关联表字段...）" name="map_fields0" data-rule="required">
+                        <input type="text" title="格式（字段别名->关联表字段|字段别名->关联表字段...）" placeholder="格式（字段别名->关联表字段|字段别名->关联表字段...）" name="map_fields0" data-rule="required">
                     </td>
                     <td>
                         <a disabled class="btn btn-red" data-icon="trash-o">删除</a>
@@ -129,25 +129,25 @@
             </div>
             <table class="table table-bordered table-responsive">
                 <tr>
-                    <th align="right">所属模块：</th>
+                    <th align="right">所属模块（下划线式）：</th>
                     <td>
                         <input style="width: 50%;" type="text" name="module_name" data-rule="required">
                     </td>
                 </tr>
                 <tr>
-                    <th align="right">控制器文件名：</th>
+                    <th align="right">控制器文件名（驼峰式）：</th>
                     <td>
                         <input style="width: 50%;" type="text" name="controller_file_name" data-rule="required">
                     </td>
                 </tr>
                 <tr>
-                    <th align="right">模型文件名：</th>
+                    <th align="right">模型文件名（驼峰式）：</th>
                     <td>
                         <input style="width: 50%;" type="text" name="model_file_name" data-rule="required">
                     </td>
                 </tr>
                 <tr>
-                    <th align="right">验证器文件名：</th>
+                    <th align="right">验证器文件名（驼峰式）：</th>
                     <td>
                         <input style="width: 50%;" type="text" name="validate_file_name" data-rule="required">
                     </td>
@@ -155,7 +155,7 @@
                 <tr>
                     <th align="right">字段字典名：</th>
                     <td>
-                        <input style="width: 50%;" placeholder="多个以英文逗号分开" type="text" name="dict_names">
+                        <input style="width: 50%;" title="多个以英文逗号分开" placeholder="多个以英文逗号分开" type="text" name="dict_names">
                     </td>
                 </tr>
                 <tr>
@@ -179,7 +179,7 @@
                 <tr>
                     <th align="right">搜索字段：</th>
                     <td>
-                        <input style="width: 50%;" placeholder="多个以英文逗号分开，两个或两个以上最后以逻辑符(|,&)结尾。（name,value,|）" type="text" name="search_fields">
+                        <input style="width: 50%;" title="多个以英文逗号分开，两个或两个以上最后以逻辑符(|,&)结尾。（name,value,|）" placeholder="多个以英文逗号分开，两个或两个以上最后以逻辑符(|,&)结尾。（name,value,|）" type="text" name="search_fields">
                     </td>
                 </tr>
                 <tr>
@@ -197,7 +197,7 @@
                 <tr>
                     <th align="right">上传文件：</th>
                     <td>
-                        <input style="width: 50%;" placeholder="字段名->类型或者类型|后缀名（图片：pic->image，文件：file->file|xls,txt,jar,zip）" type="text" name="file_list">
+                        <input style="width: 50%;" title="字段名->类型或者类型|后缀名（图片：pic->image，文件：file->file|xls,txt,jar,zip）" placeholder="字段名->类型或者类型|后缀名（图片：pic->image，文件：file->file|xls,txt,jar,zip）" type="text" name="file_list">
                     </td>
                 </tr>
             </table>
@@ -268,13 +268,13 @@
         '                </tr>';
     var rTemplate = '<tr id="rRow{:MCA}#index#">\n' +
         '                    <td>\n' +
-        '                        <input type="text" name="relation_table#index#" data-rule="required">\n' +
+        '                        <input type="text" title="若该关联模型非本模块，则要加命名空间限定（例：app\\admin\\model\\Xxx）" placeholder="若该关联模型非本模块，则要加命名空间限定（例：app\\admin\\model\\Xxx）" name="relation_table#index#" data-rule="required">\n' +
         '                    </td>\n' +
         '                    <td>\n' +
         '                        <input type="text" name="fk#index#" data-rule="required">\n' +
         '                    </td>\n' +
         '                    <td>\n' +
-        '                        <input type="text" placeholder="格式（字段别名->关联表字段|字段别名->关联表字段...）" name="map_fields#index#" data-rule="required">\n' +
+        '                        <input type="text" title="格式（字段别名->关联表字段|字段别名->关联表字段...）" placeholder="格式（字段别名->关联表字段|字段别名->关联表字段...）" name="map_fields#index#" data-rule="required">\n' +
         '                    </td>\n' +
         '                    <td>\n' +
         '                        <a onclick="delRelation(\'#index#\')" class="btn btn-red" data-icon="trash-o">删除</a>\n' +

@@ -10,8 +10,8 @@
 // +----------------------------------------------------------------------
 
 // 应用公共文件
-use think\Loader;
 use think\Db;
+use think\Loader;
 
 /**
  * 获取 managerId
@@ -51,7 +51,7 @@ function uploadImage ($imgName) {
         $relPath = config('uploads.relativePath') . 'images' . DS;
         $absPath = rtrim(config('uploads.absolutePath') . $relPath, DS);
         // 获取文件模型
-        $model = model('SysFile');
+        $model = model('app\\admin\\model\\SysFile');
         // 判断文件是否存在
         try {
             // 查询是否有满足的记录
@@ -134,7 +134,7 @@ function uploadFile ($fileName, $ext = '') {
         $relPath = config('uploads.relativePath') . 'files' . DS;
         $absPath = rtrim(config('uploads.absolutePath') . $relPath, DS);
         // 获取文件模型
-        $model = model('SysFile');
+        $model = model('app\\admin\\model\\SysFile');
         // 获取主键名称
         $idName = config('system.sys_table_pk');
         // 判断文件是否存在
@@ -214,7 +214,7 @@ function fileRefsInc ($id) {
     $idName = config('system.sys_table_pk');
     // 主键引用计数加1
     try {
-        $file = model('SysFile')->where($idName, $id)->find();
+        $file = model('app\\admin\\model\\SysFile')->where($idName, $id)->find();
         if (empty($file)) {
             return '文件并不存在！';
         }
@@ -235,7 +235,7 @@ function fileRefsDec ($id) {
     $idName = config('system.sys_table_pk');
     // 主键引用计数加1
     try {
-        $file = model('SysFile')->where($idName, $id)->find();
+        $file = model('app\\admin\\model\\SysFile')->where($idName, $id)->find();
         if (empty($file)) {
             return '文件并不存在！';
         }
@@ -282,7 +282,7 @@ function castToArray (&$item) {
  */
 function getMeaningsOfFiledValues ($table, $field) {
     // 获取数据字段模型
-    $model = model('SysFieldDict');
+    $model = model('app\\admin\\model\\SysFieldDict');
     // 返回查询到的字段值含义的数组
     $arr = $model->field([
         'value',
@@ -303,7 +303,7 @@ function getMeaningsOfFiledValues ($table, $field) {
  */
 function getFieldValues ($table, $field) {
     // 获取数据字段模型
-    $model = model('SysFieldDict');
+    $model = model('app\\admin\\model\\SysFieldDict');
     // 返回查询到的字段值的数组
     $arr = $model->where([
         'table' => $table,
@@ -362,7 +362,7 @@ function getUtilData ($table, $fields = [], $conditions = []) {
  * @return bool|array
  */
 function loginCheck ($account, $pwd) {
-    $model = model('SysManager');
+    $model = model('app\\admin\\model\\SysManager');
     $manager = $model
         ->field([
             'id'
@@ -404,7 +404,7 @@ function getImgUrl ($id, $domain = false) {
     if (empty($id)) {
         return '';
     }
-    $url = model('SysFile')
+    $url = model('app\\admin\\model\\SysFile')
         ->where([
             'id' => $id
         ])
@@ -421,7 +421,7 @@ function getSysOption ($name) {
     if (empty($name)) {
         return '';
     }
-    return model('SysOption')
+    return model('app\\admin\\model\\SysOption')
         ->where([
             'name' => $name
         ])
@@ -488,7 +488,7 @@ function getManagerRoleId ($managerId) {
     if (empty($managerId)) {
         return null;
     }
-    return model('SysManager')
+    return model('app\\admin\\model\\SysManager')
         ->where('id', $managerId)
         ->value('role_id');
 }
@@ -500,7 +500,7 @@ function getManagerRoleId ($managerId) {
 function authenticate () {
     $roleId = getManagerRoleId(getManagerId());
     /*如果管理员所属的角色被停用，则一样不能访问任何东西*/
-    $status = model('SysRole')->where('id', $roleId)->value('status');
+    $status = model('app\\admin\\model\\SysRole')->where('id', $roleId)->value('status');
     if ($status !== 'a') {
         return false;
     }
@@ -521,7 +521,7 @@ function authenticate () {
         return true;
     }
     /*根据权限id查询当前管理员所属角色是否拥有该权限*/
-    $count = model('SysRoleAuth')
+    $count = model('app\\admin\\model\\SysRoleAuth')
         ->where([
             'role_id' => $roleId,
             'auth_id' => $authId
