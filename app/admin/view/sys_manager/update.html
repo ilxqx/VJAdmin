@@ -23,7 +23,7 @@
 			<label for="avatar{:MCA}" class="row-label">头像：</label>
 			<div class="row-input required">
 				{if condition="isset($data) && !empty($data.avatar)"}
-				<input type="file" data-toggle="fileinput" data-ext="bmp,png,gif,jpg,jpeg,jpe,svg" name="avatar" id="avatar{:MCA}" data-preview="{:getImgUrl($data.avatar)}">
+				<input type="file" data-toggle="fileinput" data-ext="bmp,png,gif,jpg,jpeg,jpe,svg" name="avatar" id="avatar{:MCA}" data-preview="{:getFileUrl($data.avatar)}">
 				{else/}
 				<input type="file" data-toggle="fileinput" data-ext="bmp,png,gif,jpg,jpeg,jpe,svg" name="avatar" id="avatar{:MCA}" data-rule="required">
 				{/if}

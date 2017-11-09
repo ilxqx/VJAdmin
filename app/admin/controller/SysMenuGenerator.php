@@ -395,7 +395,7 @@ class SysMenuGenerator extends Common {
                     $map = $this->resolveFkMap($value['map_fields']);
                     /*处理一下图片的显示*/
                     if (trim($arrWithNoNS[$key], "'") === 'SysFile') {
-                        $fieldList .= "<td data-toggle=\"popover\" data-trigger=\"hover\" data-html=\"true\" data-container=\"body\" data-placement=\"top\" data-content=\"<img src='{:getImgUrl(\$val.{$val['field_name']})}' height='100' width='auto'/>\">{\$val.{$map[0][0]}}</td>\r\n\t\t\t\t";
+                        $fieldList .= "<td data-toggle=\"popover\" data-trigger=\"hover\" data-html=\"true\" data-container=\"body\" data-placement=\"top\" data-content=\"<img src='{:getFileUrl(\$val.{$val['field_name']})}' height='100' width='auto'/>\">{\$val.{$map[0][0]}}</td>\r\n\t\t\t\t";
                     } else {
                         $fieldList .= "<td>{\$val.{$map[0][0]}}</td>\r\n\t\t\t\t";
                     }
@@ -454,7 +454,7 @@ class SysMenuGenerator extends Common {
                 $inputFields .= "{/volist}\r\n\t\t\t";
             } else if (in_array($val['field_name'], $fileArrKeys)) {
                 $inputFields .= "{if condition=\"isset(\$data) && !empty(\$data.{$val['field_name']})\"}\r\n\t\t\t\t";
-                $inputFields .= "<input type=\"file\" data-toggle=\"fileinput\" " . ($fileArr[$val['field_name']]['type'] === 'file' ? ('data-ext="' . $fileArr[$val['field_name']]['ext'] . '"') : 'data-ext="bmp,png,gif,jpg,jpeg,jpe,svg"') . " name=\"{$val['field_name']}\" id=\"{$val['field_name']}{:MCA}\" data-preview=\"{:getImgUrl(\$data.{$val['field_name']})}\">\r\n\t\t\t\t";
+                $inputFields .= "<input type=\"file\" data-toggle=\"fileinput\" " . ($fileArr[$val['field_name']]['type'] === 'file' ? ('data-ext="' . $fileArr[$val['field_name']]['ext'] . '"') : 'data-ext="bmp,png,gif,jpg,jpeg,jpe,svg"') . " name=\"{$val['field_name']}\" id=\"{$val['field_name']}{:MCA}\" data-preview=\"{:getFileUrl(\$data.{$val['field_name']})}\">\r\n\t\t\t\t";
                 $inputFields .= "{else/}\r\n\t\t\t\t";
                 $inputFields .= "<input type=\"file\" data-toggle=\"fileinput\" " . ($fileArr[$val['field_name']]['type'] === 'file' ? ('data-ext="' . $fileArr[$val['field_name']]['ext'] . '"') : 'data-ext="bmp,png,gif,jpg,jpeg,jpe,svg"') . " name=\"{$val['field_name']}\" id=\"{$val['field_name']}{:MCA}\" data-rule=\"" . $this->getValidateRules($val, 1, $fileArrKeys) . "\">\r\n\t\t\t\t";
                 $inputFields .= "{/if}\r\n\t\t\t";

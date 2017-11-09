@@ -477,7 +477,7 @@ class Base extends Controller {
             // 遍历数据字典字段名字
             foreach ($model->fieldDictNames as $val) {
                 // 将数据字典值含义数组发到页面
-                $this->assign($val . '_values_meanings', getMeaningsOfFiledValues($tableName, $val));
+                $this->assign($val . '_values_meanings', getMeaningsOfFieldValues($tableName, $val));
             }
         }
 
@@ -649,7 +649,7 @@ class Base extends Controller {
             // 遍历数据字典字段名字
             foreach ($model->fieldDictNames as $val) {
                 // 将数据字典值含义数组发到页面
-                $this->assign($val . '_values_meanings', getMeaningsOfFiledValues(getTableNameOfPrefixWithCStyle($this->table), $val));
+                $this->assign($val . '_values_meanings', getMeaningsOfFieldValues(getTableNameOfPrefixWithCStyle($this->table), $val));
             }
         }
 

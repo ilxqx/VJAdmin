@@ -59,7 +59,7 @@ function uploadImage ($imgName) {
                 'sha1' => $img->hash('sha1'),
                 'type' => 'a'
             ])->find();
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             return $exception->getMessage();
         }
         // 如果不为空则直接引用
@@ -67,7 +67,7 @@ function uploadImage ($imgName) {
             try {
                 // 引用计数加一
                 $res->setInc('refs');
-            } catch (\Exception $exception) {
+            } catch (Exception $exception) {
                 // 出现错误直接返回
                 return $exception->getMessage();
             }
@@ -98,7 +98,7 @@ function uploadImage ($imgName) {
                 $model->commit();
                 // 返回新增文件的数据库id
                 return intval($model->getAttr('id'));
-            } catch (\Exception $exception) {
+            } catch (Exception $exception) {
                 // 上传失败，回滚
                 $model->rollback();
                 // 删除刚刚上传的文件
@@ -118,7 +118,7 @@ function uploadImage ($imgName) {
 }
 
 /**
- * 上传图片
+ * 上传文件
  * @param $fileName string 文件引用名字
  * @param $ext string 文件允许的后缀
  * @return int|string 成功返回int类型的图片记录id，失败返回错误信息字符串
@@ -144,7 +144,7 @@ function uploadFile ($fileName, $ext = '') {
                 'sha1' => $file->hash('sha1'),
                 'type' => 'b'
             ])->find();
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             return $exception->getMessage();
         }
         // 如果不为空则直接引用
@@ -185,7 +185,7 @@ function uploadFile ($fileName, $ext = '') {
                 $model->commit();
                 // 返回新增文件的数据库id
                 return intval($model->getAttr($idName));
-            } catch (\Exception $exception) {
+            } catch (Exception $exception) {
                 // 上传失败，回滚
                 $model->rollback();
                 // 删除刚刚上传的文件
@@ -220,7 +220,7 @@ function fileRefsInc ($id) {
         }
         $file->setInc('refs');
         return true;
-    } catch (\Exception $exception) {
+    } catch (Exception $exception) {
         return $exception->getMessage();
     }
 }
@@ -252,13 +252,13 @@ function fileRefsDec ($id) {
             }
         }
         return true;
-    } catch (\Exception $exception) {
-        dump($exception->getMessage());die;
+    } catch (Exception $exception) {
         return $exception->getMessage();
     }
 }
 
 /**
+ * 将模型对象或模型对象数组转为纯数组
  * @param $item array | \think\Model
  */
 function castToArray (&$item) {
@@ -275,12 +275,12 @@ function castToArray (&$item) {
 }
 
 /**
- * 获取数据字典字段值含义的数组
+ * 获取字段字典字段值含义的数组
  * @param $table string 表名
  * @param $field string 字段名
  * @return array 返回数组
  */
-function getMeaningsOfFiledValues ($table, $field) {
+function getMeaningsOfFieldValues ($table, $field) {
     // 获取数据字段模型
     $model = model('app\\admin\\model\\SysFieldDict');
     // 返回查询到的字段值含义的数组
@@ -313,7 +313,7 @@ function getFieldValues ($table, $field) {
 }
 
 /**
- * 将某一字段可取的值转为字符串
+ * 将某一字段可取的值连接为字符串
  * @param $table string 表名
  * @param $field string 字段名
  * @param string $sep string 分隔符
@@ -325,34 +325,29 @@ function getFieldValuesStr ($table, $field, $sep = ',') {
 
 /**
  * 获取C风格加表前缀的表名
- * @param $table string 表名
+ * @param $modelName string 表名
  * @return string C风格并且加表前缀的表名
  */
-function getTableNameOfPrefixWithCStyle ($table) {
-    return config('database.prefix') . toCStyle($table);
+function getTableNameOfPrefixWithCStyle ($modelName) {
+    return config('database.prefix') . toCStyle($modelName);
 }
 
+/**
+ * 将字符串转为C风格形式（xxx_xxx）
+ * @param $string
+ * @return string
+ */
 function toCStyle ($string) {
     return Loader::parseName($string, 0);
 }
 
+/**
+ * 将字符串转为Java风格形式（驼峰式 XxxXxx）
+ * @param $string
+ * @return string
+ */
 function toJavaStyle ($string) {
     return Loader::parseName($string, 1);
-}
-
-/**
- * 获取工具表数据
- * @param $table string 表名
- * @param array $fields 字段数组
- * @param array $conditions 条件数组
- * @return false|PDOStatement|string|\think\Collection
- */
-function getUtilData ($table, $fields = [], $conditions = []) {
-    return \think\Db::name($table)
-        ->field($fields)
-        ->where($conditions)
-        ->order(config('system.sys_table_pk'), 'asc')
-        ->select();
 }
 
 /**
@@ -395,11 +390,11 @@ function setSession ($arr = []) {
 
 /**
  * 获取文件地址
- * @param $id string 文件id
- * @param $domain bool 是否增加域名
+ * @param $id integer 文件id
+ * @param $domain bool 是否连接域名
  * @return mixed|string
  */
-function getImgUrl ($id, $domain = false) {
+function getFileUrl ($id, $domain = false) {
     /*文件id为空，直接返回*/
     if (empty($id)) {
         return '';
@@ -528,4 +523,39 @@ function authenticate () {
         ])
         ->count();
     return $count >= 1;
+}
+
+/**
+ * 生成二维码
+ * @param $text string 待生成的字符串
+ * @param bool $retErr 是否返回错误字符串
+ * @return bool|string
+ */
+function qrCode ($text, $retErr = false) {
+    /*导入二维码类库*/
+    import('phpqrcode.qrlib');
+    /*获取二维码生成配置*/
+    $config = config('qr_code_config');
+    /*生成二维码图片名*/
+    $name = $config['path'] . getUUID() . '.png';
+    /*生成二维码*/
+    try {
+        QRcode::png($text,
+            $name,
+            $config['default_level'],
+            $config['default_size'],
+            $config['default_margin'],
+            false,
+            $config['default_back_color'],
+            $config['default_fore_color']);
+    } catch (Exception $exception) {
+        /*如果是返回错误信息的化，就直接返回错误信息*/
+        if ($retErr) {
+            return $exception->getMessage();
+        }
+        /*否则直接返回false*/
+        return false;
+    }
+    /*返回图片的绝对路径*/
+    return $name;
 }
