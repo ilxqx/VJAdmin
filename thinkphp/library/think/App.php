@@ -551,7 +551,7 @@ class App
             } else {
                 $files = $config['route_config_file'];
                 foreach ($files as $file) {
-                    if (is_file(CONF_PATH . $file . CONF_EXT)) {
+                    if (is_file(CONF_PATH . 'config' . DS . $file . CONF_EXT)) {
                         // 导入路由配置
                         $rules = include CONF_PATH . 'config' . DS . $file . CONF_EXT;
                         if (is_array($rules)) {
