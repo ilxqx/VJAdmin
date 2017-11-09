@@ -513,8 +513,15 @@ class App
             }
 
             // 加载公共文件
-            if (is_file($path . 'common' . DS . 'common' . EXT)) {
-                include $path . 'common' . DS . 'common' . EXT;
+            if (is_dir($path . 'common')) {
+                $dir   = $path . 'common';
+                $files = scandir($dir);
+                foreach ($files as $file) {
+                    if ('.' . pathinfo($file, PATHINFO_EXTENSION) === EXT) {
+                        $filename = $dir . DS . $file;
+                        include $filename;
+                    }
+                }
             }
 
             // 加载当前模块语言包

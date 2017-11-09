@@ -38,4 +38,9 @@ class Customer extends Common {
 
     ];
 
+    public function index () {
+
+        dump(hello());
+    }
+
 }
