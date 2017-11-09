@@ -390,11 +390,11 @@ class SysMenuGenerator extends Common {
             }
             $showFields .= "<th" . (($val['field_type'] === 'DATE' || $val['field_type'] === 'DATETIME') ? ' width="200"' : '') . ">{$val['field_comment']}</th>\r\n\t\t\t\t";
             /*处理关联表显示，只能显示一个*/
-            foreach ($relation_arr as $value) {
+            foreach ($relation_arr as $key => $value) {
                 if ($val['field_name'] === $value['fk']) {
                     $map = $this->resolveFkMap($value['map_fields']);
                     /*处理一下图片的显示*/
-                    if ($value['relation_table'] === 'SysFile') {
+                    if (trim($arrWithNoNS[$key], "'") === 'SysFile') {
                         $fieldList .= "<td data-toggle=\"popover\" data-trigger=\"hover\" data-html=\"true\" data-container=\"body\" data-placement=\"top\" data-content=\"<img src='{:getImgUrl(\$val.{$val['field_name']})}' height='100' width='auto'/>\">{\$val.{$map[0][0]}}</td>\r\n\t\t\t\t";
                     } else {
                         $fieldList .= "<td>{\$val.{$map[0][0]}}</td>\r\n\t\t\t\t";
