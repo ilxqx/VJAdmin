@@ -12,6 +12,8 @@
 
 namespace app\admin\controller;
 
+use cn\ixiaopeng\backup\Backup;
+
 class SysLogin extends Common {
 
     /**
@@ -29,6 +31,12 @@ class SysLogin extends Common {
     public function doLogin () {
         if (!$this->isPostAndAjax()) {
             return null;
+        }
+        /*获取验证码*/
+        $verifyCode = $this->request->param('verify_code', '');
+        /*验证*/
+        if (!captcha_check($verifyCode, 'vj')) {
+            return $this->handleJson(0, '验证码错误！');
         }
         /*获取用户名和密码*/
         $account = $this->request->param('username');

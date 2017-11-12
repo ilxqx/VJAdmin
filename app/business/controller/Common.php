@@ -22,13 +22,6 @@ class Common extends Base {
      * 方法拦截
      */
     public function _initialize () {
-        /*login 页面放过*/
-        if (C === 'sys_login' && (A === 'login' || A === strtolower('doLogin'))) {
-            if (session('?managerId')) {
-                $this->redirect(url(M . '/sys_home/index'));
-            }
-            return;
-        }
         if (!session('?managerId')) {
             if ($this->isAjax()) {
                 echo '<script>window.location.reload();</script>';

@@ -30,7 +30,7 @@
             .login-box {
                 width: 100%;
                 max-width: 500px;
-                height: 400px;
+                height: 425px;
                 position: absolute;
                 top: 50%;
 
@@ -50,14 +50,14 @@
             .form {
                 width: 100%;
                 max-width: 500px;
-                height: 275px;
+                height: 320px;
                 margin: 2px auto 0px auto;
             }
 
             .login-content {
                 border-bottom-left-radius: 8px;
                 border-bottom-right-radius: 8px;
-                height: 250px;
+                height: 315px;
                 width: 100%;
                 max-width: 500px;
                 background-color: rgba(255, 250, 2550, .6);
@@ -114,6 +114,10 @@
                 font-weight: bold;
                 font: 14px/normal "microsoft yahei", "Times New Roman", "宋体", Times, serif;
             }
+
+            .refresh {
+                cursor: pointer;
+            }
         </style>
     </head>
     <body>
@@ -143,6 +147,23 @@
                                         <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
                                         <input type="password" id="password" name="password" class="form-control"
                                                placeholder="密码">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-10 col-xs-offset-1">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-check"></span>
+                                        </span>
+                                        <input type="text" id="verify_code" name="verify_code" class="form-control"
+                                               placeholder="验证码">
+                                        <span class="input-group-addon" style="padding: 0;">
+                                            {:captcha_img('vj')}
+                                        </span>
+                                        <span class="input-group-addon refresh">
+                                            <span class="glyphicon glyphicon-refresh"></span>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -213,8 +234,8 @@
         <script type="text/javascript">
             $(function () {
 
-                $('#password').keyup(function (event) {
-                    if (event.keyCode == "13") {
+                $('body').keyup(function (event) {
+                    if (event.keyCode === 13) {
                         $("#login").trigger("click");
                         return false;
                     }
@@ -234,7 +255,8 @@
                     } else {
                         var formData = {
                             username: $('#username').val(),
-                            password: $('#password').val()
+                            password: $('#password').val(),
+                            verify_code: $('#verify_code').val()
                         };
                         $.ajax({
                             type: 'POST',
@@ -267,6 +289,11 @@
                 $("#reset").on("click", function () {
                     $("#username").val("");
                     $("#password").val("");
+                });
+
+                $('.refresh').click(function () {
+                    var img = $(this).prev().children('img');
+                    img.attr('src', img.attr('src').replace(/\?vj=.*/, '') + '?vj=' + Math.random());
                 });
             });
         </script>

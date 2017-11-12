@@ -291,14 +291,6 @@
             margin-top: 24px;
             padding: 12px 0;
             border-top: 1px solid #eee;
-            text-align: center;
-        }
-
-        .info h1 {
-            font-size: 50px;
-            text-align: center;
-            height: auto;
-            line-height: 60px;
         }
 
         /* SPAN elements with the classes below are added by prettyprint. */
@@ -327,7 +319,7 @@
         
             <div class="info">
                 <div>
-                    <h2>[<?php echo $code; ?>] <?php echo sprintf('%s in %s', parse_class($name), parse_file($file, $line)); ?></h2>
+                    <h2>[<?php echo $code; ?>]&nbsp;<?php echo sprintf('%s in %s', parse_class($name), parse_file($file, $line)); ?></h2>
                 </div>
                 <div><h1><?php echo nl2br(htmlentities($message)); ?></h1></div>
             </div>
@@ -448,9 +440,9 @@
     <?php } ?>
 
     <div class="copyright">
-        <a title="个人网站" href="http://www.ixiaopeng.cn">Venus 个人官网</a>
-        <span>V1.0.0</span>
-        <span>致力于高伸缩性和高拓展性的二次开发框架</span>
+        <a title="官方网站" href="http://www.thinkphp.cn">ThinkPHP</a> 
+        <span>V<?php echo THINK_VERSION; ?></span> 
+        <span>{ 十年磨一剑-为API开发设计的高性能框架 }</span>
     </div>
     <?php if(\think\App::$debug) { ?>
     <script>
