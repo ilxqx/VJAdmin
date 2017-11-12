@@ -12,8 +12,6 @@
 
 namespace app\admin\controller;
 
-use cn\ixiaopeng\backup\Backup;
-
 class SysLogin extends Common {
 
     /**
