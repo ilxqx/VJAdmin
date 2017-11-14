@@ -2,7 +2,7 @@
 MySQL Database Backup Tools(Venus dump)
 Server:127.0.0.1:
 Database:vj_admin
-Date:2017-11-09 15:44:49
+Date:2017-11-14 22:31:15
 */
 SET FOREIGN_KEY_CHECKS=0;
 -------------------------------
@@ -207,12 +207,23 @@ CREATE TABLE `vj_sys_option` (
   PRIMARY KEY (`id`),
   KEY `vj_sys_option_manager_id` (`manager_id`),
   CONSTRAINT `vj_sys_option_manager_id` FOREIGN KEY (`manager_id`) REFERENCES `vj_sys_manager` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 -------------------------------
 -- Records of vj_sys_option
 -------------------------------
-INSERT INTO `vj_sys_option` (`id`, `name`, `value`, `remark`, `manager_id`, `at_datetime`) VALUES ('4', '发多少', '发多少', '佛挡杀佛', '1', '2017-10-28 18:33:23');
-INSERT INTO `vj_sys_option` (`id`, `name`, `value`, `remark`, `manager_id`, `at_datetime`) VALUES ('5', '系统时间', '哈哈', '这是锡系统时间', '1', '2017-10-29 11:48:36');
+INSERT INTO `vj_sys_option` (`id`, `name`, `value`, `remark`, `manager_id`, `at_datetime`) VALUES ('6', 'AccessKeyID', 'LTAIrfZRYf7z8JiAeT', '阿里云短信服务访问key', '1', '2017-11-14 22:30:56');
+INSERT INTO `vj_sys_option` (`id`, `name`, `value`, `remark`, `manager_id`, `at_datetime`) VALUES ('7', 'AccessKeySecret', 'w8wcCLXoxWpdM8kvMw4GoH6rjerhGZaD', '阿里云短信服务secret', '1', '2017-11-14 22:30:40');
+INSERT INTO `vj_sys_option` (`id`, `name`, `value`, `remark`, `manager_id`, `at_datetime`) VALUES ('8', 'ProductName', 'Dysmsapi', '阿里云短信服务所使用产品名称', '1', '2017-11-14 20:38:09');
+INSERT INTO `vj_sys_option` (`id`, `name`, `value`, `remark`, `manager_id`, `at_datetime`) VALUES ('9', 'Domain', 'dysmsapi.aliyuncs.com', '阿里云所使用产品域名', '1', '2017-11-14 20:38:43');
+INSERT INTO `vj_sys_option` (`id`, `name`, `value`, `remark`, `manager_id`, `at_datetime`) VALUES ('12', 'SignName', 'VJ管理系统', '阿里云短信签名', '1', '2017-11-14 21:02:31');
+INSERT INTO `vj_sys_option` (`id`, `name`, `value`, `remark`, `manager_id`, `at_datetime`) VALUES ('13', 'SMCodeTemplateCode', 'SMS_110120102', '阿里云短信模板号', '1', '2017-11-14 22:00:50');
+INSERT INTO `vj_sys_option` (`id`, `name`, `value`, `remark`, `manager_id`, `at_datetime`) VALUES ('14', 'MailHost', 'smtp.qq.com', '邮件服务器', '1', '2017-11-14 21:21:27');
+INSERT INTO `vj_sys_option` (`id`, `name`, `value`, `remark`, `manager_id`, `at_datetime`) VALUES ('15', 'MailUsername', 'venus-wxp@qq.com', '邮件用户名', '1', '2017-11-14 21:25:02');
+INSERT INTO `vj_sys_option` (`id`, `name`, `value`, `remark`, `manager_id`, `at_datetime`) VALUES ('16', 'MailPassword', 'juiylwmbodotdcfbaf', '邮件密码', '1', '2017-11-14 22:30:29');
+INSERT INTO `vj_sys_option` (`id`, `name`, `value`, `remark`, `manager_id`, `at_datetime`) VALUES ('17', 'MailSecure', 'ssl', '邮件传输协议（ssl、tls）', '1', '2017-11-14 21:23:34');
+INSERT INTO `vj_sys_option` (`id`, `name`, `value`, `remark`, `manager_id`, `at_datetime`) VALUES ('18', 'MailPort', '465', '邮件服务器端口号', '1', '2017-11-14 21:24:09');
+INSERT INTO `vj_sys_option` (`id`, `name`, `value`, `remark`, `manager_id`, `at_datetime`) VALUES ('19', 'MailFrom', 'venus-wxp@qq.com', '邮件发送者', '1', '2017-11-14 21:24:41');
+INSERT INTO `vj_sys_option` (`id`, `name`, `value`, `remark`, `manager_id`, `at_datetime`) VALUES ('20', 'MailName', 'Venus', '邮件发送者名称', '1', '2017-11-14 21:26:38');
 
 -------------------------------
 -- Table structure for vj_sys_role
