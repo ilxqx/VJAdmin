@@ -12,7 +12,7 @@
 
 namespace cn\ixiaopeng\curl;
 
-class CUrl {
+final class CUrl {
     /**
      * 执行curl的主方法
      * @param $method string 方法类型
@@ -31,7 +31,7 @@ class CUrl {
         /*合并配置*/
         $config = array_merge($_config, $config);
         /*创建句柄*/
-        $ch = CUrl::create();
+        $ch = static::create();
         if (false === $ch) {
             return false;
         }
@@ -101,7 +101,7 @@ class CUrl {
      * @return array|bool|mixed
      */
     public static function post ($url, array $fields, array $config = []) {
-        $ret = CUrl::execute('POST', $url, $fields, $config);
+        $ret = static::execute('POST', $url, $fields, $config);
         if (false === $ret) {
             return false;
         }
@@ -119,7 +119,7 @@ class CUrl {
      * @return array|bool|mixed
      */
     public static function get ($url, array $fields, array $config = []) {
-        $ret = CUrl::execute('GET', $url, $fields, $config);
+        $ret = static::execute('GET', $url, $fields, $config);
         if (false === $ret) {
             return false;
         }

@@ -30,15 +30,14 @@ function sendMail ($to, $subject, $content, $plainContent = '', array $options =
         /*邮件配置*/
         $mail->isSMTP();
         //$mail->SMTPDebug = 2;
-        $mail->Host = $config['host'];
-        $mail->SMTPAuth = true;
-        $mail->Username = $config['username'];
-        $mail->Password = $config['password'];
-        $mail->SMTPSecure = $config['secure'];
-        $mail->Port = $config['port'];
-        $mail->setFrom($config['from'], $config['name']);
+        $mail->Host = getSysOption('MailHost');
+        $mail->SMTPAuth = $config['auth'];
+        $mail->Username = getSysOption('MailUsername');
+        $mail->Password = getSysOption('MailPassword');
+        $mail->SMTPSecure = getSysOption('MailSecure');
+        $mail->Port = getSysOption('MailPort');
+        $mail->setFrom(getSysOption('MailFrom'), getSysOption('MailName'));
         $mail->isHTML($config['is_html']);
-
         /*邮件内容*/
         /*设置收件人*/
         if (is_array($to) && !empty($to)) {

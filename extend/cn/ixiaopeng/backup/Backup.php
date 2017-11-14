@@ -17,7 +17,7 @@ namespace cn\ixiaopeng\backup;
  * Class Backup
  * @package ixiaopeng
  */
-class Backup {
+final class Backup {
     // 数据库配置
     private $config=[];
     /**

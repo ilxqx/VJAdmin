@@ -333,7 +333,7 @@ if ($res === true) {
    // 发送邮件失败，$res此时是个字符串，记录了失败的原因
 }
 ```
-注意：邮件的配置在extra目录下的send_mail_config.php中
+注意：邮件的配置在extra目录下的send_mail_config.php中。（鉴于其可变性）大部分配置项不是在配置文件中，而是在系统选项中。
 
 > 18.getJson
 
@@ -354,6 +354,50 @@ if ($res === true) {
 返回值：`array` 返回json字符串解析的数组
 
 使用：`$arr = postJson(url, [field => value]);`
+
+> 20.sendSM
+
+作用：发送短信
+
+参数：`string` 短信签名，`string` 短信模板Code，`string` 手机号码，`array` 模板参数（可选）
+
+返回值：`bool|string` 成功返回true，失败返回失败原因
+
+使用：`$res = sendSM(短信签名, 短信模板Code, 手机号码, [参数名 => 参数值]);`
+
+注意：短信发送需要阿里云的AccessKeyId和AccessKeySecret，使用时需要去申请。（鉴于其可变性）大部分配置项不是在配置文件中，而是在系统选项中。
+
+> 21.sendSMCode
+
+作用：发送短信验证码（快捷版）
+
+参数：`string` 手机号码
+
+返回值：`bool|string` 成功返回true，失败返回失败原因
+
+使用：`$res = sendSMCode(手机号码);`
+
+注意：模板Code和短信签名是要提前在系统选项中进行配置的
+
+> 22.generateCode
+
+作用：生成n位（n >= 1）数字验证码
+
+参数：`integer` 数字个数（默认为6）
+
+返回值：`integer` n位验证码
+
+使用：`$code = generateCode(6);`
+
+> 23.querySMDetails
+
+作用：短信发送记录查询
+
+参数：`string` 手机号码，`string` 发送日期（例：20171114），`integer` 每页显示的数量（默认为10），`integer` 当前页数（默认为1），`string` 短信发送流水号（可选）
+
+返回值：`stdClass|string` 成功返回信息对象，失败则返回失败原因
+
+使用：`$res = querySMDetails(手机号码，发送日期);`
 
 ## 系统extend提供的功能类使用
 
