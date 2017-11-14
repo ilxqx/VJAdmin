@@ -14,15 +14,15 @@ return [
     // 邮件服务器
     'host' => 'smtp.qq.com',
     // 用户名
-    'username' => 'venus-wxp@qq.com',
+    'username' => 'xxxx@qq.com',
     // 密码（邮件smtp的口令）
-    'password' => 'juiylwmbodotdcfb',
+    'password' => '',
     // 邮件传输所用的协议（ssl、tls）
     'secure' => 'ssl',
     // 端口号
     'port' => '465',
     // 设置发送邮件的者
-    'from' => 'venus-wxp@qq.com',
+    'from' => 'xxxx@qq.com',
     // 设置名称
     'name' => 'Venus',
     // 是否使用html

@@ -39,20 +39,7 @@ class Customer extends Common {
     ];
 
     public function index () {
-//        $mail = new SendEmail();
-//        $mail->setServer("smtp.qq.com", "2929923469@qq.com", "juiylwmbodotdcfb");
-//        $mail->setFrom("venus-wxp@qq.com");
-//        $mail->setReceiver("2432125279");
-//        $mail->setMailInfo("Hello World", "<h1>Hello, This is a email!</h1>");
-        dump(sendMail([
-            '1758722537@qq.com',
-            '2432125279@qq.com',
-            '1349112641@qq.com'
-            ], '你好，世界', "<h1>这是一个强大的HelloWorld程序！</h1>", '', [
-            'attachment' => [
-                '美女啊哈哈.jpg' => getFileUrl(14, true)
-            ]
-        ]));
+
     }
 
 }
