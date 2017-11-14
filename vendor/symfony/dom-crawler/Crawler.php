@@ -53,6 +53,8 @@ class Crawler extends \SplObjectStorage
     private $isHtml = true;
 
     /**
+     * Constructor.
+     *
      * @param mixed  $node       A Node to use as the base for the crawling
      * @param string $currentUri The current URI
      * @param string $baseHref   The base href value
@@ -82,7 +84,7 @@ class Crawler extends \SplObjectStorage
      *
      * @param \DOMNodeList|\DOMNode|array|string|null $node A node
      *
-     * @throws \InvalidArgumentException when node is not the expected type
+     * @throws \InvalidArgumentException When node is not the expected type.
      */
     public function add($node)
     {
@@ -1103,7 +1105,7 @@ class Crawler extends \SplObjectStorage
         $nodes = array();
 
         do {
-            if ($node !== $this->getNode(0) && 1 === $node->nodeType) {
+            if ($node !== $this->getNode(0) && $node->nodeType === 1) {
                 $nodes[] = $node;
             }
         } while ($node = $node->$siblingDir);

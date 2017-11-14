@@ -271,7 +271,7 @@ if (is_integer($res)) { // 也可以使用is_string()先判断上传失败的情
 
 作用：获取文件地址
 
-参数：`integer` 文件id，`bool` 是否连接域名（默认为false）
+参数：`integer` 文件id，`bool` 是否使用绝对路径（默认为false）
 
 返回值：`string` 文件的url地址
 
@@ -288,7 +288,7 @@ if (is_integer($res)) { // 也可以使用is_string()先判断上传失败的情
 使用：调用例子：`$value = getSysOption($name);`
 
 > 16.qrCode
-
+   
 作用：生成二维码
 
 参数：`string` 待生成的字符串，`bool` 是否返回错误字符串（默认为false）
@@ -299,11 +299,101 @@ if (is_integer($res)) { // 也可以使用is_string()先判断上传失败的情
 ```php
 $qrUrl = qrCode($text);
 if ($qrUrl !== false) {
-    // 生成二维码成功 $qrUrl为二维码的绝对路径url（默认保存在/public/generator/*.png）
-    // 生成二维码的配置项在app目录下面的extra目录中的qr_code_config.php中
-    ...
+   // 生成二维码成功 $qrUrl为二维码的绝对路径url（默认保存在/public/generator/*.png）
+   // 生成二维码的配置项在app目录下面的extra目录中的qr_code_config.php中
+   ...
 } else {
-    // 生成二维码失败，可以通过设置第二个参数为true查看失败原因
+   // 生成二维码失败，可以通过设置第二个参数为true查看失败原因
 }
 ```
+   
+> 17.sendMail
 
+作用：发送邮件
+
+参数：`string|array` 目的邮件地址（为数组时表示有多个收件人），`string` 邮件主题，`string` 邮件内容，`string` 当对方邮件系统不支持html显示时显示的内容，可选，`array` 这是可选的抄送或密送选项，还有附件
+
+返回值：`bool|string` 成功返回true，否则返回失败的原因字符串
+
+使用：调用例子：
+```php
+$res = sendMail([
+   'xxxxxxx1@qq.com',
+   'xxxxxxx2@qq.com',
+   'xxxxxxx3@qq.com'
+   ], '你好，世界', "<h1>这是一个强大的HelloWorld邮件！</h1>", '', [
+   'attachment' => [
+       '附件.zip' => getFileUrl(14, true)
+   ]
+]));
+if ($res === true) {
+   // 发送邮件成功
+   ...
+} else {
+   // 发送邮件失败，$res此时是个字符串，记录了失败的原因
+}
+```
+注意：邮件的配置在extra目录下的send_mail_config.php中
+
+> 18.getJson
+
+作用：get方法请求接口，返回json数据
+
+参数：`string` 请求地址，`array` 请求参数，`array` 其它配置项（默认为空数组）
+
+返回值：`array` 返回json字符串解析的数组
+
+使用：`$arr = getJson(url, [param => value]);`
+
+> 19.postJson
+
+作用：post方法请求接口，返回json数据
+
+参数：`string` 请求地址，`array` 请求参数，`array` 其它配置项（默认为空数组）
+
+返回值：`array` 返回json字符串解析的数组
+
+使用：`$arr = postJson(url, [field => value]);`
+
+## 系统extend提供的功能类使用
+
+> 1.CUrl类
+
+作用：用来模拟网络请求的，抓取网络数据（这是一个静态工具类，使用时不需要实例化）
+
+方法：
+
++ public static function execute ($method, $url, array $fields = [], array $config = []);
+
+$method 为请求方法
+
+$url 为请求的URL地址
+
+$fields 为传递的请求参数
+
+$config 为其他配置选项，默认如下：
+
+```php
+$_config = [
+    'userAgent' => '',
+    'httpHeaders' => [],
+    'username' => '',
+    'password' => ''
+];
+```
+
++ public static function post ($url, array $fields, array $config = []);
+
+$url 为请求的URL地址
+
+$fields 为传递的请求参数
+
+$config 为其他配置选项，配置项同execute方法
+
++ public static function get ($url, array $fields, array $config = []);
+
+$url 为请求的URL地址
+
+$fields 为传递的请求参数（地址参数）
+
+$config 为其他配置选项，配置项同execute方法

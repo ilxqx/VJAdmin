@@ -130,10 +130,11 @@ function toJavaStyle ($string) {
 /**
  * 获取文件地址
  * @param $id integer 文件id
- * @param $domain bool 是否连接域名
+ * @param bool $absolute
  * @return mixed|string
+ * @internal param bool $domain 是否连接域名
  */
-function getFileUrl ($id, $domain = false) {
+function getFileUrl ($id, $absolute = false) {
     /*文件id为空，直接返回*/
     if (empty($id)) {
         return '';
@@ -143,7 +144,7 @@ function getFileUrl ($id, $domain = false) {
             'id' => $id
         ])
         ->value('relative_url');
-    return $domain ? request()->domain() . htmlspecialchars_decode($url) : htmlspecialchars_decode($url);
+    return $absolute ? config('uploads.absolutePath') . $url : $url;
 }
 
 /**

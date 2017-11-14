@@ -17,8 +17,8 @@ use Phinx\Migration\AbstractMigration;
 use Phinx\Migration\MigrationInterface;
 use Phinx\Util\Util;
 use think\console\Input;
-use think\console\input\Option as InputOption;
 use think\console\Output;
+use think\facade\Env;
 use think\migration\Command;
 use think\migration\Migrator;
 
@@ -29,39 +29,21 @@ abstract class Migrate extends Command
      */
     protected $migrations;
 
-    public function __construct($name = null)
-    {
-
-        parent::__construct($name);
-
-        $this->addOption('--config', null, InputOption::VALUE_REQUIRED, 'The database config name', 'database');
-    }
-
-    /**
-     * 初始化
-     * @param Input  $input  An InputInterface instance
-     * @param Output $output An OutputInterface instance
-     */
-    protected function initialize(Input $input, Output $output)
-    {
-        $this->config = $input->getOption('config');
-    }
-
     protected function getPath()
     {
-        return $this->getConfig('path', ROOT_PATH . 'database') . DS . 'migrations' . ($this->config !== 'database' ? DS . $this->config : '');
+        return Env::get('root_path') . 'database' . DIRECTORY_SEPARATOR . 'migrations';
     }
 
     protected function executeMigration(MigrationInterface $migration, $direction = MigrationInterface::UP)
     {
         $this->output->writeln('');
-        $this->output->writeln(' ==' . ' <info>' . $migration->getVersion() . ' ' . $migration->getName() . ':</info>' . ' <comment>' . ($direction === MigrationInterface::UP ? 'migrating' : 'reverting') . '</comment>');
+        $this->output->writeln(' ==' . ' <info>' . $migration->getVersion() . ' ' . $migration->getName() . ':</info>' . ' <comment>' . (MigrationInterface::UP === $direction ? 'migrating' : 'reverting') . '</comment>');
 
         // Execute the migration and log the time elapsed.
         $start = microtime(true);
 
         $startTime = time();
-        $direction = ($direction === MigrationInterface::UP) ? MigrationInterface::UP : MigrationInterface::DOWN;
+        $direction = (MigrationInterface::UP === $direction) ? MigrationInterface::UP : MigrationInterface::DOWN;
         $migration->setAdapter($this->getAdapter());
 
         // begin the transaction if the adapter supports it
@@ -71,7 +53,7 @@ abstract class Migrate extends Command
 
         // Run the migration
         if (method_exists($migration, MigrationInterface::CHANGE)) {
-            if ($direction === MigrationInterface::DOWN) {
+            if (MigrationInterface::DOWN === $direction) {
                 // Create an instance of the ProxyAdapter so we can record all
                 // of the migration commands for reverse playback
                 /** @var ProxyAdapter $proxyAdapter */
@@ -100,7 +82,7 @@ abstract class Migrate extends Command
 
         $end = microtime(true);
 
-        $this->output->writeln(' ==' . ' <info>' . $migration->getVersion() . ' ' . $migration->getName() . ':</info>' . ' <comment>' . ($direction === MigrationInterface::UP ? 'migrated' : 'reverted') . ' ' . sprintf('%.4fs', $end - $start) . '</comment>');
+        $this->output->writeln(' ==' . ' <info>' . $migration->getVersion() . ' ' . $migration->getName() . ':</info>' . ' <comment>' . (MigrationInterface::UP === $direction ? 'migrated' : 'reverted') . ' ' . sprintf('%.4fs', $end - $start) . '</comment>');
     }
 
     protected function getVersionLog()
@@ -116,7 +98,7 @@ abstract class Migrate extends Command
     protected function getMigrations()
     {
         if (null === $this->migrations) {
-            $phpFiles = glob($this->getPath() . DS . '*.php', defined('GLOB_BRACE') ? GLOB_BRACE : 0);
+            $phpFiles = glob($this->getPath() . DIRECTORY_SEPARATOR . '*.php', defined('GLOB_BRACE') ? GLOB_BRACE : 0);
 
             // filter the files to only get the ones that match our naming scheme
             $fileNames = [];

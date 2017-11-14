@@ -45,6 +45,9 @@ class Common extends Base {
         }
     }
 
+    /**
+     * 如果没有权限执行该方法
+     */
     private function forbid () {
         $accept = $this->request->header('accept');
         if (strpos($accept, 'text/html') !== false) {

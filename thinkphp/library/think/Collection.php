@@ -167,9 +167,9 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
 
     /**
      * 在数组开头插入一个元素
-     * @param mixed     $value
-     * @param miexed    $key
-     * @return void
+     * @param mixed $value
+     * @param null  $key
+     * @return int
      */
     public function unshift($value, $key = null)
     {
@@ -177,21 +177,6 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
             array_unshift($this->items, $value);
         } else {
             $this->items = [$key => $value] + $this->items;
-        }
-    }
-
-    /**
-     * 在数组结尾插入一个元素
-     * @param mixed  $value
-     * @param mixed  $key
-     * @return void
-     */
-    public function push($value, $key = null)
-    {
-        if (is_null($key)) {
-            $this->items[] = $value;
-        } else {
-            $this->items[$key] = $value;
         }
     }
 
