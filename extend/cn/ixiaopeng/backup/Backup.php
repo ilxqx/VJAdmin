@@ -53,6 +53,7 @@ final class Backup {
         // 设置开始时间
         $this->begin = microtime(true);
         // 开始连接
+        $this->handler = null;
         $this->connect();
     }
 
@@ -72,17 +73,35 @@ final class Backup {
      * 获取PDO连接
      */
     private function connect () {
+        if ($this->handler === null) {
+            try {
+                $this->handler =new \PDO("{$this->config['type']}:host={$this->config['hostname']};port={$this->config['hostport']};",
+                    $this->config['username'],
+                    $this->config['password'],
+                    [
+                        \PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES {$this->config['charset']};",
+                        \PDO::ATTR_ERRMODE =>  \PDO::ERRMODE_EXCEPTION,
+                        \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC
+                    ]);
+            } catch (\PDOException $e) {
+                $this->message(0, $e->getMessage());
+            }
+        }
+        /*选择数据库*/
         try {
-           $this->handler =new \PDO("{$this->config['type']}:host={$this->config['hostname']};port={$this->config['hostport']};dbname={$this->config['database']};",
-                $this->config['username'],
-                $this->config['password'], 
-                [
-                    \PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES {$this->config['charset']};",
-                    \PDO::ATTR_ERRMODE =>  \PDO::ERRMODE_EXCEPTION, 
-                    \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC
-                ]);
+            $this->handler->exec("USE {$this->config['database']}");
         } catch (\PDOException $e) {
-            $this->message(0, $e->getMessage());
+            $msg = $e->getMessage();
+            /*判断如果数据库不存在，则创建数据库*/
+            if (strpos($msg, 'Unknown database') !== false) {
+                try {
+                    $this->handler->exec("CREATE DATABASE `{$this->config['database']}` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci");
+                } catch (\PDOException $exception) {
+                    $this->message(0, $exception->getMessage());
+                }
+            } else {
+                $this->message(0, $msg);
+            }
         }
     }
      /**

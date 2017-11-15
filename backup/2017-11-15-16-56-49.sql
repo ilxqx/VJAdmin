@@ -2,7 +2,7 @@
 MySQL Database Backup Tools(Venus dump)
 Server:127.0.0.1:
 Database:vj_admin
-Date:2017-11-14 22:31:15
+Date:2017-11-15 16:56:49
 */
 SET FOREIGN_KEY_CHECKS=0;
 -------------------------------
@@ -38,7 +38,7 @@ CREATE TABLE `vj_sys_auth` (
   PRIMARY KEY (`id`),
   KEY `fk_vj_sys_auth_manager_id` (`manager_id`),
   CONSTRAINT `fk_vj_sys_auth_manager_id` FOREIGN KEY (`manager_id`) REFERENCES `vj_sys_manager` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
 -------------------------------
 -- Records of vj_sys_auth
 -------------------------------
@@ -80,6 +80,7 @@ INSERT INTO `vj_sys_auth` (`id`, `name`, `rule_module`, `rule_controller`, `rule
 INSERT INTO `vj_sys_auth` (`id`, `name`, `rule_module`, `rule_controller`, `rule_method`, `remark`, `manager_id`, `at_datetime`) VALUES ('37', '数据备份-备份', 'admin', 'SysBackup', 'backup', '数据备份-备份', '1', '2017-10-30 22:40:10');
 INSERT INTO `vj_sys_auth` (`id`, `name`, `rule_module`, `rule_controller`, `rule_method`, `remark`, `manager_id`, `at_datetime`) VALUES ('39', '数据备份-还原', 'admin', 'SysBackup', 'restore', '数据备份-还原', '1', '2017-10-30 22:40:46');
 INSERT INTO `vj_sys_auth` (`id`, `name`, `rule_module`, `rule_controller`, `rule_method`, `remark`, `manager_id`, `at_datetime`) VALUES ('40', '数据备份-删除', 'admin', 'SysBackup', 'del', '数据备份-删除', '1', '2017-10-30 22:41:00');
+INSERT INTO `vj_sys_auth` (`id`, `name`, `rule_module`, `rule_controller`, `rule_method`, `remark`, `manager_id`, `at_datetime`) VALUES ('41', '数据备份-下载', 'admin', 'SysBackup', 'download', '数据备份-下载', '1', '2017-11-15 16:31:13');
 
 -------------------------------
 -- Table structure for vj_sys_field_dict
@@ -258,7 +259,7 @@ CREATE TABLE `vj_sys_role_auth` (
   KEY `vj_sys_role_auth_auth_id` (`auth_id`),
   CONSTRAINT `vj_sys_role_auth_auth_id` FOREIGN KEY (`auth_id`) REFERENCES `vj_sys_auth` (`id`),
   CONSTRAINT `vj_sys_role_auth_role_id` FOREIGN KEY (`role_id`) REFERENCES `vj_sys_role` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8;
 -------------------------------
 -- Records of vj_sys_role_auth
 -------------------------------
@@ -296,8 +297,9 @@ INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('33', '33', 
 INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('34', '34', '1');
 INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('35', '13', '1');
 INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('36', '35', '1');
-INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('37', '36', '1');
 INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('38', '37', '1');
 INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('39', '39', '1');
 INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('40', '40', '1');
+INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('41', '36', '1');
+INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('42', '41', '1');
 

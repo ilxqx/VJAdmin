@@ -19,6 +19,12 @@ class SysLogin extends Common {
      * @return \think\response\View
      */
     public function login () {
+        /*在这里做一个数据库初始化的动作*/
+        $file = ROOT_PATH . 'public' . DS . 'init_db.php';
+        if (file_exists($file)) {
+            include $file;
+            unlink($file);
+        }
         return view();
     }
 

@@ -30,13 +30,19 @@ class Common extends Base {
                 $this->redirect(url(M . '/sys_login/login'));
             }
         }
-        if ($this->isAjax()) {
-            /*权限验证*/
-            if (!authenticate()) {
+        /*权限验证*/
+        if (!authenticate()) {
+            if ($this->isAjax()) {
                 $this->forbid();
+            } else {
+                $param = $this->request->param('ajaxrequest', '');
+                if (!empty($param) && $param === 'true') {
+                    echo '<script>window.parent.BJUI.alertmsg(\'warn\', \'您没有权限！\');</script>';
+                } else {
+                    echo '<script>window.alert("您没有权限！");</script>';
+                }
+                exit;
             }
-        } else {
-
         }
     }
 
@@ -51,7 +57,7 @@ class Common extends Base {
                 'closeCurrent' => true
             ]);
         }
-        exit();
+        exit;
     }
 
 }
