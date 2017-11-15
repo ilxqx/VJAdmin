@@ -35,6 +35,8 @@ class Common extends Base {
             if (!authenticate()) {
                 $this->forbid();
             }
+        } else {
+
         }
     }
 

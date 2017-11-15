@@ -162,3 +162,49 @@ function getSysOption ($name) {
         ])
         ->value('value');
 }
+
+/**
+ * 将日期时间转换为对人类更友善的显示方式
+ * @param $time string|integer 时间
+ * @return false|string
+ */
+function humanTime ($time) {
+    if (is_string($time)) {
+        $time = strtotime($time);
+    }
+    $int = time() - $time;
+    if ($int <= 2) {
+        $str = sprintf('刚刚', $int);
+    } elseif ($int < 60) {
+        $str = sprintf('%d秒前', $int);
+    } elseif ($int < 3600) {
+        $str = sprintf('%d分钟前', floor($int / 60));
+    } elseif ($int < 86400) {
+        $str = sprintf('%d小时前', floor($int / 3600));
+    } elseif ($int < 604800) {
+        $str = sprintf('%d天前', floor($int / 86400));
+    } else {
+        $str = date('Y-m-d H:i:s', $time);
+    }
+    return $str;
+}
+
+/**
+ * 获取请求设备的类型
+ * @return int
+ */
+function getDeviceType () {
+    //全部变成小写字母
+    $agent = strtolower($_SERVER['HTTP_USER_AGENT']);
+    $type = 'other';
+    //分别进行判断
+    if (strpos($agent, 'iphone') !== false || strpos($agent, 'ipad') !== false){
+        $type = 'ios';
+    }
+    if (strpos($agent, 'android') !== false) {
+        $type = 'android';
+    }
+    return $type;
+}
+
+

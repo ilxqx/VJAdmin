@@ -1,23 +1,5 @@
-/*!
- * B-JUI  V1.31 (http://b-jui.com)
- * Git@OSC (http://git.oschina.net/xknaan/B-JUI)
- * Copyright 2014 K'naan.
- * Licensed under Apache (http://www.apache.org/licenses/LICENSE-2.0)
- */
-
-/* ========================================================================
- * B-JUI: bjui-core.js  V1.31
- * @author K'naan
- * -- Modified from dwz.core.js (author:ZhangHuihua@msn.com)
- * http://git.oschina.net/xknaan/B-JUI/blob/master/BJUI/js/bjui-core.js
- * ========================================================================
- * Copyright 2014 K'naan.
- * Licensed under Apache (http://www.apache.org/licenses/LICENSE-2.0)
- * ======================================================================== */
-
 +function ($) {
     'use strict';
-    
     var BJUI = {
         JSPATH     : 'BJUI/',
         PLUGINPATH : 'BJUI/plugins/',
@@ -5373,7 +5355,6 @@
     $(document).on(BJUI.eventType.initUI, function(e) {
         $(e.target).find('[data-toggle="autoajaxload"]').each(function() {
             var $element = $(this), data = $this.data(), options = data.options
-            
             if (options) {
                 if (typeof options === 'string') options = options.toObj()
                 if (typeof options === 'object') {
@@ -5381,7 +5362,6 @@
                     $.extend(data, options)
                 }
             }
-            
             data.target = this
             Plugin.call($element, 'doload', data)
         })

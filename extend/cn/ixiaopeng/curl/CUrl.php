@@ -48,11 +48,7 @@ final class CUrl {
         }
         /*处理请求参数*/
         if (is_array($fields) && !empty($fields)) {
-            $sets = array();
-            foreach ($fields AS $key => $val) {
-                $sets[] = $key . '=' . urlencode($val);
-            }
-            $fieldStr = implode('&', $sets);
+            $fieldStr = http_build_query($fields);
         }
         $method = strtolower($method);
         if ('post' == $method) {

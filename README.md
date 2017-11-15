@@ -1,4 +1,4 @@
-VJ Admin 1.2.1
+VJ Admin 1.2.2
 ===============
 
 ## 系统介绍
@@ -13,7 +13,8 @@ VJ Admin 1.2.1
  + 集成邮件发送功能（需要在系统选项中配置相关项）
  + 集成短信发送功能（使用阿里云的短信服务SMS，同样需要在系统选项中配置相关项）
  + 集成二维码生成功能，只需要调用相应的API即可，后面有详细介绍
- + 后续会继承大量常用功能（包括微信，PHPWord，PHPExcel等）
+ + 集成Excel表格的导入导出
+ + 后续会继承大量常用功能（包括微信，PHPWord等）
 
 > 运行环境要求PHP5.6以上。
 
@@ -407,6 +408,67 @@ if ($res === true) {
 返回值：`stdClass|string` 成功返回信息对象，失败则返回失败原因
 
 使用：`$res = querySMDetails(手机号码，发送日期);`
+
+> 23.humanTime
+
+作用：将日期时间转换为对人类更友善的显示方式
+
+参数：`string|integer` 字符串类型的日期时间格式或者整型类型的时间戳
+
+返回值：`string` 返回更人性化和直观的时间显示方式（例：1秒前，2分钟前，3小时前，4天前），超过七天就直接显示日期时间
+
+使用：`$str = humanTime('2017-11-14 22:22:11');`
+
+> 23.getDeviceType
+
+作用：获取请求设备的类型
+
+参数：无
+
+返回值：`string` 返回other表示其他，返回ios表示苹果，返回android表示安卓
+
+使用：`$device = getDeviceType();`
+
+> 24.createExcel
+
+作用：生成Excel表格
+
+参数：`array` 表格数据，`string` 文件名（可带后缀可不带，默认是为data），`string` excel文件类型（支持xls、xlsx、csv，默认为xlsx），`integer` 表格字体大小（默认为12），`bool` 是否解析换行（例：\n，默认为false）
+
+返回值：`file` 直接返回生成的文件（直接下载）
+
+使用：
+
+```php
+createExcel([
+    ['name', 'value', 'age'],
+    ['name1', 'value1', 'age1'],
+    ['name2', 'value2', 'age2'],
+    ['name3', 'value3', 'age3'],
+    ['name4', 'value4', 'age4'],
+    ['name5', 'value5', 'age5']
+], 'info', 'xlsx', '14', false);
+// 将生成info.xlsx的excel文件（浏览器中会提示下载）
+```
+
+> 25.parseExcel
+
+作用：解析excel文件
+
+参数：`string` 文件全路径（绝对路径）
+
+返回值：`array` 返回解析后的数据
+
+使用：
+
+```php
+// 支持解析xlsx、xls以及csv格式的文件
+// 注意，如果文件无效或者不存在会返回空数组
+$arr = parseExcel('D:\\info.xlsx');
+// 数组中保存着数据
+```
+
+注意：如果excel文件中有多个Sheet，那么数组中第一维会以Sheet名为键值，其中的数据数组为键值。如果只有一个Sheet，那么就直接是这个Sheet里面的数据数组
 
 ## 系统extend提供的功能类使用
 
