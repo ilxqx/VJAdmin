@@ -96,6 +96,7 @@ final class Backup {
             if (strpos($msg, 'Unknown database') !== false) {
                 try {
                     $this->handler->exec("CREATE DATABASE `{$this->config['database']}` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci");
+                    $this->connect();
                 } catch (\PDOException $exception) {
                     $this->message(0, $exception->getMessage());
                 }
