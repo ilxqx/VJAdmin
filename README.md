@@ -14,6 +14,10 @@ VJ Admin 1.2.2
  + 集成短信发送功能（使用阿里云的短信服务SMS，同样需要在系统选项中配置相关项）
  + 集成二维码生成功能，只需要调用相应的API即可，后面有详细介绍
  + 集成Excel表格的导入导出
+ + 集成验证码功能（TP5自带和系统提供二选一）
+ + 集成图片处理功能（TP5自带）
+ + 集成数据库迁移功能（TP5自带）
+ + 集成Socket，Angular，时间操作等等许多功能（TP5自带）
  + 后续会继承大量常用功能（包括微信，PHPWord等）
 
 > 运行环境要求PHP5.6以上。
@@ -49,8 +53,10 @@ www  WEB部署目录（或者子目录）
 ├─app           应用目录
 │  ├─common                 应用公共函数目录
 │  |  ├─common.php          应用公共函数文件
+│  │
 │  ├─admin                  admin模块目录
-│  │  ├─config              模块配置文件目录
+│  │  ├─common              模块公用函数（可选）
+│  │  ├─config              模块配置文件目录（可选）
 │  │  |  ├─config.php       模块配置文件
 │  │  ├─extra               拓展配置文件目录（可选）
 │  │  ├─controller          控制器目录
@@ -65,13 +71,34 @@ www  WEB部署目录（或者子目录）
 │  |  |  ├─Base.php         base模型文件
 │  |  ├─validate            验证器目录
 │  |  |  ├─Base.php         base验证器文件
+│  │
+│  ├─business               business业务模块（其中的目录结构省略，根据你的需求来定模块，business只是Demo）
+│  |  ├─controller          控制器目录
+│  |  ├─model               模型目录
+│  |  ├─validate            验证器目录
+│  |  ├─view                验证器目录
+│  │
+│  ├─common                 应用公共函数目录
+│  |  ├─common.php          公共常用函数
+│  |  ├─curl.php            对extend中的CUrl类库的进一步封装函数
+│  |  ├─excel.php           对excel表格导入导出的封装函数
+│  |  ├─qrcode.php          对二维码生成的封装函数
+│  |  ├─sendmail.php        对发送邮件的封装函数
+│  |  ├─sendmsg.php         对发送短信的封装函数
+│  |  ├─system.php          系统使用的封装函数
+│  |  └─upload.php          对上传文件封装的函数
+│  │
 │  ├─config                 应用配置目录
 │  |  ├─config.php          应用配置文件
 │  |  ├─route.php           应用路由配置文件
 │  |  ├─tags.php            应用行为扩展定义文件
 │  |  └─database.php        应用数据库配置文件
+│  │
 │  ├─extra                  应用其他配置目录
-│  |  └─qr_code_config.php  二维码生成配置文件
+│  |  ├─qr_code_config.php  二维码生成配置文件
+│  |  ├─send_mail_config.php发送邮件的部分（不常变）配置文件（其余配置在系统选项中配置）
+│  |  └─send_msg_config.php 发送短信的部分（不常变）配置文件（其余配置在系统选项中配置）
+│  │
 │  ├─template               菜单自动生成模板目录
 │  |  ├─Controller.vj       控制器模板文件
 │  |  ├─Model.vj            模型模板文件
@@ -79,11 +106,33 @@ www  WEB部署目录（或者子目录）
 │  |  ├─index.vj            功能首页模板文件
 │  |  └─udpate.vj           功能添加修改模板文件
 │
+├─backup                    数据库备份sql文件存放目录
+|
+├─extend                    扩展类库目录
+|  ├─Aliyun                 阿里云短信服务类库
+|  ├─cn                     cn扩展类库目录
+|  |  ├─ixiaopeng           ixiaopeng扩展类库目录
+|  |  |  ├─backup           备份扩展类库目录
+|  |  |  |  └─Backup.php    备份类库文件
+|  |  |  ├─curl             客户端url类库目录
+|  |  |  |  └─CUrl.php      curl封装类库文件
+|  |  |  ├─verify           验证码类库目录
+│  |  |  |  ├─font          字体文件目录
+|  |  |  |  |  └─1.ttf      字体文件
+|  |  |  |  └─VerifyCode.php验证码生成类（TP5给我们提供了验证码类库，这个可选择性使用）
+|  ├─phpexcel               PHPExcel类库
+|  └─phpqrcode              PHPQRCode类库
+│  
 ├─public                    WEB目录（对外访问目录）
+│  ├─generator              网站生成文件目录（例如验证码的生成会放在该目录）
+│  ├─static                 网站静态资源目录（里面有很多静态资源，这里省略）
+│  ├─uploads                网站上传文件目录
+│  │  ├─files               上传的文件存放目录（除图片以外的文件）
+│  │  └─images              上传的图片存放目录
 │  ├─index.php              入口文件
 │  ├─router.php             快速测试文件
 │  └─.htaccess              用于apache的重写
-│
+│  
 ├─thinkphp                  框架系统目录
 │  ├─lang                   语言文件目录
 │  ├─library                框架类库目录
@@ -97,14 +146,6 @@ www  WEB部署目录（或者子目录）
 │  ├─helper.php             助手函数文件
 │  ├─phpunit.xml            phpunit配置文件
 │  └─start.php              框架入口文件
-│
-├─backup                    数据库备份sql文件存放目录
-|
-├─extend                    扩展类库目录
-|  ├─cn                     cn扩展类库目录
-|  |  ├─ixiaopeng           ixiaopeng扩展类库目录
-|  |  |  ├─backup           备份扩展类库目录
-|  |  |  |  └─Backup.php    备份类库文件
 |
 ├─runtime                   应用的运行时目录（可写，可定制）
 ├─vendor                    第三方类库目录（Composer依赖库）
@@ -114,6 +155,8 @@ www  WEB部署目录（或者子目录）
 ├─README.md                 README 文件
 ├─think                     命令行入口文件
 ```
+
+*注意：模块目录比较全的结构请参照admin模块*
 
 ## 系统使用
 

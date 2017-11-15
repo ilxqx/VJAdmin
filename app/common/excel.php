@@ -21,7 +21,7 @@
 function createExcel (array $data, $filename = 'data', $type = 'xlsx', $fontSize = 12, $wrap = false) {
     /*设置php的最大执行时间*/
     ini_set('max_execution_time', '0');
-    /*导入phpexcel内库*/
+    /*导入phpexcel类库*/
     import('phpexcel.PHPExcel');
     /*文件类型数组*/
     $typeArr = [
