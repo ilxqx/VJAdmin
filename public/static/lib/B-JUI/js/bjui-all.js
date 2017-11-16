@@ -17550,9 +17550,9 @@
             })
         }
         
-        /* Kindeditor */
-        if (KindEditor) {
-            $box.find('textarea[data-toggle="kindeditor"]').each(function() {
+        /* neditor */
+        if (UE) {
+            $box.find('textarea[data-toggle="neditor"]').each(function() {
                 var $editor = $(this).removeClass('form-control'), options = $editor.data(), _op = options.options
                 
                 if (_op && typeof _op === 'string') _op = _op.toObj()
@@ -17560,68 +17560,18 @@
                     $.extend(options, _op)
                     delete options.options
                 }
-                
-                if (options.items && typeof options.items === 'string')
-                    options.items = options.items.replaceAll('\'', '').replaceAll(' ', '').split(',')
-                if (options.afterUpload)         options.afterUpload = options.afterUpload.toFunc()
-                if (options.afterSelectFile) options.afterSelectFile = options.afterSelectFile.toFunc()
-                if (options.confirmSelect)     options.confirmSelect = options.confirmSelect.toFunc()
-                
-                var htmlTags = {
-                    font : [/*'color', 'size', 'face', '.background-color'*/],
-                    span : ['.color', '.background-color', '.font-size', '.font-family'
-                            /*'.color', '.background-color', '.font-size', '.font-family', '.background',
-                            '.font-weight', '.font-style', '.text-decoration', '.vertical-align', '.line-height'*/
-                    ],
-                    div : ['.margin', '.padding', '.text-align'
-                            /*'align', '.border', '.margin', '.padding', '.text-align', '.color',
-                            '.background-color', '.font-size', '.font-family', '.font-weight', '.background',
-                            '.font-style', '.text-decoration', '.vertical-align', '.margin-left'*/
-                    ],
-                    table: ['align', 'width'
-                            /*'border', 'cellspacing', 'cellpadding', 'width', 'height', 'align', 'bordercolor',
-                            '.padding', '.margin', '.border', 'bgcolor', '.text-align', '.color', '.background-color',
-                            '.font-size', '.font-family', '.font-weight', '.font-style', '.text-decoration', '.background',
-                            '.width', '.height', '.border-collapse'*/
-                    ],
-                    'td,th': ['align', 'valign', 'width', 'height', 'colspan', 'rowspan'
-                            /*'align', 'valign', 'width', 'height', 'colspan', 'rowspan', 'bgcolor',
-                            '.text-align', '.color', '.background-color', '.font-size', '.font-family', '.font-weight',
-                            '.font-style', '.text-decoration', '.vertical-align', '.background', '.border'*/
-                    ],
-                    a : ['href', 'target', 'name'],
-                    embed : ['src', 'width', 'height', 'type', 'loop', 'autostart', 'quality', '.width', '.height', 'align', 'allowscriptaccess'],
-                    img : ['src', 'width', 'height', 'border', 'alt', 'title', 'align', '.width', '.height', '.border'],
-                    'p,ol,ul,li,blockquote,h1,h2,h3,h4,h5,h6' : [
-                        'class', 'align', '.text-align', '.color', /*'.background-color', '.font-size', '.font-family', '.background',*/
-                        '.font-weight', '.font-style', '.text-decoration', '.vertical-align', '.text-indent', '.margin-left'
-                    ],
-                    pre : ['class'],
-                    hr : ['class', '.page-break-after'],
-                    'br,tbody,tr,strong,b,sub,sup,em,i,u,strike,s,del' : []
-                }
-                
-                KindEditor.create($editor, {
-                    pasteType                : options.pasteType,
-                    minHeight                : options.minHeight || 260,
-                    autoHeightMode           : options.autoHeight || false,
-                    items                    : options.items || KindEditor.options.items,
-                    uploadJson               : options.uploadJson,
-                    fileManagerJson          : options.fileManagerJson,
-                    allowFileManager         : options.allowFileManager || true,
-                    //fillDescAfterUploadImage : options.fillDescAfterUploadImage || true, //上传图片成功后转到属性页，为false则直接插入图片[设为true方便自定义函数(X_afterSelect)]
-                    afterUpload              : options.afterUpload,
-                    afterSelectFile          : options.afterSelectFile,
-                    //X_afterSelect            : options.confirmSelect,
-                    //htmlTags                 : htmlTags,
-                    /*
-                    cssPath                  : [
-                                                    BJUI.PLUGINPATH + 'kindeditor_4.1.10/editor-content.css', 
-                                                    BJUI.PLUGINPATH + 'kindeditor_4.1.10/plugins/code/prettify.css'
-                                               ],
-                    */
-                    afterBlur                : function() { this.sync() }
+
+                var ue = new UE.ui.Editor({
+                    maximumWords: 10000000,
+                    autoHeightEnabled: false,
+                    elementPathEnabled: false,
+                    enableAutoSave: false,
+                    scaleEnabled: false
                 })
+                ue.addListener('contentChange', function (editor) {
+                    $editor.val(ue.getContent())
+                })
+                ue.render($editor.get(0))
             })
         }
         

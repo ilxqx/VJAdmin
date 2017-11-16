@@ -25,7 +25,7 @@ class Customer extends Common {
         parent::__construct($rules, $message, $field);
         /*表单验证的规则*/
         $this->rule = [
-            'name' => 'require|max:20'
+            'name' => 'require|max:10000000'
         ];
         /*表单验证的场景*/
         $this->scene = [

@@ -8,7 +8,7 @@
         <div class="bjui-row col-1">
             <label for="name{:MCA}" class="row-label">姓名：</label>
 			<div class="row-input required">
-				<input type="text"  name="name" id="name{:MCA}" value="{$data.name|default=''}" data-rule="required;length(~20)">
+                <textarea data-toggle="neditor" style="height: 300px;" name="name" id="name{:MCA}" data-rule="required;length(~10000000)">{$data.name|default=''}</textarea>
 			</div>
         </div>
     </form>

@@ -244,13 +244,14 @@ class Base extends Controller {
         // 转数组处理
         castToArray($data);
         // 处理数据字典属性
-        $this->handleFieldsInDict($this->table, $data, $model->fieldDictNames, true);
+        $this->handleFieldsInDict($this->table, $data, $model->fieldDictNames, true, true);
         // 最终处理数据 如果有的话
         if (method_exists($this, 'afterDetail')) {
             $this->afterDetail($data);
         }
         // 返回数据
-        return json($data);
+        $this->assign('data', $data);
+        return view();
     }
 
     /**

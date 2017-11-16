@@ -39,8 +39,6 @@ class Customer extends Common {
 
     ];
 
-    public function index () {
 
-    }
 
 }
