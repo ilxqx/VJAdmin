@@ -167,7 +167,7 @@ class Base extends Controller {
             return '';
         }
         // 获取数据字段模型
-        $model = model('SysFieldDict');
+        $model = model('app\\admin\\model\\SysFieldDict');
         // 返回查询到的字段值含义
         return $model->where([
             'table' => $table,
@@ -244,7 +244,7 @@ class Base extends Controller {
         // 转数组处理
         castToArray($data);
         // 处理数据字典属性
-        $this->handleFieldsInDict($this->table, $data, $model->fieldDictNames, true, true);
+        $this->handleFieldsInDict($this->table, $data, $model->fieldDictNames, false, true);
         // 最终处理数据 如果有的话
         if (method_exists($this, 'afterDetail')) {
             $this->afterDetail($data);

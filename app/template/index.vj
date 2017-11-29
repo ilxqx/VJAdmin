@@ -7,7 +7,7 @@
             <tr>
                 <th>#</th>
                 #showFields#
-                <th width="200">操作</th>
+                <th width="#opWidth#">操作</th>
             </tr>
             </thead>
             <tbody>
@@ -15,14 +15,14 @@
             <tr>
                 <th>{$key + 1}</th>
                 #fields#
-                <th>
+                <th>#detail#
                     <a href="{:url(M_C . 'edit', ['id' => $val.id, 'tabid' => MCA])}"
                        data-icon="pencil"
                        class="btn btn-blue"
                        data-toggle="dialog"
                        data-id="{:MC . 'edit'}"
-                       data-width="650"
-                       data-height="500"
+                       data-width="#width#"
+                       data-height="#height#"
                     >
                         编辑
                     </a>

@@ -1,4 +1,4 @@
-{include file="common:headerSearch" search="true" height="500" width="650" /}
+{include file="common:headerSearch" search="true" height="500" width="850" /}
 
 <div class="bjui-pageContent tableContent">
     <div class="panel panel-default">
@@ -6,6 +6,9 @@
             <thead>
             <tr>
                 <th>#</th>
+                <th>姓名</th>
+				<th>图片</th>
+				<th>状态</th>
 				<th>管理员</th>
 				<th width="200">时间</th>
                 <th width="300">操作</th>
@@ -15,25 +18,35 @@
             {volist name="data" id="val"}
             <tr>
                 <th>{$key + 1}</th>
+                <td>{$val.name}</td>
+				<td data-toggle="popover" data-trigger="hover" data-html="true" data-container="body" data-placement="top" data-content="<img src='{:getFileUrl($val.pic)}' height='100' width='auto'/>">{$val.pic_name}</td>
+				<td>
+					{eq name="val.status" value="a"}
+					<div class="label label-success">{$val.status_name}</div>
+					{else/}
+					<div class="label label-danger">{$val.status_name}</div>
+					{/eq}
+				</td>
 				<td>{$val.manager_name}</td>
 				<td>{$val.at_datetime}</td>
                 <th>
-                    <a href="{:url(M_C . 'detail', ['id' => $val.id, 'tabid' => MCA])}"
-                       data-icon="eye"
-                       class="btn btn-green"
-                       data-toggle="dialog"
-                       data-id="{:MC . 'detail'}"
-                       data-width="650"
-                       data-height="500"
-                    >
-                        详情
-                    </a>
+<a href="{:url(M_C . 'detail', ['id' => $val.id, 'tabid' => MCA])}"
+						data-icon="eye"
+						class="btn btn-info"
+						data-toggle="dialog"
+						data-id="{:MC . 'detail'}"
+						data-width="850"
+						data-height="500"
+					>
+						详情
+					</a>
+
                     <a href="{:url(M_C . 'edit', ['id' => $val.id, 'tabid' => MCA])}"
                        data-icon="pencil"
                        class="btn btn-blue"
                        data-toggle="dialog"
                        data-id="{:MC . 'edit'}"
-                       data-width="650"
+                       data-width="850"
                        data-height="500"
                     >
                         编辑

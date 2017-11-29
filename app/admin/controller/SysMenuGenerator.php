@@ -186,6 +186,10 @@ class SysMenuGenerator extends Common {
                         $ruleBackEnd .= '255';
                     }
                     break;
+                case 'TEXT':
+                    $ruleForeEnd .= 'length(~10000000)';
+                    $ruleBackEnd .= 'max:10000000';
+                    break;
                 case 'DATETIME':
                     $ruleForeEnd .= 'datetime';
                     $ruleBackEnd .= 'date';
@@ -207,6 +211,13 @@ class SysMenuGenerator extends Common {
         $data = $this->request->param();
         $table_name = getTableNameOfPrefixWithCStyle($data['model_file_name']);
         $keys = array_keys($data);
+        $idName = config('system.sys_table_pk');
+        /*处理时忽略处理*/
+        $ignore = [
+            $idName,
+            'manager_id',
+            'at_datetime'
+        ];
         $field_keys = [];
         $relation_keys = [];
         foreach ($keys as $key) {
@@ -238,12 +249,17 @@ class SysMenuGenerator extends Common {
         $relation_arr = $this->handleFields($relation_keys, $data, [
             'relation_table',
             'fk',
-            'map_fields'
+            'map_fields',
+            'is_assoc'
         ]);
         /*获取所有的外键集合*/
         $fk_keys = [];
+        $fk_assoc_keys = [];
         foreach ($relation_arr as $val) {
             array_push($fk_keys, $val['fk']);
+            if ($val['is_assoc'] === 'a') {
+                array_push($fk_assoc_keys, $val['fk']);
+            }
         }
         /*创建表结构的语句*/
         $sql = $this->createTableSql($table_name, $fields_arr, $relation_arr);
@@ -271,6 +287,33 @@ class SysMenuGenerator extends Common {
         }
         $searchFields = rtrim($searchFields, ",\r\n\t\t");
         $controllerFile = str_replace('#searchFields#', $searchFields, $controllerFile);
+        /*书写添加修改页面的公共操作代码*/
+        $assocArr = [];
+        foreach ($relation_arr as $val) {
+            if ($val['is_assoc'] === 'a' && !in_array($val['fk'], $ignore)) {
+                array_push($assocArr, $val);
+            }
+        }
+        if (!empty($assocArr)) {
+            $str = "public function beforeUpdate () {\r\n\t\t";
+            foreach ($assocArr as $val) {
+                $map = $this->resolveFkMap($val['map_fields']);
+                $assocField = $map[0][1];
+                $assocName = $map[0][0] . '_list';
+                $str .= "\${$assocName} = model('" . str_replace('\\', '\\\\', $val['relation_table']) . "')\r\n\t\t\t";
+                $str .= "->field([\r\n\t\t\t\t";
+                $str .= "'{$idName}',\r\n\t\t\t\t";
+                $str .= "'{$assocField}'\r\n\t\t\t";
+                $str .= "])\r\n\t\t\t";
+                $str .= "->select();\r\n\t\t";
+                $str .= "\$this->assign('{$assocName}', \${$assocName});\r\n\r\n\t\t";
+            }
+            $str = rtrim($str, "\r\n\r\n\t\t");
+            $str .= "\r\n\t}";
+            $controllerFile = str_replace('#beforeUpdate#', $str, $controllerFile);
+        } else {
+            $controllerFile = str_replace('#beforeUpdate#', '', $controllerFile);
+        }
         file_put_contents($modulePath . 'controller' . DS . $data['controller_file_name'] . '.php', $controllerFile);
         /*创建模型*/
         $modelFile = file_get_contents($templatePath . 'Model.vj');
@@ -348,12 +391,6 @@ class SysMenuGenerator extends Common {
         $rules = '';
         $add_fields = '';
         $edit_fields = '';
-        $idName = config('system.sys_table_pk');
-        $ignore = [
-            $idName,
-            'manager_id',
-            'at_datetime'
-        ];
         foreach ($fields_arr as $val) {
             if (in_array($val['field_name'], $ignore)) {
                 continue;
@@ -381,6 +418,18 @@ class SysMenuGenerator extends Common {
         $indexFile = str_replace('#height#', $data['dialog_height'], $indexFile);
         $indexFile = str_replace('#width#', $data['dialog_width'], $indexFile);
         $indexFile = str_replace('#pagination#', ($data['paginate'] === 'a') ? "{include file=\"common:paginateFooter\" /}" : '', $indexFile);
+        $indexFile = str_replace('#opWidth#', ($data['detail'] === 'a') ? '300' : '200', $indexFile);
+        $detailBtn = "\r\n<a href=\"{:url(M_C . 'detail', ['id' => \$val.id, 'tabid' => MCA])}\"\r\n\t\t\t\t\t\t";
+        $detailBtn .= "data-icon=\"eye\"\r\n\t\t\t\t\t\t";
+        $detailBtn .= "class=\"btn btn-info\"\r\n\t\t\t\t\t\t";
+        $detailBtn .= "data-toggle=\"dialog\"\r\n\t\t\t\t\t\t";
+        $detailBtn .= "data-id=\"{:MC . 'detail'}\"\r\n\t\t\t\t\t\t";
+        $detailBtn .= "data-width=\"{$data['dialog_width']}\"\r\n\t\t\t\t\t\t";
+        $detailBtn .= "data-height=\"{$data['dialog_height']}\"\r\n\t\t\t\t\t";
+        $detailBtn .= ">\r\n\t\t\t\t\t\t";
+        $detailBtn .= "详情\r\n\t\t\t\t\t";
+        $detailBtn .= "</a>\r\n";
+        $indexFile = str_replace('#detail#', ($data['detail'] === 'a') ? $detailBtn : '', $indexFile);
         $showFields = '';
         $fieldList = '';
         $show_fields_arr = $this->getShowFields($fields_arr);
@@ -394,7 +443,7 @@ class SysMenuGenerator extends Common {
                 if ($val['field_name'] === $value['fk']) {
                     $map = $this->resolveFkMap($value['map_fields']);
                     /*处理一下图片的显示*/
-                    if (trim($arrWithNoNS[$key], "'") === 'SysFile') {
+                    if (in_array($val['field_name'], $fileArrKeys) && $fileArr[$val['field_name']]['type'] === 'image') {
                         $fieldList .= "<td data-toggle=\"popover\" data-trigger=\"hover\" data-html=\"true\" data-container=\"body\" data-placement=\"top\" data-content=\"<img src='{:getFileUrl(\$val.{$val['field_name']})}' height='100' width='auto'/>\">{\$val.{$map[0][0]}}</td>\r\n\t\t\t\t";
                     } else {
                         $fieldList .= "<td>{\$val.{$map[0][0]}}</td>\r\n\t\t\t\t";
@@ -439,6 +488,7 @@ class SysMenuGenerator extends Common {
             $inputFields .= " class=\"row-label\">{$val['field_comment']}：</label>\r\n\t\t\t";
             $inputFields .= "<div class=\"row-input" . ($val['field_null'] === 'NOT NULL' ? ' required' : '') . "\">\r\n\t\t\t\t";
             if (in_array($val['field_name'], $fieldDictNames)) {
+                /*如果是字段字典有的字段*/
                 $inputFields .= "{volist name=\"{$val['field_name']}_values_meanings\" id=\"val\"}\r\n\t\t\t\t";
                 $inputFields .= "{if condition=\"isset(\$data) && !empty(\$data.{$val['field_name']}) && \$data.{$val['field_name']} == \$val.value\"}\r\n\t\t\t\t";
                 if ($val['field_null'] === 'NOT NULL') {
@@ -453,14 +503,45 @@ class SysMenuGenerator extends Common {
                 $inputFields .= "{/if}\r\n\t\t\t\t";
                 $inputFields .= "{/volist}\r\n\t\t\t";
             } else if (in_array($val['field_name'], $fileArrKeys)) {
+                /*如果是文件上传*/
                 $inputFields .= "{if condition=\"isset(\$data) && !empty(\$data.{$val['field_name']})\"}\r\n\t\t\t\t";
                 $inputFields .= "<input type=\"file\" data-toggle=\"fileinput\" " . ($fileArr[$val['field_name']]['type'] === 'file' ? ('data-ext="' . $fileArr[$val['field_name']]['ext'] . '"') : 'data-ext="bmp,png,gif,jpg,jpeg,jpe,svg"') . " name=\"{$val['field_name']}\" id=\"{$val['field_name']}{:MCA}\" data-preview=\"{:getFileUrl(\$data.{$val['field_name']})}\">\r\n\t\t\t\t";
                 $inputFields .= "{else/}\r\n\t\t\t\t";
                 $inputFields .= "<input type=\"file\" data-toggle=\"fileinput\" " . ($fileArr[$val['field_name']]['type'] === 'file' ? ('data-ext="' . $fileArr[$val['field_name']]['ext'] . '"') : 'data-ext="bmp,png,gif,jpg,jpeg,jpe,svg"') . " name=\"{$val['field_name']}\" id=\"{$val['field_name']}{:MCA}\" data-rule=\"" . $this->getValidateRules($val, 1, $fileArrKeys) . "\">\r\n\t\t\t\t";
                 $inputFields .= "{/if}\r\n\t\t\t";
+            } else if (in_array($val['field_name'], $fk_assoc_keys)) {
+                /*如果是关联字段*/
+                foreach ($relation_arr as $v) {
+                    if ($val['field_name'] == $v['fk']) {
+                        $info = $v;
+                    }
+                }
+                /*说明此字段确实需要关联*/
+                $map = $this->resolveFkMap($info['map_fields']);
+                $assocField = $map[0][1];
+                $assocName = $map[0][0] . '_list';
+                $inputFields .= "<select id=\"role_id{:MCA}\"\r\n\t\t\t\t\t\t";
+                $inputFields .= "data-rule=\"required\"\r\n\t\t\t\t\t\t";
+                $inputFields .= "data-live-search=\"true\"\r\n\t\t\t\t\t\t";
+                $inputFields .= "name=\"role_id\"\r\n\t\t\t\t\t\t";
+                $inputFields .= "data-width=\"437\"\r\n\t\t\t\t\t\t";
+                $inputFields .= "data-toggle=\"selectpicker\">\r\n\t\t\t\t\t";
+                $inputFields .= "{volist name=\"{$assocName}\" id=\"val\"}\r\n\t\t\t\t\t";
+                $inputFields .= "{if condition=\"isset(\$data) && !empty(\$data.{$val['field_name']}) && \$data.{$val['field_name']} == \$val.{$idName}\"}\r\n\t\t\t\t\t";
+                $inputFields .= "<option value=\"{\$val.{$idName}}\" selected>{\$val.{$assocField}}</option>\r\n\t\t\t\t\t";
+                $inputFields .= "{else/}\r\n\t\t\t\t\t";
+                $inputFields .= "<option value=\"{\$val.{$idName}}\">{\$val.{$assocField}}</option>\r\n\t\t\t\t\t";
+                $inputFields .= "{/if}\r\n\t\t\t\t\t";
+                $inputFields .= "{/volist}\r\n\t\t\t\t";
+                $inputFields .= "</select>\r\n\t\t\t";
             } else if ($val['field_name'] === 'remark') {
+                /*对于remark字段（特定）使用文本框*/
                 $inputFields .= "<textarea style=\"resize: none;\" name=\"{$val['field_name']}\" id=\"{$val['field_name']}{:MCA}\" data-toggle=\"autoheight\" data-rule=\"" . $this->getValidateRules($val, 1, $fileArrKeys) . "\" rows=\"5\">{\$data.{$val['field_name']}|default=''}</textarea>\r\n\t\t\t";
+            } else if ($val['field_type'] === 'TEXT') {
+                /*对于TEXT字段使用富文本编辑器*/
+                $inputFields .= "<textarea name=\"{$val['field_name']}\" id=\"{$val['field_name']}{:MCA}\" data-toggle=\"neditor\" style=\"height: 300px;\" data-rule=\"" . $this->getValidateRules($val, 1, $fileArrKeys) . "\">{\$data.{$val['field_name']}|default=''}</textarea>\r\n\t\t\t";
             } else {
+                /*普通输入框（有可能会是时间选择）*/
                 $inputFields .= "<input type=\"text\" " . (($val['field_type'] === 'DATETIME') ? 'data-toggle="datepicker" data-pattern="yyyy-MM-dd HH:mm:ss"' : ($val['field_type'] === 'DATE' ? 'data-toggle="datepicker"' : '')) . " name=\"{$val['field_name']}\" id=\"{$val['field_name']}{:MCA}\" value=\"{\$data.{$val['field_name']}|default=''}\" data-rule=\"" . $this->getValidateRules($val, 1, $fileArrKeys) . "\">\r\n\t\t\t";
             }
             $inputFields .= "</div>\r\n\t\t\t";
@@ -469,6 +550,50 @@ class SysMenuGenerator extends Common {
         $updateFile = str_replace('#inputFields#', $inputFields, $updateFile);
         $updateFile = str_replace('#enctype#', (empty($fileArr) ? '' : ' enctype="multipart/form-data"'), $updateFile);
         file_put_contents($viewPath . DS . 'update.html', $updateFile);
+        /*处理detail页面*/
+        $detailFile = file_get_contents($templatePath . 'detail.vj');
+        $detailStr = '';
+        $includeContent = false;
+        foreach ($fields_arr as $val) {
+            if ($val['field_name'] === $idName) {
+                continue;
+            }
+            if ($val['field_type'] === 'TEXT') {
+                $includeContent = true;
+            }
+            $detailStr .= "<label class=\"row-label\">{$val['field_comment']}：</label>\r\n\t\t";
+            $detailStr .= "<div class=\"row-input\">\r\n\t\t\t";
+            /*处理关联表显示，只能显示一个*/
+            foreach ($relation_arr as $key => $value) {
+                if ($val['field_name'] === $value['fk']) {
+                    $map = $this->resolveFkMap($value['map_fields']);
+                    /*处理一下图片的显示*/
+                    if (in_array($val['field_name'], $fileArrKeys) && $fileArr[$val['field_name']]['type'] === 'image') {
+                        $detailStr .= "<img class=\"thumbnail\" src='{:getFileUrl(\$data.{$val['field_name']})}' height='auto' width='50%'/>\r\n\t\t";
+                    } else {
+                        $detailStr .= "{\$data.{$map[0][0]}}\r\n\t\t";
+                    }
+                    $detailStr .= "</div>\r\n\t\t";
+                    continue 2;
+                }
+            }
+            /*处理数据字典*/
+            if (in_array($val['field_name'], $fieldDictNames)) {
+                $detailStr .= "{eq name=\"data.{$val['field_name']}\" value=\"a\"}\r\n\t\t\t";
+                $detailStr .= "<div class=\"label label-success\">{\$data." . $val['field_name'] . "_name}</div>\r\n\t\t\t";
+                $detailStr .= "{else/}\r\n\t\t\t";
+                $detailStr .= "<div class=\"label label-danger\">{\$data." . $val['field_name'] . "_name}</div>\r\n\t\t\t";
+                $detailStr .= "{/eq}\r\n\t\t";
+                $detailStr .= "</div>\r\n\t\t";
+                continue;
+            }
+            $detailStr .= "{\$data.{$val['field_name']}}\r\n\t\t";
+            $detailStr .= "</div>\r\n\t\t";
+        }
+        $detailStr = rtrim($detailStr, "\r\n\t\t");
+        $detailFile = str_replace('#detail#', $detailStr, $detailFile);
+        $detailFile = str_replace('#parse#', $includeContent ? "{include file=\"common:detailContentParse\"/}" : "", $detailFile);
+        file_put_contents($viewPath . DS . 'detail.html', $detailFile);
         return $this->handleJson(1, '生成菜单成功！', true);
     }
 

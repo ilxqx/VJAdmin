@@ -1,9 +1,34 @@
 <div id="{:MCA}" class="bjui-pageContent">
     <div class="bjui-row col-1">
         <label class="row-label">姓名：</label>
-        <div class="row-input">
-            {$data.name}
-        </div>
+		<div class="row-input">
+			{$data.name}
+		</div>
+        <label class="row-label">内容：</label>
+		<div class="row-input">
+			{$data.content}
+		</div>
+        <label class="row-label">图片：</label>
+		<div class="row-input">
+			<img class="thumbnail" src='{:getFileUrl($data.pic)}' height='auto' width='50%'/>
+		</div>
+        <label class="row-label">状态：</label>
+		<div class="row-input">
+			{eq name="data.status" value="a"}
+			<div class="label label-success">{$data.status_name}</div>
+			{else/}
+			<div class="label label-danger">{$data.status_name}</div>
+			{/eq}
+		</div>
+        <label class="row-label">管理员：</label>
+		<div class="row-input">
+			{$data.manager_name}
+		</div>
+        <label class="row-label">时间：</label>
+		<div class="row-input">
+			{$data.at_datetime}
+		</div>
+
     </div>
 </div>
 

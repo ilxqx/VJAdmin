@@ -2,7 +2,7 @@
 /* +----------------------------------------------------------------------
  * 作	者: venus <venus-wxp@outlook.com>
  +----------------------------------------------------------------------
- * 创建日期: 2017-11-09 14:44
+ * 创建日期: 2017-11-29 18:21
  +----------------------------------------------------------------------
  * 文件描述: Customer验证器
  +----------------------------------------------------------------------
@@ -25,15 +25,23 @@ class Customer extends Common {
         parent::__construct($rules, $message, $field);
         /*表单验证的规则*/
         $this->rule = [
-            'name' => 'require|max:10000000'
+            'name' => 'require|max:50',
+			'content' => 'require|max:10000000',
+			'pic' => 'require|integer',
+			'status' => 'in:' . getFieldValuesStr('vj_customer', 'status')
         ];
         /*表单验证的场景*/
         $this->scene = [
             'add' => [
-                'name'
+                'name',
+				'content',
+				'pic',
+				'status'
             ],
             'edit' => [
-                'name'
+                'name',
+				'content',
+				'status'
             ]
         ];
     }

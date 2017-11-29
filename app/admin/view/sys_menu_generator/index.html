@@ -8,82 +8,89 @@
                 </h4>
             </div>
             <table id="dbTable{:MCA}" class="table table-bordered table-responsive">
-                <tr>
-                    <th width="10%">字段</th>
-                    <th width="10%">类型</th>
-                    <th width="10%">长度</th>
-                    <th width="10%">无符号</th>
-                    <th width="10%">为空</th>
-                    <th width="10%">默认值</th>
-                    <th width="10%">自增</th>
-                    <th width="10%">主键</th>
-                    <th width="10%">备注</th>
-                    <th width="10%">显示</th>
-                    <th width="10%">操作</th>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="text" name="field_name0" value="id" data-rule="required">
-                    </td>
-                    <td>
-                        <select data-width="100%" data-live-search="true" name="field_type0" data-toggle="selectpicker">
-                            <option selected value="INT">int</option>
-                            <option value="FLOAT">float</option>
-                            <option value="VARCHAR">varchar</option>
-                            <option value="DATETIME">datetime</option>
-                            <option value="DATE">date</option>
-                            <option value="TEXT">text</option>
-                        </select>
-                    </td>
-                    <td>
-                        <input type="text" name="field_length0">
-                    </td>
-                    <td>
-                        <select data-width="100%" data-live-search="true" name="field_unsigned0" data-toggle="selectpicker">
-                            <option value="">无</option>
-                            <option selected value="UNSIGNED">unsigned（无符号）</option>
-                        </select>
-                    </td>
-                    <td>
-                        <select data-width="100%" data-live-search="true" name="field_null0" data-toggle="selectpicker">
-                            <option value="">无</option>
-                            <option value="NULL">null（可以为空）</option>
-                            <option selected value="NOT NULL">not null（不能为空）</option>
-                        </select>
-                    </td>
-                    <td>
-                        <input type="text" name="field_default0">
-                    </td>
-                    <td>
-                        <select data-width="100%" data-live-search="true" name="field_auto0" data-toggle="selectpicker">
-                            <option value="">无</option>
-                            <option selected value="AUTO_INCREMENT">auto_increment（自增）</option>
-                        </select>
-                    </td>
-                    <td>
-                        <select data-width="100%" data-live-search="true" name="field_pk0" data-toggle="selectpicker">
-                            <option value="">无</option>
-                            <option selected value="PRIMARY KEY">primary key（主键）</option>
-                        </select>
-                    </td>
-                    <td>
-                        <input type="text" value="主键" name="field_comment0">
-                    </td>
-                    <td>
-                        <select data-width="100%" data-live-search="true" name="field_show0" data-toggle="selectpicker">
-                            <option value="a">显示</option>
-                            <option selected value="b">不显示</option>
-                        </select>
-                    </td>
-                    <td>
-                        <a disabled class="btn btn-red" data-icon="trash-o">
-                            删除
-                        </a>
-                    </td>
-                </tr>
+                <tbody>
+                    <tr>
+                        <th width="20%">字段</th>
+                        <th width="20%">类型</th>
+                        <th width="20%">长度</th>
+                        <th width="20%">无符号</th>
+                        <th width="20%">为空</th>
+                        <th rowspan="4">
+                            <a disabled class="btn btn-red" data-icon="trash-o">
+                                删除
+                            </a>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" name="field_name0" value="id" data-rule="required">
+                        </td>
+                        <td>
+                            <select data-width="100%" data-live-search="true" name="field_type0" data-toggle="selectpicker">
+                                <option selected value="INT">int</option>
+                                <option value="FLOAT">float</option>
+                                <option value="VARCHAR">varchar</option>
+                                <option value="DATETIME">datetime</option>
+                                <option value="DATE">date</option>
+                                <option value="TEXT">text</option>
+                            </select>
+                        </td>
+                        <td>
+                            <input type="text" name="field_length0">
+                        </td>
+                        <td>
+                            <select data-width="100%" data-live-search="true" name="field_unsigned0" data-toggle="selectpicker">
+                                <option value="">无</option>
+                                <option selected value="UNSIGNED">unsigned（无符号）</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select data-width="100%" data-live-search="true" name="field_null0" data-toggle="selectpicker">
+                                <option value="">无</option>
+                                <option value="NULL">null（可以为空）</option>
+                                <option selected value="NOT NULL">not null（不能为空）</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>默认值</th>
+                        <th>自增</th>
+                        <th>主键</th>
+                        <th>备注</th>
+                        <th>显示</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" name="field_default0">
+                        </td>
+                        <td>
+                            <select data-width="100%" data-live-search="true" name="field_auto0" data-toggle="selectpicker">
+                                <option value="">无</option>
+                                <option selected value="AUTO_INCREMENT">auto_increment（自增）</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select data-width="100%" data-live-search="true" name="field_pk0" data-toggle="selectpicker">
+                                <option value="">无</option>
+                                <option selected value="PRIMARY KEY">primary key（主键）</option>
+                            </select>
+                        </td>
+                        <td>
+                            <input type="text" value="主键" name="field_comment0">
+                        </td>
+                        <td>
+                            <select data-width="100%" data-live-search="true" name="field_show0" data-toggle="selectpicker">
+                                <option value="a">显示</option>
+                                <option selected value="b">不显示</option>
+                            </select>
+                        </td>
+                    </tr>
+                </tbody>
             </table>
             <div class="panel-footer">
-                <a id="addField{:MCA}" class="btn btn-blue" data-icon="plus">添加一个字段</a>
+                <a id="addField{:MCA}" class="btn btn-blue" data-icon="plus">添加字段</a>
+                <a id="addFieldManager{:MCA}" class="btn btn-blue" data-icon="user">添加管理员字段</a>
+                <a id="addFieldTime{:MCA}" class="btn btn-blue" data-icon="clock-o">添加时间字段</a>
             </div>
         </div>
 
@@ -96,19 +103,47 @@
             </div>
             <table id="relationTable{:MCA}" class="table table-bordered table-responsive">
                 <tr>
-                    <th width="33.33%">关联模型（驼峰式）</th>
-                    <th width="33.33%">外键</th>
-                    <th width="33.33%">映射字段</th>
+                    <th width="25%"
+                        data-toggle="popover"
+                        data-trigger="hover"
+                        data-content="关联模型名请写驼峰式。若该关联模型非本模块，则要加命名空间限定，例：app\admin\model\Xxx"
+                        data-container="body"
+                        data-placement="top">关联模型（鼠标移上有提示）</th>
+                    <th width="25%"
+                        data-toggle="popover"
+                        data-trigger="hover"
+                        data-content="外键是您上面填写的表中的某一个字段，请填写它的名字。"
+                        data-container="body"
+                        data-placement="top">外键（鼠标移上有提示）</th>
+                    <th width="25%"
+                        data-toggle="popover"
+                        data-trigger="hover"
+                        data-content="填写格式：字段别名->关联表字段|字段别名->关联表字段..."
+                        data-container="body"
+                        data-placement="top">映射字段（鼠标移上有提示）</th>
+                    <th width="25%"
+                        data-toggle="popover"
+                        data-trigger="hover"
+                        data-content="在添加和修改时会自动查询关联表指定字段的信息"
+                        data-container="body"
+                        data-placement="top">是否关联映射字段（鼠标移上有提示）</th>
+                    <th>操作</th>
                 </tr>
                 <tr>
                     <td>
-                        <input type="text" title="若该关联模型非本模块，则要加命名空间限定（例：app\admin\model\Xxx）" placeholder="若该关联模型非本模块，则要加命名空间限定（例：app\admin\model\Xxx）" name="relation_table0" data-rule="required">
+                        <input type="text" name="relation_table0" value="app\admin\model\SysManager" data-rule="required">
                     </td>
                     <td>
-                        <input type="text" name="fk0" data-rule="required">
+                        <input type="text" name="fk0" value="manager_id" data-rule="required">
                     </td>
                     <td>
-                        <input type="text" title="格式（字段别名->关联表字段|字段别名->关联表字段...）" placeholder="格式（字段别名->关联表字段|字段别名->关联表字段...）" name="map_fields0" data-rule="required">
+                        <input type="text" name="map_fields0" value="manager_name->name" data-rule="required">
+                    </td>
+                    <td>
+                        <select data-width="100%" data-live-search="true" name="is_assoc0" data-toggle="selectpicker">
+                            <option selected value="a">关联</option>
+                            <option value="b">不关联</option>
+                        </select>
                     </td>
                     <td>
                         <a disabled class="btn btn-red" data-icon="trash-o">删除</a>
@@ -116,7 +151,7 @@
                 </tr>
             </table>
             <div class="panel-footer">
-                <a id="addRelation{:MCA}" class="btn btn-blue" data-icon="plus">添加一个映射</a>
+                <a id="addRelation{:MCA}" class="btn btn-blue" data-icon="plus">添加映射</a>
             </div>
         </div>
 
@@ -124,44 +159,53 @@
             <div class="panel-heading">
                 <h4 class="text-center text-success">
                     <i class="fa fa-cogs"></i>
-                    文件配置
+                    其他配置
                 </h4>
             </div>
             <table class="table table-bordered table-responsive">
                 <tr>
                     <th align="right">所属模块（下划线式）：</th>
                     <td>
-                        <input style="width: 50%;" type="text" name="module_name" data-rule="required">
+                        <input style="width: 70%;" type="text" name="module_name" data-rule="required">
                     </td>
                 </tr>
                 <tr>
                     <th align="right">控制器文件名（驼峰式）：</th>
                     <td>
-                        <input style="width: 50%;" type="text" name="controller_file_name" data-rule="required">
+                        <input style="width: 70%;" type="text" name="controller_file_name" data-rule="required">
                     </td>
                 </tr>
                 <tr>
                     <th align="right">模型文件名（驼峰式）：</th>
                     <td>
-                        <input style="width: 50%;" type="text" name="model_file_name" data-rule="required">
+                        <input style="width: 70%;" type="text" name="model_file_name" data-rule="required">
                     </td>
                 </tr>
                 <tr>
                     <th align="right">验证器文件名（驼峰式）：</th>
                     <td>
-                        <input style="width: 50%;" type="text" name="validate_file_name" data-rule="required">
+                        <input style="width: 70%;" type="text" name="validate_file_name" data-rule="required">
                     </td>
                 </tr>
                 <tr>
                     <th align="right">字段字典名：</th>
                     <td>
-                        <input style="width: 50%;" title="多个以英文逗号分开" placeholder="多个以英文逗号分开" type="text" name="dict_names">
+                        <input style="width: 70%;" title="多个以英文逗号分开" placeholder="多个以英文逗号分开" type="text" name="dict_names">
+                    </td>
+                </tr>
+                <tr>
+                    <th align="right">是生成详情页：</th>
+                    <td>
+                        <select data-width="70%" data-rule="required" data-live-search="true" name="detail" data-toggle="selectpicker">
+                            <option value="a">生成</option>
+                            <option value="b">不生成</option>
+                        </select>
                     </td>
                 </tr>
                 <tr>
                     <th align="right">是否分页：</th>
                     <td>
-                        <select data-width="50%" data-rule="required" data-live-search="true" name="paginate" data-toggle="selectpicker">
+                        <select data-width="70%" data-rule="required" data-live-search="true" name="paginate" data-toggle="selectpicker">
                             <option value="a">分页</option>
                             <option value="b">不分页</option>
                         </select>
@@ -170,7 +214,7 @@
                 <tr>
                     <th align="right">是否搜索：</th>
                     <td>
-                        <select data-width="50%" data-rule="required" data-live-search="true" name="search" data-toggle="selectpicker">
+                        <select data-width="70%" data-rule="required" data-live-search="true" name="search" data-toggle="selectpicker">
                             <option value="a">搜索</option>
                             <option value="b">不搜索</option>
                         </select>
@@ -179,25 +223,25 @@
                 <tr>
                     <th align="right">搜索字段：</th>
                     <td>
-                        <input style="width: 50%;" title="多个以英文逗号分开，两个或两个以上最后以逻辑符(|,&)结尾。（name,value,|）" placeholder="多个以英文逗号分开，两个或两个以上最后以逻辑符(|,&)结尾。（name,value,|）" type="text" name="search_fields">
+                        <input style="width: 70%;" title="多个以英文逗号分开，两个或两个以上最后以逻辑符(|,&)结尾。（name,value,|）" placeholder="多个以英文逗号分开，两个或两个以上最后以逻辑符(|,&)结尾。（name,value,|）" type="text" name="search_fields">
                     </td>
                 </tr>
                 <tr>
                     <th align="right">交互Dialog宽度：</th>
                     <td>
-                        <input style="width: 50%;" data-rule="required" value="650" type="text" name="dialog_width">
+                        <input style="width: 70%;" data-rule="required" value="650" type="text" name="dialog_width">
                     </td>
                 </tr>
                 <tr>
                     <th align="right">交互Dialog高度：</th>
                     <td>
-                        <input style="width: 50%;" data-rule="required" value="500" type="text" name="dialog_height">
+                        <input style="width: 70%;" data-rule="required" value="500" type="text" name="dialog_height">
                     </td>
                 </tr>
                 <tr>
                     <th align="right">上传文件：</th>
                     <td>
-                        <input style="width: 50%;" title="字段名->类型或者类型|后缀名（图片：pic->image，文件：file->file|xls,txt,jar,zip）" placeholder="字段名->类型或者类型|后缀名（图片：pic->image，文件：file->file|xls,txt,jar,zip）" type="text" name="file_list">
+                        <input style="width: 70%;" title="字段名->类型或者类型|后缀名（图片：pic->image，文件：file->file|xls,txt,jar,zip）" placeholder="字段名->类型或者类型|后缀名（图片：pic->image，文件：file->file|xls,txt,jar,zip）" type="text" name="file_list">
                     </td>
                 </tr>
             </table>
@@ -206,17 +250,108 @@
 </div>
 
 <script>
-    var template = '<tr id="row{:MCA}#index#">\n' +
+    var template = '<tbody id="row{:MCA}#index#">\n' +
+        '                    <tr>\n' +
+        '                        <th width="20%">字段</th>\n' +
+        '                        <th width="20%">类型</th>\n' +
+        '                        <th width="20%">长度</th>\n' +
+        '                        <th width="20%">无符号</th>\n' +
+        '                        <th width="20%">为空</th>\n' +
+        '                        <th rowspan="4">\n' +
+        '                            <a onclick="del(\'#index#\')" class="btn btn-red" data-icon="trash-o">\n' +
+        '                                删除\n' +
+        '                            </a>\n' +
+        '                        </th>\n' +
+        '                    </tr>\n' +
+        '                    <tr>\n' +
+        '                        <td>\n' +
+        '                            <input type="text" name="field_name#index#" data-rule="required">\n' +
+        '                        </td>\n' +
+        '                        <td>\n' +
+        '                            <select data-width="100%" data-live-search="true" name="field_type#index#" data-toggle="selectpicker">\n' +
+        '                                <option value="INT">int</option>\n' +
+        '                                <option value="FLOAT">float</option>\n' +
+        '                                <option value="VARCHAR">varchar</option>\n' +
+        '                                <option value="DATETIME">datetime</option>\n' +
+        '                                <option value="DATE">date</option>\n' +
+        '                                <option value="TEXT">text</option>\n' +
+        '                            </select>\n' +
+        '                        </td>\n' +
+        '                        <td>\n' +
+        '                            <input type="text" name="field_length#index#">\n' +
+        '                        </td>\n' +
+        '                        <td>\n' +
+        '                            <select data-width="100%" data-live-search="true" name="field_unsigned#index#" data-toggle="selectpicker">\n' +
+        '                                <option value="">无</option>\n' +
+        '                                <option value="UNSIGNED">unsigned（无符号）</option>\n' +
+        '                            </select>\n' +
+        '                        </td>\n' +
+        '                        <td>\n' +
+        '                            <select data-width="100%" data-live-search="true" name="field_null#index#" data-toggle="selectpicker">\n' +
+        '                                <option value="">无</option>\n' +
+        '                                <option value="NULL">null（可以为空）</option>\n' +
+        '                                <option value="NOT NULL">not null（不能为空）</option>\n' +
+        '                            </select>\n' +
+        '                        </td>\n' +
+        '                    </tr>\n' +
+        '                    <tr>\n' +
+        '                        <th>默认值</th>\n' +
+        '                        <th>自增</th>\n' +
+        '                        <th>主键</th>\n' +
+        '                        <th>备注</th>\n' +
+        '                        <th>显示</th>\n' +
+        '                    </tr>\n' +
+        '                    <tr>\n' +
+        '                        <td>\n' +
+        '                            <input type="text" name="field_default#index#">\n' +
+        '                        </td>\n' +
+        '                        <td>\n' +
+        '                            <select data-width="100%" data-live-search="true" name="field_auto#index#" data-toggle="selectpicker">\n' +
+        '                                <option value="">无</option>\n' +
+        '                                <option value="AUTO_INCREMENT">auto_increment（自增）</option>\n' +
+        '                            </select>\n' +
+        '                        </td>\n' +
+        '                        <td>\n' +
+        '                            <select data-width="100%" data-live-search="true" name="field_pk#index#" data-toggle="selectpicker">\n' +
+        '                                <option value="">无</option>\n' +
+        '                                <option value="PRIMARY KEY">primary key（主键）</option>\n' +
+        '                            </select>\n' +
+        '                        </td>\n' +
+        '                        <td>\n' +
+        '                            <input type="text" name="field_comment#index#">\n' +
+        '                        </td>\n' +
+        '                        <td>\n' +
+        '                            <select data-width="100%" data-live-search="true" name="field_show#index#" data-toggle="selectpicker">\n' +
+        '                                <option value="a">显示</option>\n' +
+        '                                <option value="b">不显示</option>\n' +
+        '                            </select>\n' +
+        '                        </td>\n' +
+        '                    </tr>\n' +
+        '                </tbody>';
+    var templateManager = '<tbody id="row{:MCA}#index#">\n' +
+        '                <tr>\n' +
+        '                    <th width="20%">字段</th>\n' +
+        '                    <th width="20%">类型</th>\n' +
+        '                    <th width="20%">长度</th>\n' +
+        '                    <th width="20%">无符号</th>\n' +
+        '                    <th width="20%">为空</th>\n' +
+        '                    <th rowspan="4">\n' +
+        '                        <a onclick="del(\'#index#\')" class="btn btn-red" data-icon="trash-o">\n' +
+        '                            删除\n' +
+        '                        </a>\n' +
+        '                    </th>\n' +
+        '                </tr>\n' +
+        '                <tr>\n' +
         '                    <td>\n' +
-        '                        <input type="text" name="field_name#index#" data-rule="required">\n' +
+        '                        <input type="text" name="field_name#index#" value="manager_id" data-rule="required">\n' +
         '                    </td>\n' +
         '                    <td>\n' +
-        '                        <select data-live-search="true" name="field_type#index#" data-toggle="selectpicker">\n' +
-        '                            <option value="INT">int</option>\n' +
+        '                        <select data-width="100%" data-live-search="true" name="field_type#index#" data-toggle="selectpicker">\n' +
+        '                            <option selected value="INT">int</option>\n' +
         '                            <option value="FLOAT">float</option>\n' +
         '                            <option value="VARCHAR">varchar</option>\n' +
         '                            <option value="DATETIME">datetime</option>\n' +
-        '                            <option value="DATE">date</option>' +
+        '                            <option value="DATE">date</option>\n' +
         '                            <option value="TEXT">text</option>\n' +
         '                        </select>\n' +
         '                    </td>\n' +
@@ -224,58 +359,147 @@
         '                        <input type="text" name="field_length#index#">\n' +
         '                    </td>\n' +
         '                    <td>\n' +
-        '                        <select data-live-search="true" name="field_unsigned#index#" data-toggle="selectpicker">\n' +
+        '                        <select data-width="100%" data-live-search="true" name="field_unsigned#index#" data-toggle="selectpicker">\n' +
         '                            <option value="">无</option>\n' +
-        '                            <option value="UNSIGNED">unsigned（无符号）</option>\n' +
+        '                            <option selected value="UNSIGNED">unsigned（无符号）</option>\n' +
         '                        </select>\n' +
         '                    </td>\n' +
         '                    <td>\n' +
-        '                        <select data-live-search="true" name="field_null#index#" data-toggle="selectpicker">\n' +
+        '                        <select data-width="100%" data-live-search="true" name="field_null#index#" data-toggle="selectpicker">\n' +
         '                            <option value="">无</option>\n' +
         '                            <option value="NULL">null（可以为空）</option>\n' +
-        '                            <option value="NOT NULL">not null（不能为空）</option>\n' +
+        '                            <option selected value="NOT NULL">not null（不能为空）</option>\n' +
         '                        </select>\n' +
         '                    </td>\n' +
+        '                </tr>\n' +
+        '                <tr>\n' +
+        '                    <th>默认值</th>\n' +
+        '                    <th>自增</th>\n' +
+        '                    <th>主键</th>\n' +
+        '                    <th>备注</th>\n' +
+        '                    <th>显示</th>\n' +
+        '                </tr>\n' +
+        '                <tr>\n' +
         '                    <td>\n' +
         '                        <input type="text" name="field_default#index#">\n' +
         '                    </td>\n' +
         '                    <td>\n' +
-        '                        <select data-live-search="true" name="field_auto#index#" data-toggle="selectpicker">\n' +
+        '                        <select data-width="100%" data-live-search="true" name="field_auto#index#" data-toggle="selectpicker">\n' +
         '                            <option value="">无</option>\n' +
         '                            <option value="AUTO_INCREMENT">auto_increment（自增）</option>\n' +
         '                        </select>\n' +
         '                    </td>\n' +
         '                    <td>\n' +
-        '                        <select data-live-search="true" name="field_pk#index#" data-toggle="selectpicker">\n' +
+        '                        <select data-width="100%" data-live-search="true" name="field_pk#index#" data-toggle="selectpicker">\n' +
         '                            <option value="">无</option>\n' +
         '                            <option value="PRIMARY KEY">primary key（主键）</option>\n' +
         '                        </select>\n' +
         '                    </td>\n' +
         '                    <td>\n' +
-        '                        <input type="text" name="field_comment#index#">\n' +
+        '                        <input type="text" value="管理员" name="field_comment#index#">\n' +
         '                    </td>\n' +
         '                    <td>\n' +
         '                        <select data-width="100%" data-live-search="true" name="field_show#index#" data-toggle="selectpicker">\n' +
-        '                            <option value="a">显示</option>\n' +
+        '                            <option selected value="a">显示</option>\n' +
         '                            <option value="b">不显示</option>\n' +
-        '                        </select>' +
+        '                        </select>\n' +
         '                    </td>\n' +
-        '                    <td>\n' +
+        '                </tr>\n' +
+        '                </tbody>';
+    var templateTime = '<tbody id="row{:MCA}#index#">\n' +
+        '                <tr>\n' +
+        '                    <th width="20%">字段</th>\n' +
+        '                    <th width="20%">类型</th>\n' +
+        '                    <th width="20%">长度</th>\n' +
+        '                    <th width="20%">无符号</th>\n' +
+        '                    <th width="20%">为空</th>\n' +
+        '                    <th rowspan="4">\n' +
         '                        <a onclick="del(\'#index#\')" class="btn btn-red" data-icon="trash-o">\n' +
         '                            删除\n' +
         '                        </a>\n' +
+        '                    </th>\n' +
+        '                </tr>\n' +
+        '                <tr>\n' +
+        '                    <td>\n' +
+        '                        <input type="text" name="field_name#index#" value="at_datetime" data-rule="required">\n' +
         '                    </td>\n' +
-        '                </tr>';
+        '                    <td>\n' +
+        '                        <select data-width="100%" data-live-search="true" name="field_type#index#" data-toggle="selectpicker">\n' +
+        '                            <option value="INT">int</option>\n' +
+        '                            <option value="FLOAT">float</option>\n' +
+        '                            <option value="VARCHAR">varchar</option>\n' +
+        '                            <option selected value="DATETIME">datetime</option>\n' +
+        '                            <option value="DATE">date</option>\n' +
+        '                            <option value="TEXT">text</option>\n' +
+        '                        </select>\n' +
+        '                    </td>\n' +
+        '                    <td>\n' +
+        '                        <input type="text" name="field_length#index#">\n' +
+        '                    </td>\n' +
+        '                    <td>\n' +
+        '                        <select data-width="100%" data-live-search="true" name="field_unsigned#index#" data-toggle="selectpicker">\n' +
+        '                            <option value="">无</option>\n' +
+        '                            <option value="UNSIGNED">unsigned（无符号）</option>\n' +
+        '                        </select>\n' +
+        '                    </td>\n' +
+        '                    <td>\n' +
+        '                        <select data-width="100%" data-live-search="true" name="field_null#index#" data-toggle="selectpicker">\n' +
+        '                            <option value="">无</option>\n' +
+        '                            <option value="NULL">null（可以为空）</option>\n' +
+        '                            <option selected value="NOT NULL">not null（不能为空）</option>\n' +
+        '                        </select>\n' +
+        '                    </td>\n' +
+        '                </tr>\n' +
+        '                <tr>\n' +
+        '                    <th>默认值</th>\n' +
+        '                    <th>自增</th>\n' +
+        '                    <th>主键</th>\n' +
+        '                    <th>备注</th>\n' +
+        '                    <th>显示</th>\n' +
+        '                </tr>\n' +
+        '                <tr>\n' +
+        '                    <td>\n' +
+        '                        <input type="text" name="field_default#index#">\n' +
+        '                    </td>\n' +
+        '                    <td>\n' +
+        '                        <select data-width="100%" data-live-search="true" name="field_auto#index#" data-toggle="selectpicker">\n' +
+        '                            <option value="">无</option>\n' +
+        '                            <option value="AUTO_INCREMENT">auto_increment（自增）</option>\n' +
+        '                        </select>\n' +
+        '                    </td>\n' +
+        '                    <td>\n' +
+        '                        <select data-width="100%" data-live-search="true" name="field_pk#index#" data-toggle="selectpicker">\n' +
+        '                            <option value="">无</option>\n' +
+        '                            <option value="PRIMARY KEY">primary key（主键）</option>\n' +
+        '                        </select>\n' +
+        '                    </td>\n' +
+        '                    <td>\n' +
+        '                        <input type="text" value="时间" name="field_comment#index#">\n' +
+        '                    </td>\n' +
+        '                    <td>\n' +
+        '                        <select data-width="100%" data-live-search="true" name="field_show#index#" data-toggle="selectpicker">\n' +
+        '                            <option selected value="a">显示</option>\n' +
+        '                            <option value="b">不显示</option>\n' +
+        '                        </select>\n' +
+        '                    </td>\n' +
+        '                </tr>\n' +
+        '                </tbody>';
     var rTemplate = '<tr id="rRow{:MCA}#index#">\n' +
         '                    <td>\n' +
-        '                        <input type="text" title="若该关联模型非本模块，则要加命名空间限定（例：app\\admin\\model\\Xxx）" placeholder="若该关联模型非本模块，则要加命名空间限定（例：app\\admin\\model\\Xxx）" name="relation_table#index#" data-rule="required">\n' +
+        '                        <input type="text" name="relation_table#index#" data-rule="required">\n' +
         '                    </td>\n' +
         '                    <td>\n' +
         '                        <input type="text" name="fk#index#" data-rule="required">\n' +
         '                    </td>\n' +
         '                    <td>\n' +
-        '                        <input type="text" title="格式（字段别名->关联表字段|字段别名->关联表字段...）" placeholder="格式（字段别名->关联表字段|字段别名->关联表字段...）" name="map_fields#index#" data-rule="required">\n' +
+        '                        <input type="text" name="map_fields#index#" data-rule="required">\n' +
         '                    </td>\n' +
+        '                    <td>\n' +
+        '                        <select data-width="100%" data-live-search="true" name="is_assoc#index#" data-toggle="selectpicker">\n' +
+        '                            <option selected value="a">关联</option>\n' +
+        '                            <option value="b">不关联</option>\n' +
+        '                        </select>\n' +
+        '                    </td>' +
         '                    <td>\n' +
         '                        <a onclick="delRelation(\'#index#\')" class="btn btn-red" data-icon="trash-o">删除</a>\n' +
         '                    </td>\n' +
@@ -285,6 +509,16 @@
 
     $('#addField{:MCA}').click(function () {
         var t = template.replaceAll('#index#', index ++);
+        $('#dbTable{:MCA}').append(t).initui();
+    });
+
+    $('#addFieldManager{:MCA}').click(function () {
+        var t = templateManager.replaceAll('#index#', index ++);
+        $('#dbTable{:MCA}').append(t).initui();
+    });
+
+    $('#addFieldTime{:MCA}').click(function () {
+        var t = templateTime.replaceAll('#index#', index ++);
         $('#dbTable{:MCA}').append(t).initui();
     });
 

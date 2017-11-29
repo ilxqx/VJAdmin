@@ -2,7 +2,7 @@
 MySQL Database Backup Tools(Venus dump)
 Server:127.0.0.1:
 Database:vj_admin
-Date:2017-11-15 16:56:49
+Date:2017-11-29 18:38:56
 */
 SET FOREIGN_KEY_CHECKS=0;
 -------------------------------
@@ -11,16 +11,22 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `vj_customer`;
 CREATE TABLE `vj_customer` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `name` varchar(20) NOT NULL COMMENT '姓名',
+  `name` varchar(50) NOT NULL COMMENT '姓名',
+  `content` text NOT NULL COMMENT '内容',
+  `pic` int(10) unsigned NOT NULL COMMENT '图片',
+  `status` varchar(2) NOT NULL COMMENT '状态',
   `manager_id` int(10) unsigned NOT NULL COMMENT '管理员',
   `at_datetime` datetime NOT NULL COMMENT '时间',
   PRIMARY KEY (`id`),
   KEY `fk_vj_customer_manager_id` (`manager_id`),
-  CONSTRAINT `fk_vj_customer_manager_id` FOREIGN KEY (`manager_id`) REFERENCES `vj_sys_manager` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `fk_vj_customer_pic` (`pic`),
+  CONSTRAINT `fk_vj_customer_manager_id` FOREIGN KEY (`manager_id`) REFERENCES `vj_sys_manager` (`id`),
+  CONSTRAINT `fk_vj_customer_pic` FOREIGN KEY (`pic`) REFERENCES `vj_sys_file` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 -------------------------------
 -- Records of vj_customer
 -------------------------------
+INSERT INTO `vj_customer` (`id`, `name`, `content`, `pic`, `status`, `manager_id`, `at_datetime`) VALUES ('1', '防守对方的手', '<p><strong><span style=\"font-size: 20px;\">这里是自动生成的内容</span></strong></p><p>很不错的哦<img src=\"//imgbaidu.b0.upaiyun.com/hi/jx2/j_0057.gif\"/></p>', '15', 'a', '1', '2017-11-29 18:34:12');
 
 -------------------------------
 -- Table structure for vj_sys_auth
@@ -98,7 +104,7 @@ CREATE TABLE `vj_sys_field_dict` (
   PRIMARY KEY (`id`),
   KEY `fk_vj_sys_field_dict_manager_id` (`manager_id`),
   CONSTRAINT `fk_vj_sys_field_dict_manager_id` FOREIGN KEY (`manager_id`) REFERENCES `vj_sys_manager` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 -------------------------------
 -- Records of vj_sys_field_dict
 -------------------------------
@@ -108,6 +114,8 @@ INSERT INTO `vj_sys_field_dict` (`id`, `table`, `field`, `value`, `meaning`, `re
 INSERT INTO `vj_sys_field_dict` (`id`, `table`, `field`, `value`, `meaning`, `remark`, `manager_id`, `at_datetime`) VALUES ('5', 'vj_sys_manager', 'status', 'b', '停用', '管理员的停用状态', '1', '2017-10-29 14:15:51');
 INSERT INTO `vj_sys_field_dict` (`id`, `table`, `field`, `value`, `meaning`, `remark`, `manager_id`, `at_datetime`) VALUES ('6', 'vj_sys_role', 'status', 'a', '启用', '角色启用状态', '1', '2017-10-29 15:46:04');
 INSERT INTO `vj_sys_field_dict` (`id`, `table`, `field`, `value`, `meaning`, `remark`, `manager_id`, `at_datetime`) VALUES ('7', 'vj_sys_role', 'status', 'b', '停用', '角色停用状态', '1', '2017-10-29 15:46:26');
+INSERT INTO `vj_sys_field_dict` (`id`, `table`, `field`, `value`, `meaning`, `remark`, `manager_id`, `at_datetime`) VALUES ('8', 'vj_customer', 'status', 'a', '开启', '开启', '1', '2017-11-29 18:23:50');
+INSERT INTO `vj_sys_field_dict` (`id`, `table`, `field`, `value`, `meaning`, `remark`, `manager_id`, `at_datetime`) VALUES ('9', 'vj_customer', 'status', 'b', '关闭', '关闭', '1', '2017-11-29 18:24:07');
 
 -------------------------------
 -- Table structure for vj_sys_file
@@ -122,11 +130,12 @@ CREATE TABLE `vj_sys_file` (
   `type` varchar(2) NOT NULL DEFAULT 'a',
   `at_datetime` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 -------------------------------
 -- Records of vj_sys_file
 -------------------------------
 INSERT INTO `vj_sys_file` (`id`, `name`, `relative_url`, `sha1`, `refs`, `type`, `at_datetime`) VALUES ('14', 'b42af90c30bfd40ed1b0ae70ccc6a39a.jpg', '\\uploads\\images\\vjeaa3ef6a-4a17-bba3-2c4b-e95f008ea42d.jpg', 'eb40f6a07deed6f5226e86ef7164e165af4f0624', '1', 'a', '2017-11-09 10:24:41');
+INSERT INTO `vj_sys_file` (`id`, `name`, `relative_url`, `sha1`, `refs`, `type`, `at_datetime`) VALUES ('15', '4CA20CE9ABF3D2EDA2D336590A62CD1D.jpg', '\\uploads\\images\\vj24335f24-5e7b-aab0-7b24-0fc2b0ffc136.jpg', '05ac140d3023dabad7d561c18c1e768060bd517a', '1', 'a', '2017-11-29 18:24:32');
 
 -------------------------------
 -- Table structure for vj_sys_manager

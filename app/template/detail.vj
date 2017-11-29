@@ -1,0 +1,7 @@
+<div id="{:MCA}" class="bjui-pageContent">
+    <div class="bjui-row col-1">
+        #detail#
+    </div>
+</div>
+
+#parse#

@@ -1,5 +1,5 @@
 <div class="bjui-pageContent">
-    <form action="{:url(M_C_A)}" data-toggle="validate" data-alertmsg="true">
+    <form action="{:url(M_C_A)}" data-toggle="validate" data-alertmsg="true" enctype="multipart/form-data">
         {if condition="isset($data) && !empty($data.id)"}
         <input type="hidden" name="id" value="{$data.id}">
         {/if}
@@ -8,7 +8,29 @@
         <div class="bjui-row col-1">
             <label for="name{:MCA}" class="row-label">姓名：</label>
 			<div class="row-input required">
-                <textarea data-toggle="neditor" style="height: 300px;" name="name" id="name{:MCA}" data-rule="required;length(~10000000)">{$data.name|default=''}</textarea>
+				<input type="text"  name="name" id="name{:MCA}" value="{$data.name|default=''}" data-rule="required;length(~50)">
+			</div>
+			<label for="content{:MCA}" class="row-label">内容：</label>
+			<div class="row-input required">
+				<textarea name="content" id="content{:MCA}" data-toggle="neditor" style="height: 300px;" data-rule="required;length(~10000000)">{$data.content|default=''}</textarea>
+			</div>
+			<label for="pic{:MCA}" class="row-label">图片：</label>
+			<div class="row-input required">
+				{if condition="isset($data) && !empty($data.pic)"}
+				<input type="file" data-toggle="fileinput" data-ext="bmp,png,gif,jpg,jpeg,jpe,svg" name="pic" id="pic{:MCA}" data-preview="{:getFileUrl($data.pic)}">
+				{else/}
+				<input type="file" data-toggle="fileinput" data-ext="bmp,png,gif,jpg,jpeg,jpe,svg" name="pic" id="pic{:MCA}" data-rule="required">
+				{/if}
+			</div>
+			<label class="row-label">状态：</label>
+			<div class="row-input required">
+				{volist name="status_values_meanings" id="val"}
+				{if condition="isset($data) && !empty($data.status) && $data.status == $val.value"}
+				<input checked type="radio" name="status" data-toggle="icheck" data-rule="checked" value="{$val.value}" data-label="{$val.meaning}">
+				{else/}
+				<input type="radio" name="status" data-toggle="icheck" data-rule="checked" value="{$val.value}" data-label="{$val.meaning}">
+				{/if}
+				{/volist}
 			</div>
         </div>
     </form>
