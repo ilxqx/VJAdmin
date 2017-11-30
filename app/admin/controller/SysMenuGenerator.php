@@ -520,10 +520,10 @@ class SysMenuGenerator extends Common {
                 $map = $this->resolveFkMap($info['map_fields']);
                 $assocField = $map[0][1];
                 $assocName = $map[0][0] . '_list';
-                $inputFields .= "<select id=\"role_id{:MCA}\"\r\n\t\t\t\t\t\t";
+                $inputFields .= "<select id=\"{$val['field_name']}{:MCA}\"\r\n\t\t\t\t\t\t";
                 $inputFields .= "data-rule=\"required\"\r\n\t\t\t\t\t\t";
                 $inputFields .= "data-live-search=\"true\"\r\n\t\t\t\t\t\t";
-                $inputFields .= "name=\"role_id\"\r\n\t\t\t\t\t\t";
+                $inputFields .= "name=\"{$val['field_name']}\"\r\n\t\t\t\t\t\t";
                 $inputFields .= "data-width=\"437\"\r\n\t\t\t\t\t\t";
                 $inputFields .= "data-toggle=\"selectpicker\">\r\n\t\t\t\t\t";
                 $inputFields .= "{volist name=\"{$assocName}\" id=\"val\"}\r\n\t\t\t\t\t";
@@ -550,6 +550,9 @@ class SysMenuGenerator extends Common {
         $updateFile = str_replace('#inputFields#', $inputFields, $updateFile);
         $updateFile = str_replace('#enctype#', (empty($fileArr) ? '' : ' enctype="multipart/form-data"'), $updateFile);
         file_put_contents($viewPath . DS . 'update.html', $updateFile);
+        if ($data['detail'] === 'b') {
+            return $this->handleJson(1, '生成菜单成功！', true);
+        }
         /*处理detail页面*/
         $detailFile = file_get_contents($templatePath . 'detail.vj');
         $detailStr = '';
