@@ -268,7 +268,7 @@
   color: #f8fdff;
 }
 
-.n-red .msg-wrap{position:absolute;z-index:10;padding:4px 6px 3px;font-size:12px;border:1px solid transparent;background-color:#fff6f6;border-color:#ff6464;color:#ff2929;box-shadow:0 1px 3px #ccc;border-radius:2px;}
+.n-red .msg-wrap{position:absolute;z-index:9999;padding:4px 6px 3px;font-size:12px;border:1px solid transparent;background-color:#fff6f6;border-color:#ff6464;color:#ff2929;box-shadow:0 1px 3px #ccc;border-radius:2px;}
 .n-red .msg-wrap .n-arrow b{color:#ff6464;text-shadow:0 0 2px #ccc}
 .n-red .msg-wrap .n-arrow i{color:#ffecec;}
 .n-red .msg-wrap .n-icon{background-image:url("images/validator_simple.png")}

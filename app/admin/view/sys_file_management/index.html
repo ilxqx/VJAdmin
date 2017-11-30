@@ -1,0 +1,227 @@
+<div class="bjui-pageContent tableContent">
+    <style>
+        .thumbnail .vj-pic {
+            width: 100%;
+            overflow: hidden;
+        }
+
+        @media (min-width: 768px) {
+            .thumbnail .vj-pic {
+                height: 300px;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .thumbnail .vj-pic {
+                height: 200px;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .thumbnail .vj-pic {
+                height: 250px;
+            }
+        }
+
+        .thumbnail .vj-pic img {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+
+    {if condition="!empty($files.user)"}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            上传图片管理
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                {volist name="files.user" id="val"}
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="thumbnail">
+                        <div class="vj-pic">
+                            <img src="{$val['url']}" alt="{:basename($val['url'])}">
+                        </div>
+                        <div class="caption">
+                            <p>{:basename($val['url'])}{if condition="!$val['ref']"}（未被引用）{/if}</p>
+                            <p>
+                                <a href="{:url(M_C . 'view', '', '')}?url={:urlencode($val.url)}"
+                                   data-icon="eye"
+                                   class="btn btn-blue"
+                                   data-toggle="dialog"
+                                   data-id="{:MC . 'view'}"
+                                   data-width="850"
+                                   data-height="600">查看</a>
+                                {if condition="!$val['ref']"}
+                                <a data-icon="trash"
+                                   class="btn btn-red"
+                                   data-toggle="doajax"
+                                   data-confirm-msg="确定要删除吗？"
+                                   data-url="{:url(M_C . 'del', '', '')}?url={:urlencode($val.url)}">删除</a>
+                                {/if}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {/volist}
+            </div>
+        </div>
+    </div>
+    {/if}
+
+    {if condition="!empty($files.scrawl)"}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            涂鸦图片管理
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                {volist name="files.scrawl" id="val"}
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="thumbnail">
+                        <div class="vj-pic">
+                            <img src="{$val['url']}" alt="{:basename($val['url'])}">
+                        </div>
+                        <div class="caption">
+                            <p>{:basename($val['url'])}{if condition="!$val['ref']"}（未被引用）{/if}</p>
+                            <p>
+                                <a href="{:url(M_C . 'view', '', '')}?url={:urlencode($val.url)}"
+                                   data-icon="eye"
+                                   class="btn btn-blue"
+                                   data-toggle="dialog"
+                                   data-id="{:MC . 'view'}"
+                                   data-width="850"
+                                   data-height="600">查看</a>
+                                {if condition="!$val['ref']"}
+                                <a data-icon="trash"
+                                   class="btn btn-red"
+                                   data-toggle="doajax"
+                                   data-confirm-msg="确定要删除吗？"
+                                   data-url="{:url(M_C . 'del', '', '')}?url={:urlencode($val.url)}">删除</a>
+                                {/if}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {/volist}
+            </div>
+        </div>
+    </div>
+    {/if}
+
+    {if condition="!empty($files.snapscreen)"}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            上传截图管理
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                {volist name="$files.snapscreen" id="val"}
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="thumbnail">
+                        <div class="vj-pic">
+                            <img src="{$val['url']}" alt="{:basename($val['url'])}">
+                        </div>
+                        <div class="caption">
+                            <p>{:basename($val['url'])}{if condition="!$val['ref']"}（未被引用）{/if}</p>
+                            <p>
+                                <a href="{:url(M_C . 'view', '', '')}?url={:urlencode($val.url)}"
+                                   data-icon="eye"
+                                   class="btn btn-blue"
+                                   data-toggle="dialog"
+                                   data-id="{:MC . 'view'}"
+                                   data-width="850"
+                                   data-height="600">查看</a>
+                                {if condition="!$val['ref']"}
+                                <a data-icon="trash"
+                                   class="btn btn-red"
+                                   data-toggle="doajax"
+                                   data-confirm-msg="确定要删除吗？"
+                                   data-url="{:url(M_C . 'del', '', '')}?url={:urlencode($val.url)}">删除</a>
+                                {/if}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {/volist}
+            </div>
+        </div>
+    </div>
+    {/if}
+
+    {if condition="!empty($files.catcher)"}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            抓取远程图片管理
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                {volist name="files.catcher" id="val"}
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="thumbnail">
+                        <div class="vj-pic">
+                            <img src="{$val['url']}" alt="{:basename($val['url'])}">
+                        </div>
+                        <div class="caption">
+                            <p>{:basename($val['url'])}{if condition="!$val['ref']"}（未被引用）{/if}</p>
+                            <p>
+                                <a href="{:url(M_C . 'view', '', '')}?url={:urlencode($val.url)}"
+                                   data-icon="eye"
+                                   class="btn btn-blue"
+                                   data-toggle="dialog"
+                                   data-id="{:MC . 'view'}"
+                                   data-width="850"
+                                   data-height="600">查看</a>
+                                {if condition="!$val['ref']"}
+                                <a data-icon="trash"
+                                   class="btn btn-red"
+                                   data-toggle="doajax"
+                                   data-confirm-msg="确定要删除吗？"
+                                   data-url="{:url(M_C . 'del', '', '')}?url={:urlencode($val.url)}">删除</a>
+                                {/if}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {/volist}
+            </div>
+        </div>
+    </div>
+    {/if}
+
+    {if condition="!empty($files.files)"}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            上传文件管理
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                {volist name="files.files" id="val"}
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="thumbnail">
+                        <div class="vj-pic">
+                            <img src="__IMG__/files.jpg" alt="{:basename($val['url'])}">
+                        </div>
+                        <div class="caption">
+                            <p>{:basename($val['url'])}{if condition="!$val['ref']"}（未被引用）{/if}</p>
+                            <p>
+                                <a href="{$val.url}"
+                                   data-icon="cloud-download"
+                                   class="btn btn-blue">下载</a>
+                                {if condition="!$val['ref']"}
+                                <a data-icon="trash"
+                                   class="btn btn-red"
+                                   data-toggle="doajax"
+                                   data-confirm-msg="确定要删除吗？"
+                                   data-url="{:url(M_C . 'del', '', '')}?url={:urlencode($val.url)}">删除</a>
+                                {/if}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {/volist}
+            </div>
+        </div>
+    </div>
+    {/if}
+</div>

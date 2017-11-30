@@ -305,5 +305,22 @@ return [
         'fontttf' => '',  // 验证码字体，不设置是随机获取
         'bg' => [243, 251, 254],  // 背景颜色
         'reset' => true  // 验证成功后是否重置
+    ],
+
+    // neditor上传的文件所在
+    "neditor" => [
+        'user' => DS . 'uploads' . DS . 'neditor' . DS . 'images' . DS . 'user' . DS,
+        'scrawl' => DS . 'uploads' . DS . 'neditor' . DS . 'images' . DS . 'scrawl' . DS,
+        'snapscreen' => DS . 'uploads' . DS . 'neditor' . DS . 'images' . DS . 'snapscreen' . DS,
+        'catcher' => DS . 'uploads' . DS . 'neditor' . DS . 'images' . DS . 'catcher' . DS,
+        'files' => DS . 'uploads' . DS . 'neditor' . DS . 'files' . DS,
+        'absolutePath' => ROOT_PATH . 'public',
+        /*使用该富文本编辑器的表*/
+        'table_names' => [
+            /*键对应模型（要带全命名空间），值对应使用到的字段（数组）*/
+            'app\\business\\model\\Customer' => [
+                'content'
+            ]
+        ]
     ]
 ];

@@ -38,6 +38,16 @@ class Customer extends Common {
 
     ];
 
-    
+    /*public function index () {
+
+    }*/
+
+    protected function beforeAlter (&$data) {
+        $data['content'] = htmlspecialchars($data['content']);
+    }
+
+    protected function afterDetail (&$data) {
+        $data['content'] = htmlspecialchars_decode($data['content']);
+    }
 
 }

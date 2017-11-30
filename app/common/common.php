@@ -207,4 +207,15 @@ function getDeviceType () {
     return $type;
 }
 
-
+/**
+ * 匹配给定文本中的所有图片的地址
+ * @param $content string 给定的文本
+ * @return mixed 返回给定文本中的图片地址数组
+ */
+function extractImgUrls ($content) {
+    $res = [];
+    /*匹配内容中的所有图片的地址*/
+    preg_match_all('/<\s*img[^<>]*src\s*=\s*["\']{1}([^<>"\']+)["\']{1}[^<>]*\/?\s*>/', $content, $res);
+    /*返回所匹配的所有图片的地址*/
+    return $res[1];
+}
