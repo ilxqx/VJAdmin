@@ -37,6 +37,10 @@ class ComposerStaticInit73d5bf89285288576ea0882cc1337bd2
             'Workerman\\' => 10,
             'Webmozart\\Assert\\' => 17,
         ),
+        'V' => 
+        array (
+            'Vaptcha\\' => 8,
+        ),
         'S' => 
         array (
             'Symfony\\Polyfill\\Mbstring\\' => 26,
@@ -106,6 +110,10 @@ class ComposerStaticInit73d5bf89285288576ea0882cc1337bd2
         'Webmozart\\Assert\\' => 
         array (
             0 => __DIR__ . '/..' . '/webmozart/assert/src',
+        ),
+        'Vaptcha\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/vaptcha/vaptcha-sdk/src',
         ),
         'Symfony\\Polyfill\\Mbstring\\' => 
         array (

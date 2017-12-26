@@ -1114,7 +1114,7 @@ label.x150 {
 .table > thead > tr > td,
 .table > tbody > tr > td,
 .table > tfoot > tr > td {
-    padding: 8px 5px;
+    padding: 10px 5px;
     vertical-align: middle;
 }
 
@@ -1138,7 +1138,7 @@ label.x150 {
 }
 
 .table > tbody > tr > td {
-    height: 30px;
+
 }
 
 .table.table-condensed > tbody > tr > td {

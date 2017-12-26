@@ -115,8 +115,33 @@
                 font: 14px/normal "microsoft yahei", "Times New Roman", "宋体", Times, serif;
             }
 
-            .refresh {
-                cursor: pointer;
+            .vaptcha-init-main {
+                display: table;
+                width: 100%;
+                height: 100%
+                background-color: #EEEEEE;
+            }
+            .vaptcha-init-loading {
+                display: table-cell;
+                vertical-align: middle;
+                text-align: center
+            }
+            .vaptcha-init-loading>a {
+                display: inline-block;
+                width: 18px;
+                height: 18px;
+            }
+            .vaptcha-init-loading>a img {
+                vertical-align: middle
+            }
+            .vaptcha-init-loading .vaptcha-text {
+                font-family: sans-serif;
+                font-size: 12px;
+                color: #CCCCCC;
+                vertical-align: middle
+            }
+            #vaptcha {
+                margin-top: 30px;
             }
         </style>
     </head>
@@ -150,7 +175,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <!--<div class="form-group">
                                 <div class="col-xs-10 col-xs-offset-1">
                                     <div class="input-group">
                                         <span class="input-group-addon">
@@ -164,6 +189,18 @@
                                         <span class="input-group-addon refresh">
                                             <span class="glyphicon glyphicon-refresh"></span>
                                         </span>
+                                    </div>
+                                </div>
+                            </div>-->
+                            <div class="form-group">
+                                <div class="col-xs-10 col-xs-offset-1">
+                                    <div id="vaptcha" style="width: 411px; height: 40px;">
+                                        <div class="vaptcha-init-main">
+                                            <div class="vaptcha-init-loading">
+                                                <a href="javascript: void 0;" target="_blank"><img src="https://cdn.vaptcha.com/vaptcha-loading.gif"/></a>
+                                                <span class="vaptcha-text">VAPTCHA启动中...</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -207,6 +244,7 @@
         <script src="__LIB__/B-JUI/js/jquery-1.11.3.min.js"></script>
         <script src="__LIB__/B-JUI/js/jquery.cookie.js"></script>
         <script src="__LIB__/B-JUI/plugins/bootstrap.min.js"></script>
+        <script src="https://cdn.vaptcha.com/v.js"></script>
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -232,8 +270,62 @@
             })();
         </script>
         <script type="text/javascript">
+            (function (win) {
+                var url = win.verifiedUrl || '/vaptcha/01';
+                var outage = win.outageUrl || '/downtime';
+                /*配置*/
+                var config = {
+                    vid: '',
+                    challenge: '',
+                    outage: outage,
+                    effect: 'popup',
+                    style: 'dark',
+                    type: 'click',
+                    container: '',
+                    lang: 'zh_CN',
+                    success: null,
+                    fail: null
+                };
+                /*ajax异步请求验证码流水号*/
+                $.ajax({
+                    url: url,
+                    type: 'get',
+                    dataType: 'json',
+                    async: false,
+                    success: function (resp) {
+                        if (resp.code === 1) {
+                            /*设置验证流水号和vid*/
+                            config.challenge = resp.data.challenge;
+                            config.vid = resp.data.vid;
+                            win.vaptchaValidate = function (container, success, fail) {
+                                var arr = ['container', 'success', 'fail'];
+                                [].slice.call(arguments, 0).forEach(function (val, index) {
+                                    config[arr[index]] = val;
+                                });
+                                /*获取验证对象*/
+                                win.vaptcha(config, function (obj) {
+                                    obj.init();
+                                });
+                            }
+                        } else {
+                            alert(resp.msg);
+                        }
+                    },
+                    error: function () {
+                        alert('网络错误！');
+                    }
+                });
+            })(window);
             $(function () {
-
+                var op = null;
+                vaptchaValidate('#vaptcha', function (token, challenge) {
+                    op = {
+                        token: token,
+                        challenge: challenge
+                    };
+                }, function () {
+                    showMsg('验证失败！');
+                });
                 $('body').keyup(function (event) {
                     if (event.keyCode === 13) {
                         $("#login").trigger("click");
@@ -242,8 +334,25 @@
                 });
 
                 $("#login").on("click", function () {
-                    submitForm();
+                    if ($.trim($('#username').val()) === '' || $.trim($('#password').val()) === '') {
+                        showMsg('请输入用户名或密码！');
+                        return;
+                    }
+                    if (op) {
+                        submitForm();
+                    } else {
+                        showMsg('请先进行验证！');
+                    }
                 });
+
+                function showMsg (msg) {
+                    var $el = $('#errModal .modal-body');
+                    $el.html($el.html().replace('#msg#', msg));
+                    $('#errModal').modal();
+                    setTimeout(function () {
+                        $('#errModal').modal('hide');
+                    }, 2000);
+                }
 
                 function submitForm() {
                     if (navigator.appName == "Microsoft Internet Explorer" &&
@@ -256,7 +365,9 @@
                         var formData = {
                             username: $('#username').val(),
                             password: $('#password').val(),
-                            verify_code: $('#verify_code').val()
+                            token: op.token,
+                            challenge: op.challenge,
+                            sceneId: '01'
                         };
                         $.ajax({
                             type: 'POST',
@@ -265,22 +376,16 @@
                             data: JSON.stringify(formData),
                             success: function (data) {
                                 if (data.status == 1) {
-                                    var $el = $('#sucModal .modal-body');
-                                    $el.html($el.html().replace('#msg#', data.message));
-                                    $('#sucModal').modal();
+                                    showMsg(data.message);
                                     setTimeout(function () {
                                         location.href = data.url;
                                     }, 1000);
                                 } else {
-                                    var $el = $('#errModal .modal-body');
-                                    $el.html($el.html().replace('#msg#', data.message));
-                                    $('#errModal').modal();
+                                    showMsg(data.message);
                                 }
                             },
                             error: function () {
-                                var $el = $('#errModal .modal-body');
-                                $el.html($el.html().replace('#msg#', '网络错误！'));
-                                $('#errModal').modal();
+                                showMsg('网络错误！');
                             }
                         });
                     }
@@ -289,11 +394,6 @@
                 $("#reset").on("click", function () {
                     $("#username").val("");
                     $("#password").val("");
-                });
-
-                $('.refresh').click(function () {
-                    var img = $(this).prev().children('img');
-                    img.attr('src', img.attr('src').replace(/\?vj=.*/, '') + '?vj=' + Math.random());
                 });
             });
         </script>

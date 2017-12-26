@@ -2,7 +2,7 @@
 MySQL Database Backup Tools(Venus dump)
 Server:127.0.0.1:
 Database:vj_admin
-Date:2017-11-30 12:20:15
+Date:2017-12-26 13:03:21
 */
 SET FOREIGN_KEY_CHECKS=0;
 -------------------------------
@@ -220,7 +220,7 @@ CREATE TABLE `vj_sys_option` (
   PRIMARY KEY (`id`),
   KEY `vj_sys_option_manager_id` (`manager_id`),
   CONSTRAINT `vj_sys_option_manager_id` FOREIGN KEY (`manager_id`) REFERENCES `vj_sys_manager` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 -------------------------------
 -- Records of vj_sys_option
 -------------------------------
@@ -237,6 +237,8 @@ INSERT INTO `vj_sys_option` (`id`, `name`, `value`, `remark`, `manager_id`, `at_
 INSERT INTO `vj_sys_option` (`id`, `name`, `value`, `remark`, `manager_id`, `at_datetime`) VALUES ('18', 'MailPort', '465', '邮件服务器端口号', '1', '2017-11-14 21:24:09');
 INSERT INTO `vj_sys_option` (`id`, `name`, `value`, `remark`, `manager_id`, `at_datetime`) VALUES ('19', 'MailFrom', 'venus-wxp@qq.com', '邮件发送者', '1', '2017-11-14 21:24:41');
 INSERT INTO `vj_sys_option` (`id`, `name`, `value`, `remark`, `manager_id`, `at_datetime`) VALUES ('20', 'MailName', 'Venus', '邮件发送者名称', '1', '2017-11-14 21:26:38');
+INSERT INTO `vj_sys_option` (`id`, `name`, `value`, `remark`, `manager_id`, `at_datetime`) VALUES ('21', 'VaptchaVID', '5a41a035a48612214c4a982e', '手势验证码的vid', '1', '2017-12-26 09:25:34');
+INSERT INTO `vj_sys_option` (`id`, `name`, `value`, `remark`, `manager_id`, `at_datetime`) VALUES ('22', 'VaptchaKey', 'b7c2caa1afcb4e2eb08c7b47004886c3', '手势验证码的key', '1', '2017-12-26 09:25:15');
 
 -------------------------------
 -- Table structure for vj_sys_role

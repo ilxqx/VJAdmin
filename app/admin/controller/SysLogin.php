@@ -36,11 +36,15 @@ class SysLogin extends Common {
         if (!$this->isPostAndAjax()) {
             return null;
         }
-        /*获取验证码*/
-        $verifyCode = $this->request->param('verify_code', '');
-        /*验证*/
-        if (!captcha_check($verifyCode, 'vj')) {
-            return $this->handleJson(0, '验证码错误！');
+        /*获取token*/
+        $token = $this->request->param('token', '');
+        /*获取challenge*/
+        $challenge = $this->request->param('challenge', '');
+        /*获取sceneId*/
+        $sceneId = $this->request->param('sceneId', '');
+        /*二次验证*/
+        if (!vaptchaRevalidate($challenge, $token, $sceneId)) {
+            return $this->handleJson(0, '二次验证不通过！');
         }
         /*获取用户名和密码*/
         $account = $this->request->param('username');
