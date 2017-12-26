@@ -234,7 +234,6 @@
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <span class="text-success"><i class="fa fa-check-circle"></i> #msg#</span>
                     </div>
                 </div>
             </div>
@@ -347,7 +346,7 @@
 
                 function showMsg (msg) {
                     var $el = $('#errModal .modal-body');
-                    $el.html($el.html().replace('#msg#', msg));
+                    $el.html('<span class="text-success"><i class="fa fa-check-circle"></i> ' + msg + '</span>');
                     $('#errModal').modal();
                     setTimeout(function () {
                         $('#errModal').modal('hide');
