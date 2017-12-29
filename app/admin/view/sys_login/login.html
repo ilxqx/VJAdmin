@@ -143,6 +143,14 @@
             #vaptcha {
                 margin-top: 30px;
             }
+
+            .form-control, .input-group {
+                height: 46px;
+            }
+
+            .input-group .form-control {
+                z-index: 0;
+            }
         </style>
     </head>
     <body>
@@ -194,7 +202,7 @@
                             </div>-->
                             <div class="form-group">
                                 <div class="col-xs-10 col-xs-offset-1">
-                                    <div id="vaptcha" style="width: 411px; height: 40px;">
+                                    <div id="vaptcha" style="width: 411px; height: 46px;">
                                         <div class="vaptcha-init-main">
                                             <div class="vaptcha-init-loading">
                                                 <a href="javascript: void 0;" target="_blank"><img src="https://cdn.vaptcha.com/vaptcha-loading.gif"/></a>
@@ -277,7 +285,7 @@
                     vid: '',
                     challenge: '',
                     outage: outage,
-                    effect: 'popup',
+                    effect: 'float',
                     style: 'dark',
                     type: 'click',
                     container: '',
