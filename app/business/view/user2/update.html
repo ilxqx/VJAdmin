@@ -1,0 +1,30 @@
+<div class="bjui-pageContent">
+    <form action="{:url(M_C_A)}" data-toggle="validate" data-alertmsg="true">
+        {if condition="isset($data) && !empty($data.id)"}
+        <input type="hidden" name="id" value="{$data.id}">
+        {/if}
+        <input type="hidden" name="tabid" value="{$Request.param.tabid}">
+
+        <div class="bjui-row col-1">
+            <label for="name{:MCA}" class="row-label">名字：</label>
+			<div class="row-input required">
+				<input type="text"  name="name" id="name{:MCA}" value="{$data.name|default=''}" data-rule="required;length(~20)">
+			</div>
+			<label for="age{:MCA}" class="row-label">年龄：</label>
+			<div class="row-input required">
+				<input type="text"  name="age" id="age{:MCA}" value="{$data.age|default=''}" data-rule="required;integer">
+			</div>
+        </div>
+    </form>
+</div>
+
+<div class="bjui-pageFooter">
+    <ul>
+        <li>
+            <button type="button" data-icon="close" class="btn btn-close">取消</button>
+        </li>
+        <li>
+            <button type="submit" data-icon="check" class="btn btn-success">提交</button>
+        </li>
+    </ul>
+</div>

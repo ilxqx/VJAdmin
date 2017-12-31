@@ -28,8 +28,11 @@
                         <td>
                             <select data-width="100%" data-live-search="true" name="field_type0" data-toggle="selectpicker">
                                 <option selected value="INT">int</option>
+                                <option value="SMALLINT">smallint</option>
+                                <option value="TINYINT">tinyint</option>
                                 <option value="FLOAT">float</option>
                                 <option value="VARCHAR">varchar</option>
+                                <option value="CHAR">char</option>
                                 <option value="DATETIME">datetime</option>
                                 <option value="DATE">date</option>
                                 <option value="TEXT">text</option>
@@ -103,30 +106,36 @@
             </div>
             <table id="relationTable{:MCA}" class="table table-bordered table-responsive">
                 <tr>
-                    <th width="25%"
+                    <th width="20%"
                         data-toggle="popover"
                         data-trigger="hover"
                         data-content="关联模型名请写驼峰式。若该关联模型非本模块，则要加命名空间限定，例：app\admin\model\Xxx"
                         data-container="body"
                         data-placement="top">关联模型（鼠标移上有提示）</th>
-                    <th width="25%"
+                    <th width="20%"
                         data-toggle="popover"
                         data-trigger="hover"
                         data-content="外键是您上面填写的表中的某一个字段，请填写它的名字。"
                         data-container="body"
                         data-placement="top">外键（鼠标移上有提示）</th>
-                    <th width="25%"
+                    <th width="20%"
                         data-toggle="popover"
                         data-trigger="hover"
                         data-content="填写格式：字段别名->关联表字段|字段别名->关联表字段..."
                         data-container="body"
                         data-placement="top">映射字段（鼠标移上有提示）</th>
-                    <th width="25%"
+                    <th width="20%"
                         data-toggle="popover"
                         data-trigger="hover"
                         data-content="在添加和修改时会自动查询关联表指定字段的信息"
                         data-container="body"
                         data-placement="top">是否关联映射字段（鼠标移上有提示）</th>
+                    <th width="20%"
+                        data-toggle="popover"
+                        data-trigger="hover"
+                        data-content="在数据库建立索引，加快查询速度"
+                        data-container="body"
+                        data-placement="top">是否建立索引（鼠标移上有提示）</th>
                     <th>操作</th>
                 </tr>
                 <tr>
@@ -141,8 +150,14 @@
                     </td>
                     <td>
                         <select data-width="100%" data-live-search="true" name="is_assoc0" data-toggle="selectpicker">
-                            <option selected value="a">关联</option>
-                            <option value="b">不关联</option>
+                            <option value="a">关联</option>
+                            <option selected value="b">不关联</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select data-width="100%" data-live-search="true" name="is_index0" data-toggle="selectpicker">
+                            <option value="a">建立</option>
+                            <option selected value="b">不建立</option>
                         </select>
                     </td>
                     <td>
@@ -269,12 +284,15 @@
         '                        </td>\n' +
         '                        <td>\n' +
         '                            <select data-width="100%" data-live-search="true" name="field_type#index#" data-toggle="selectpicker">\n' +
-        '                                <option value="INT">int</option>\n' +
+        '                                <option selected value="INT">int</option>\n' +
+        '                                <option value="SMALLINT">smallint</option>\n' +
+        '                                <option value="TINYINT">tinyint</option>\n' +
         '                                <option value="FLOAT">float</option>\n' +
         '                                <option value="VARCHAR">varchar</option>\n' +
+        '                                <option value="CHAR">char</option>\n' +
         '                                <option value="DATETIME">datetime</option>\n' +
         '                                <option value="DATE">date</option>\n' +
-        '                                <option value="TEXT">text</option>\n' +
+        '                                <option value="TEXT">text</option>' +
         '                            </select>\n' +
         '                        </td>\n' +
         '                        <td>\n' +
@@ -348,11 +366,14 @@
         '                    <td>\n' +
         '                        <select data-width="100%" data-live-search="true" name="field_type#index#" data-toggle="selectpicker">\n' +
         '                            <option selected value="INT">int</option>\n' +
+        '                            <option value="SMALLINT">smallint</option>\n' +
+        '                            <option value="TINYINT">tinyint</option>\n' +
         '                            <option value="FLOAT">float</option>\n' +
         '                            <option value="VARCHAR">varchar</option>\n' +
+        '                            <option value="CHAR">char</option>\n' +
         '                            <option value="DATETIME">datetime</option>\n' +
         '                            <option value="DATE">date</option>\n' +
-        '                            <option value="TEXT">text</option>\n' +
+        '                            <option value="TEXT">text</option>' +
         '                        </select>\n' +
         '                    </td>\n' +
         '                    <td>\n' +
@@ -426,11 +447,14 @@
         '                    <td>\n' +
         '                        <select data-width="100%" data-live-search="true" name="field_type#index#" data-toggle="selectpicker">\n' +
         '                            <option value="INT">int</option>\n' +
+        '                            <option value="SMALLINT">smallint</option>\n' +
+        '                            <option value="TINYINT">tinyint</option>\n' +
         '                            <option value="FLOAT">float</option>\n' +
         '                            <option value="VARCHAR">varchar</option>\n' +
-        '                            <option selected value="DATETIME">datetime</option>\n' +
+        '                            <option value="CHAR">char</option>\n' +
+        '                            <option selected value="DATETIME">datetime</optionselected>\n' +
         '                            <option value="DATE">date</option>\n' +
-        '                            <option value="TEXT">text</option>\n' +
+        '                            <option value="TEXT">text</option>' +
         '                        </select>\n' +
         '                    </td>\n' +
         '                    <td>\n' +
@@ -498,6 +522,12 @@
         '                        <select data-width="100%" data-live-search="true" name="is_assoc#index#" data-toggle="selectpicker">\n' +
         '                            <option selected value="a">关联</option>\n' +
         '                            <option value="b">不关联</option>\n' +
+        '                        </select>\n' +
+        '                    </td>' +
+        '                   <td>\n' +
+        '                        <select data-width="100%" data-live-search="true" name="is_index#index#" data-toggle="selectpicker">\n' +
+        '                            <option selected value="a">建立</optionselected>\n' +
+        '                            <option value="b">不建立</option>\n' +
         '                        </select>\n' +
         '                    </td>' +
         '                    <td>\n' +

@@ -80,7 +80,7 @@ class SysMenuGenerator extends Common {
             $sub .= empty($field['field_comment']) ? ",\r\n" : "COMMENT '{$field['field_comment']}' ,\r\n";
             $sql .= $sub;
         }
-        /*创建外键字段*/
+        /*创建外键字段和索引*/
         foreach ($fks as $fk) {
             $relationTable = $fk['relation_table'];
             if (false !== strpos($relationTable, '\\')) {
@@ -90,6 +90,10 @@ class SysMenuGenerator extends Common {
             $table = getTableNameOfPrefixWithCStyle($relationTable);
             $idName = config('system.sys_table_pk');
             $sql .= "CONSTRAINT `fk_{$tableName}_{$fk['fk']}` FOREIGN KEY (`{$fk['fk']}`) REFERENCES `{$table}` (`{$idName}`) ,\r\n";
+            /*如果需要创建索引就创建索引*/
+            if ($fk['is_index'] == 'a') {
+                $sql .= "KEY `i_{$tableName}_{$fk['fk']}` (`{$fk['fk']}`),\r\n";
+            }
         }
         $sql = rtrim($sql, ",\r\n");
         /*设置表结构的引擎和编码*/
@@ -164,6 +168,8 @@ class SysMenuGenerator extends Common {
         if (array_key_exists('field_type', $fieldInfo)) {
             switch ($fieldInfo['field_type']) {
                 case 'INT':
+                case 'SMALLINT':
+                case 'TINYINT':
                     if (!in_array($fieldInfo['field_name'], $fileKeys)) {
                         $ruleForeEnd .= 'integer';
                     } else {
@@ -176,6 +182,7 @@ class SysMenuGenerator extends Common {
                     $ruleBackEnd .= 'float';
                     break;
                 case 'VARCHAR':
+                case 'CHAR':
                     $ruleForeEnd .= 'length(~';
                     $ruleBackEnd .= 'max:';
                     if (array_key_exists('field_length', $fieldInfo)) {
@@ -250,7 +257,8 @@ class SysMenuGenerator extends Common {
             'relation_table',
             'fk',
             'map_fields',
-            'is_assoc'
+            'is_assoc',
+            'is_index'
         ]);
         /*获取所有的外键集合*/
         $fk_keys = [];
