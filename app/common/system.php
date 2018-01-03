@@ -17,6 +17,10 @@ use think\Db;
  * @param $account string 账号
  * @param $pwd string 密码
  * @return bool|array
+ * @throws \think\Exception
+ * @throws \think\db\exception\DataNotFoundException
+ * @throws \think\db\exception\ModelNotFoundException
+ * @throws \think\exception\DbException
  */
 function loginCheck ($account, $pwd) {
     $model = model('app\\admin\\model\\SysManager');
@@ -117,10 +121,17 @@ function getManagerRoleId ($managerId) {
 
 /**
  * 验证请求权限
- * @return bool
+ * @param $module string 模块
+ * @param $controller string 控制器
+ * @param $action string 方法
+ * @return bool 验证成功返回true，否则返回false
  */
-function authenticate () {
+function authenticate ($module, $controller, $action) {
     $roleId = getManagerRoleId(getManagerId());
+    /*如果是超级管理员的话，则不受任何权限的限制*/
+    if ($roleId == config('system.super_manager_id')) {
+        return true;
+    }
     /*如果管理员所属的角色被停用，则一样不能访问任何东西*/
     $status = model('app\\admin\\model\\SysRole')->where('id', $roleId)->value('status');
     if ($status !== 'a') {
@@ -133,9 +144,15 @@ function authenticate () {
             AND LOWER(`rule_method`) = ?
             LIMIT 1";
     /*查询权限id*/
-    $auth = Db::name('SysAuth')->query($sql, [
-        M, toJavaStyle(C), A
-    ]);
+    try {
+        $auth = Db::name('SysAuth')->query($sql, [
+            $module, $controller, $action
+        ]);
+    } catch (\think\db\exception\BindParamException $e) {
+        return false;
+    } catch (\think\exception\PDOException $e) {
+        return false;
+    }
     if (!empty($auth)) {
         $authId = $auth[0]['id'];
     } else {

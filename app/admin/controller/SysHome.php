@@ -12,6 +12,9 @@
 
 namespace app\admin\controller;
 
+use think\exception\DbException;
+use think\exception\PDOException;
+
 class SysHome extends Common {
     /**
      * 查询菜单所需要的字段
@@ -33,10 +36,15 @@ class SysHome extends Common {
     /**
      * 递归处理子菜单
      * @param $menus
+     * @param bool $unsetid
+     * @throws DbException
+     * @throws \think\Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
      */
-    protected function buildMenus (&$menus) {
+    protected function buildMenus (&$menus, $unsetid = true) {
         $model = model($this->menuTable);
-        foreach ($menus as &$menu) {
+        foreach ($menus as $key => &$menu) {
             /*查找子菜单*/
             $children = $model
                 ->field($this->fields)
@@ -53,6 +61,12 @@ class SysHome extends Common {
                 /*移除id属性*/
                 $menu['id'] = $menu['type_id'];
                 unset($menu['type_id']);
+                /*检测他的url是否有权限*/
+                $menu['auth'] = authenticate($menu['auth'][0], toJavaStyle($menu['auth'][1]), $menu['auth'][2]);
+                if (!$menu['auth']) {
+                    // 没有权限则删除，不显示
+                    unset($menus[$key]);
+                }
                 /*为空时直接跳过*/
                 continue;
             } else {
@@ -61,6 +75,7 @@ class SysHome extends Common {
                 /*处理url*/
                 foreach ($children as &$child) {
                     if (!empty($child['url'])) {
+                        $child['auth'] = preg_split('/\//', $child['url']);
                         $child['url'] = url($child['url']);
                         $child['target'] = 'navtab';
                     }
@@ -68,10 +83,16 @@ class SysHome extends Common {
                 /*不为空时递归查找*/
                 $this->buildMenus($children);
                 /*最后赋值给children*/
-                $menu['children'] = $children;
-                unset($menu['id']);
-                unset($menu['url']);
-                unset($menu['type_id']);
+                if (!empty($children)) {
+                    $menu['children'] = $children;
+                    if ($unsetid) {
+                        unset($id);
+                    }
+                    unset($menu['url']);
+                    unset($menu['type_id']);
+                } else {
+                    unset($menus[$key]);
+                }
             }
         }
     }
@@ -79,6 +100,10 @@ class SysHome extends Common {
     /**
      * 获取菜单JSON数据
      * @return \think\response\Json
+     * @throws \think\Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
      */
     public function getMenus () {
         if (!$this->isPostAndAjax()) {
@@ -105,10 +130,10 @@ class SysHome extends Common {
             ->select();
         /*处理数据字典的值*/
         castToArray($menus);
-        $this->handleFieldsInDict($this->menuTable, $menus, $model->fieldDictNames, true);
         /*处理菜单的url*/
         foreach ($menus as &$menu) {
             if (!empty($menu['url'])) {
+                $menu['auth'] = preg_split('/\//', $menu['url']);
                 $menu['url'] = url($menu['url']);
                 $menu['target'] = 'navtab';
             }
@@ -121,6 +146,10 @@ class SysHome extends Common {
     /**
      * 系统首页
      * @return \think\response\View
+     * @throws \think\Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
      */
     public function index () {
         /*获取服务器信息*/
@@ -173,14 +202,19 @@ class SysHome extends Common {
             ])
             ->select();
         castToArray($menus);
+        $this->buildMenus($menus, false);
+        $visibilityMenus = [];
         foreach ($menus as &$menu) {
             /*设置顶级菜单的url*/
             $menu['url'] = url(M_C . 'getMenus', [
                 'pid' => $menu['id']
             ]);
             unset($menu['id']);
+            unset($menu['children']);
+            array_push($visibilityMenus, $menu);
         }
-        $this->assign('menus', $menus);
+        unset($menus);
+        $this->assign('menus', $visibilityMenus);
         return view();
     }
 
@@ -202,7 +236,11 @@ class SysHome extends Common {
             return null;
         }
         $id = getManagerId();
-        $manager = model('SysManager')::get($id);
+        try {
+            $manager = model('SysManager')::get($id);
+        } catch (DbException $e) {
+            return $this->handleJson(0, '修改密码失败：' . $e->getMessage());
+        }
         if ($this->isPost()) {
             $data = $this->request->post();
             if ($data['id'] != $id) {
@@ -218,7 +256,11 @@ class SysHome extends Common {
                 $manager->commit();
                 return $this->handleJson(1, '修改密码成功！', true);
             } catch (\Exception $exception) {
-                $manager->rollback();
+                try {
+                    $manager->rollback();
+                } catch (PDOException $e) {
+                    return $this->handleJson(0, '修改密码失败：' . $e->getMessage());
+                }
                 return $this->handleJson(0, '修改密码失败：' . $exception->getMessage());
             }
         }

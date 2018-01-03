@@ -14,6 +14,7 @@
  * 上传图片
  * @param $imgName string 图片引用名字
  * @return int|string 成功返回int类型的图片记录id，失败返回错误信息字符串
+ * @throws \think\exception\PDOException
  */
 function uploadImage ($imgName) {
     // 获取img文件
@@ -97,6 +98,7 @@ function uploadImage ($imgName) {
  * @param $fileName string 文件引用名字
  * @param $ext string 文件允许的后缀
  * @return int|string 成功返回int类型的图片记录id，失败返回错误信息字符串
+ * @throws \think\exception\PDOException
  */
 function uploadFile ($fileName, $ext = '') {
     // 获取file文件

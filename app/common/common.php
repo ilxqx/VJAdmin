@@ -37,6 +37,7 @@ function getUUID () {
 /**
  * 将模型对象或模型对象数组转为纯数组
  * @param $item array | \think\Model
+ * @throws \think\Exception
  */
 function castToArray (&$item) {
     // 如果是数组则判断每个元素是不是
@@ -55,7 +56,8 @@ function castToArray (&$item) {
  * 获取字段字典字段值含义的数组
  * @param $table string 表名
  * @param $field string 字段名
- * @return array 返回数组
+ * @return false|PDOStatement|string|\think\Collection 返回数组
+ * @throws \think\Exception
  */
 function getMeaningsOfFieldValues ($table, $field) {
     // 获取数据字段模型

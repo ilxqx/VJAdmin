@@ -214,6 +214,14 @@ class Base extends Controller {
         }
     }
 
+    /**
+     * 详情页面
+     * @return null|\think\response\Json|\think\response\View
+     * @throws \think\Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
     public function detail () {
         if (!$this->isGetAndAjax()) {
             return null;
@@ -257,6 +265,7 @@ class Base extends Controller {
     /**
      * 数据页面
      * @return View
+     * @throws \think\Exception
      */
     public function index () {
         // 过滤非Ajax请求
@@ -347,6 +356,8 @@ class Base extends Controller {
     /**
      * 添加方法
      * @return \think\response\Json
+     * @throws \think\Exception
+     * @throws \think\exception\PDOException
      */
     public function add () {
         /*过滤非Ajax请求*/
@@ -497,6 +508,11 @@ class Base extends Controller {
     /**
      * 修改方法
      * @return \think\response\Json
+     * @throws \think\Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     * @throws \think\exception\PDOException
      */
     public function edit () {
         /*过滤非Ajax请求*/
@@ -671,6 +687,7 @@ class Base extends Controller {
     /**
      * 删除方法
      * @return \think\response\Json
+     * @throws \think\exception\PDOException
      */
     public function del () {
         // 这里删除只能是get方式

@@ -97,14 +97,19 @@
                 event.preventDefault()
             if (treeNode.isParent) {
                 var zTree = $.fn.zTree.getZTreeObj(treeId)
-
                 zTree.expandNode(treeNode)
                 return
             }
             if (treeNode.target && treeNode.target == 'dialog')
-                $(event.target).dialog({id:treeNode.targetid, url:treeNode.url, title:treeNode.name})
+                $(event.target).dialog({id: treeNode.targetid, url: treeNode.url, title: treeNode.name})
             else if (treeNode.target && treeNode.target == 'navtab')
-                $(event.target).navtab({id:treeNode.targetid, url:treeNode.url, title:treeNode.name, fresh:treeNode.fresh, external:treeNode.external})
+                $(event.target).navtab({
+                    id: treeNode.targetid,
+                    url: treeNode.url,
+                    title: treeNode.name,
+                    fresh: treeNode.fresh,
+                    external: treeNode.external
+                })
         }
     </script>
 </head>

@@ -30,6 +30,7 @@
 				<td>{$val.manager_name}</td>
 				<td>{$val.at_datetime}</td>
                 <th>
+                    {if condition="$val.id != config('system.super_manager_id')"}
                     <a href="{:url(M_C . 'authorize', ['role_id' => $val.id, 'tabid' => MCA])}"
                        data-icon="key"
                        data-toggle="dialog"
@@ -58,6 +59,26 @@
                     >
                         删除
                     </a>
+                    {else/}
+                    <a data-icon="key"
+                       class="btn btn-primary"
+                       disabled
+                    >
+                        授权
+                    </a>
+                    <a data-icon="pencil"
+                       class="btn btn-blue"
+                       disabled
+                    >
+                        编辑
+                    </a>
+                    <a data-icon="trash-o"
+                       class="btn btn-red"
+                       disabled
+                    >
+                        删除
+                    </a>
+                    {/if}
                 </th>
             </tr>
             {/volist}

@@ -19,10 +19,7 @@ class SysMenu extends Common {
     ];
 
     public $fieldDictNames = [
-        'status',
-        'type',
-        'fresh',
-        'mask'
+        'status'
     ];
 
     public $relationModels = [

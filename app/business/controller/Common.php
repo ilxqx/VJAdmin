@@ -31,7 +31,7 @@ class Common extends Base {
             }
         }
         /*权限验证*/
-        if (!authenticate()) {
+        if (!authenticate(M, toJavaStyle(C), A)) {
             if ($this->isAjax()) {
                 $this->forbid();
             } else {

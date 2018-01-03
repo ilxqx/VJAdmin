@@ -59,7 +59,8 @@ class SysRole extends Common {
         /*如果是post请求的话就进行权限的更改*/
         if ($this->isPost()) {
             /*获取前台传来的权限的id数组*/
-            $ids = $this->request->post()['ids'];
+            $post = $this->request->post();
+            $ids = isset($post['ids']) ? $post['ids'] : [];
             /*如果id数组不为空*/
             $newAuthIds = array_map(function ($item) {
                 return $item;
@@ -159,6 +160,20 @@ class SysRole extends Common {
         }
         $this->assign('rules', $rules);
         return view();
+    }
+
+    /**
+     * 删除前的操作
+     * @param $data array 待删除的数据
+     * @throws \Exception
+     */
+    protected function beforeDel ($data) {
+        /*
+         * 如果删除的角色id为1，则不让其删除。
+         */
+        if ($data['id'] == config('system.super_manager_id')) {
+            throw new \Exception('超级管理员角色不可以删除！');
+        }
     }
 
 }

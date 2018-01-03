@@ -248,7 +248,7 @@ return [
         // 数据库表的主键
         'sys_table_pk' => 'id',
         'template_path' => APP_PATH . 'template' . DS,
-        'super_manager_id' => 1,
+        'super_manager_id' => 1, // 超级管理员角色ID
         'deny_controller' => [
             'Common',
             'Demo'
