@@ -2,7 +2,7 @@
 MySQL Database Backup Tools(Venus dump)
 Server:127.0.0.1:
 Database:vj_admin
-Date:2017-12-26 13:03:21
+Date:2018-01-03 15:27:24
 */
 SET FOREIGN_KEY_CHECKS=0;
 -------------------------------
@@ -22,7 +22,7 @@ CREATE TABLE `vj_customer` (
   KEY `fk_vj_customer_pic` (`pic`),
   CONSTRAINT `fk_vj_customer_manager_id` FOREIGN KEY (`manager_id`) REFERENCES `vj_sys_manager` (`id`),
   CONSTRAINT `fk_vj_customer_pic` FOREIGN KEY (`pic`) REFERENCES `vj_sys_file` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 -------------------------------
 -- Records of vj_customer
 -------------------------------
@@ -132,11 +132,12 @@ CREATE TABLE `vj_sys_file` (
   `type` varchar(2) NOT NULL DEFAULT 'a',
   `at_datetime` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 -------------------------------
 -- Records of vj_sys_file
 -------------------------------
 INSERT INTO `vj_sys_file` (`id`, `name`, `relative_url`, `sha1`, `refs`, `type`, `at_datetime`) VALUES ('14', 'b42af90c30bfd40ed1b0ae70ccc6a39a.jpg', '\\uploads\\images\\vjeaa3ef6a-4a17-bba3-2c4b-e95f008ea42d.jpg', 'eb40f6a07deed6f5226e86ef7164e165af4f0624', '1', 'a', '2017-11-09 10:24:41');
+INSERT INTO `vj_sys_file` (`id`, `name`, `relative_url`, `sha1`, `refs`, `type`, `at_datetime`) VALUES ('15', '143DP5bI140-95395.jpg', '\\uploads\\images\\vjedac3c6a-ac37-34a3-5a6d-d8010a75da1b.jpg', '6baccb448857479f1bdd16ed4e2858de1264fe3c', '1', 'a', '2018-01-03 14:51:58');
 
 -------------------------------
 -- Table structure for vj_sys_manager
@@ -159,11 +160,12 @@ CREATE TABLE `vj_sys_manager` (
   CONSTRAINT `fk_vj_sys_manager_avatar` FOREIGN KEY (`avatar`) REFERENCES `vj_sys_file` (`id`),
   CONSTRAINT `fk_vj_sys_manager_manager_id` FOREIGN KEY (`manager_id`) REFERENCES `vj_sys_manager` (`id`),
   CONSTRAINT `fk_vj_sys_manager_role_id` FOREIGN KEY (`role_id`) REFERENCES `vj_sys_role` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 -------------------------------
 -- Records of vj_sys_manager
 -------------------------------
 INSERT INTO `vj_sys_manager` (`id`, `name`, `account`, `pwd`, `avatar`, `role_id`, `status`, `manager_id`, `at_datetime`) VALUES ('1', '超级管理员', 'admin', '21232f297a57a5a743894a0e4a801fc3', '14', '1', 'a', '1', '2017-11-09 10:24:41');
+INSERT INTO `vj_sys_manager` (`id`, `name`, `account`, `pwd`, `avatar`, `role_id`, `status`, `manager_id`, `at_datetime`) VALUES ('2', '冷笑浅兮', 'youke', 'e10adc3949ba59abbe56e057f20f883e', '15', '2', 'a', '1', '2018-01-03 14:51:58');
 
 -------------------------------
 -- Table structure for vj_sys_menu
@@ -254,11 +256,12 @@ CREATE TABLE `vj_sys_role` (
   PRIMARY KEY (`id`),
   KEY `fk_vj_sys_role_manager_id` (`manager_id`),
   CONSTRAINT `fk_vj_sys_role_manager_id` FOREIGN KEY (`manager_id`) REFERENCES `vj_sys_manager` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 -------------------------------
 -- Records of vj_sys_role
 -------------------------------
 INSERT INTO `vj_sys_role` (`id`, `name`, `remark`, `status`, `manager_id`, `at_datetime`) VALUES ('1', '超级管理员', '这是超级管理员，拥有最高权限', 'a', '1', '2017-10-29 15:47:00');
+INSERT INTO `vj_sys_role` (`id`, `name`, `remark`, `status`, `manager_id`, `at_datetime`) VALUES ('2', '管理员', '这是管理员，用来管理部分功能', 'a', '1', '2018-01-03 14:50:29');
 
 -------------------------------
 -- Table structure for vj_sys_role_auth
@@ -273,50 +276,14 @@ CREATE TABLE `vj_sys_role_auth` (
   KEY `vj_sys_role_auth_auth_id` (`auth_id`),
   CONSTRAINT `vj_sys_role_auth_auth_id` FOREIGN KEY (`auth_id`) REFERENCES `vj_sys_auth` (`id`),
   CONSTRAINT `vj_sys_role_auth_role_id` FOREIGN KEY (`role_id`) REFERENCES `vj_sys_role` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 -------------------------------
 -- Records of vj_sys_role_auth
 -------------------------------
-INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('2', '9', '1');
-INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('3', '7', '1');
-INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('4', '6', '1');
-INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('5', '8', '1');
-INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('6', '10', '1');
-INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('7', '11', '1');
-INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('8', '12', '1');
-INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('10', '14', '1');
-INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('11', '15', '1');
-INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('12', '16', '1');
-INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('13', '1', '1');
-INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('14', '2', '1');
-INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('15', '4', '1');
-INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('16', '5', '1');
-INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('17', '17', '1');
-INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('18', '18', '1');
-INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('19', '19', '1');
-INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('20', '20', '1');
-INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('21', '21', '1');
-INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('22', '22', '1');
-INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('23', '23', '1');
-INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('24', '24', '1');
-INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('25', '25', '1');
-INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('26', '26', '1');
-INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('27', '27', '1');
-INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('28', '28', '1');
-INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('29', '29', '1');
-INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('30', '30', '1');
-INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('31', '31', '1');
-INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('32', '32', '1');
-INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('33', '33', '1');
-INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('34', '34', '1');
-INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('35', '13', '1');
-INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('36', '35', '1');
-INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('38', '37', '1');
-INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('39', '39', '1');
-INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('40', '40', '1');
-INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('41', '36', '1');
-INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('42', '41', '1');
-INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('43', '42', '1');
-INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('44', '43', '1');
-INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('45', '44', '1');
+INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('1', '1', '2');
+INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('2', '2', '2');
+INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('3', '4', '2');
+INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('4', '21', '2');
+INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('5', '22', '2');
+INSERT INTO `vj_sys_role_auth` (`id`, `auth_id`, `role_id`) VALUES ('6', '13', '2');
 
