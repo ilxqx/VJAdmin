@@ -235,7 +235,9 @@ class SysMenuGenerator extends Common {
             /*获取关联表组*/
             if ($this->startWith('relation_table', $key)
             || $this->startWith('fk', $key)
-            || $this->startWith('map_fields', $key)) {
+            || $this->startWith('map_fields', $key)
+            || $this->startWith('is_assoc', $key)
+            || $this->startWith('is_index', $key)) {
                 array_push($relation_keys, $key);
             }
         }
@@ -289,11 +291,13 @@ class SysMenuGenerator extends Common {
         $controllerFile = str_replace('#controller#', $data['controller_file_name'], $controllerFile);
         $controllerFile = str_replace('#pagination#', ($data['paginate'] === 'a') ? 'true' : 'false', $controllerFile);
         $searchFields = '';
-        $search_arr = preg_split('/\s*,\s*/', $data['search_fields']);
-        foreach ($search_arr as $val) {
-            $searchFields .= "'{$val}',\r\n\t\t";
+        if ($data['search'] == 'a') {
+            $search_arr = preg_split('/\s*,\s*/', $data['search_fields']);
+            foreach ($search_arr as $val) {
+                $searchFields .= "'{$val}',\r\n\t\t";
+            }
+            $searchFields = rtrim($searchFields, ",\r\n\t\t");
         }
-        $searchFields = rtrim($searchFields, ",\r\n\t\t");
         $controllerFile = str_replace('#searchFields#', $searchFields, $controllerFile);
         /*书写添加修改页面的公共操作代码*/
         $assocArr = [];
@@ -337,7 +341,14 @@ class SysMenuGenerator extends Common {
             return "'" . lcfirst($item) . "'";
         }, $relationModels);
         $modelFile = str_replace('#relationModels#', join(', ', $arrWithNoNS), $modelFile);
-        $modelFile = str_replace('#fieldDictNames#', "'{$data['dict_names']}'", $modelFile);
+        /*处理字段字典*/
+        $fieldDictNames = preg_split('/\s*,\s*/', $data['dict_names']);
+        $field_dict_str = '';
+        foreach ($fieldDictNames as $val) {
+            $field_dict_str .= "'${val}', ";
+        }
+        $field_dict_str = rtrim($field_dict_str, ', ');
+        $modelFile = str_replace('#fieldDictNames#', $field_dict_str, $modelFile);
         /*处理上传文件*/
         $file_list = preg_split('/\s*,\s*/', $data['file_list']);
         $fileArr = [];
@@ -395,7 +406,6 @@ class SysMenuGenerator extends Common {
         $validateFile = str_replace('#datetime#', date('Y-m-d H:i'), $validateFile);
         $validateFile = str_replace('#module#', $data['module_name'], $validateFile);
         $validateFile = str_replace('#validate#', $data['validate_file_name'], $validateFile);
-        $fieldDictNames = preg_split('/\s*,\s*/', $data['dict_names']);
         $rules = '';
         $add_fields = '';
         $edit_fields = '';
@@ -427,7 +437,7 @@ class SysMenuGenerator extends Common {
         $indexFile = str_replace('#width#', $data['dialog_width'], $indexFile);
         $indexFile = str_replace('#pagination#', ($data['paginate'] === 'a') ? "{include file=\"common:paginateFooter\" /}" : '', $indexFile);
         $indexFile = str_replace('#opWidth#', ($data['detail'] === 'a') ? '300' : '200', $indexFile);
-        $detailBtn = "\r\n<a href=\"{:url(M_C . 'detail', ['id' => \$val.id, 'tabid' => MCA])}\"\r\n\t\t\t\t\t\t";
+        $detailBtn = "\r\n\t\t\t\t\t<a href=\"{:url(M_C . 'detail', ['id' => \$val.id, 'tabid' => MCA])}\"\r\n\t\t\t\t\t\t";
         $detailBtn .= "data-icon=\"eye\"\r\n\t\t\t\t\t\t";
         $detailBtn .= "class=\"btn btn-info\"\r\n\t\t\t\t\t\t";
         $detailBtn .= "data-toggle=\"dialog\"\r\n\t\t\t\t\t\t";

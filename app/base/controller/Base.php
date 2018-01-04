@@ -129,7 +129,7 @@ class Base extends Controller {
      */
     protected function buildSearch () {
         // 要想有模糊匹配的功能，必须要在控制器里面定义likeFields属性（必须是数组，不能为空）
-        if (isset($this->likeFields) && is_array($this->likeFields) && !empty($this->likeFields)) {
+        if (isset($this->likeFields) && !empty($this->likeFields) && is_array($this->likeFields)) {
             // 获取前台传来的搜索关键字
             $key = $this->request->param('key', '');
             // 数组长度不能为2
@@ -435,13 +435,13 @@ class Base extends Controller {
                     $data[$key] = $val;
                 }
             }
-            // 插入和更新前的公共操作
-            if (method_exists($this, 'beforeAlter')) {
-                $this->beforeAlter($data);
-            }
             // 验证通过后，对插入之前对要插入的数据进行处理
             if (method_exists($this, 'beforeInsert')) {
                 $this->beforeInsert($data);
+            }
+            // 插入和更新前的公共操作
+            if (method_exists($this, 'beforeAlter')) {
+                $this->beforeAlter($data);
             }
             // 获取相应的验证器实例
             $validate = validate($this->table);
@@ -457,13 +457,13 @@ class Base extends Controller {
                 $model->isUpdate(false)->data($data)->allowField(true)->save();
                 $idName = config('system.sys_table_pk');
                 $data[$idName] = $model->getAttr($idName);
-                // 处理插入和更新后的公共操作
-                if (method_exists($this, 'afterAlter')) {
-                    $this->afterAlter($data);
-                }
                 // 处理插入之后的逻辑
                 if (method_exists($this, 'afterInsert')) {
                     $this->afterInsert($data);
+                }
+                // 处理插入和更新后的公共操作
+                if (method_exists($this, 'afterAlter')) {
+                    $this->afterAlter($data);
                 }
                 // 没有出现错误进行提交
                 $model->commit();
@@ -608,13 +608,13 @@ class Base extends Controller {
                     array_push($delFileIds, $oldData[$key]);
                 }
             }
-            // 插入和更新前的公共操作
-            if (method_exists($this, 'beforeAlter')) {
-                $this->beforeAlter($data);
-            }
             // 数据验证通过后就可以执行修改前的操作了
             if (method_exists($this, 'beforeModify')) {
                 $this->beforeModify($data, $oldData);
+            }
+            // 插入和更新前的公共操作
+            if (method_exists($this, 'beforeAlter')) {
+                $this->beforeAlter($data);
             }
             // 实例化验证器
             $validate = validate($this->table);
@@ -635,13 +635,13 @@ class Base extends Controller {
                         throw new \Exception($res);
                     }
                 }
-                // 处理插入和更新后的公共操作
-                if (method_exists($this, 'afterAlter')) {
-                    $this->afterAlter($data);
-                }
                 // 处理更新后的操作
                 if (method_exists($this, 'afterModify')) {
                     $this->afterModify($data, $oldData);
+                }
+                // 处理插入和更新后的公共操作
+                if (method_exists($this, 'afterAlter')) {
+                    $this->afterAlter($data);
                 }
                 // 事务提交
                 $model->commit();
