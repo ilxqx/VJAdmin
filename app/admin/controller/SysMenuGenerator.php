@@ -307,7 +307,7 @@ class SysMenuGenerator extends Common {
             }
         }
         if (!empty($assocArr)) {
-            $str = "public function beforeUpdate () {\r\n\t\t";
+            $str = "protected function beforeUpdate () {\r\n\t\t";
             foreach ($assocArr as $val) {
                 $map = $this->resolveFkMap($val['map_fields']);
                 $assocField = $map[0][1];
