@@ -18233,6 +18233,7 @@
                 'theme': 'fa',
                 'language': 'zh',
                 'showUpload': false,
+                'showPreview': options.showPreview,
                 'maxFileSize': options.maxSize,
                 'allowedFileExtensions': options.allowExt,
                 'initialPreview': preview,

@@ -86,7 +86,7 @@ function uploadImage ($imgName) {
             }
         } else {
             // 如果上传出错，返回错误
-            return $info->getError();
+            return $img->getError();
         }
     }
     // 文件不存在则返回错误
@@ -174,7 +174,7 @@ function uploadFile ($fileName, $ext = '') {
             }
         } else {
             // 如果上传出错，返回错误
-            return $info->getError();
+            return $file->getError();
         }
     }
     // 文件不存在则返回错误
